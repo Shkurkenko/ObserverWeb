@@ -1,0 +1,77 @@
+.task-list-container
+  overflow-y: auto
+  height: 87.7vh
+
+.task-list
+  display: flex
+  flex-direction: column
+
+.task-content-search-input
+  width: 100%
+  height: 6vh
+  background-color: #0d1014
+  padding-left: 80px
+  color: rgb(220, 218, 218)
+
+  &:focus
+    outline: none
+    border: 2px solid #36b37e
+
+.task-content-search-icon
+  position: absolute
+
+.task-item-header
+  height: 105px
+  text-align-last: left
+  padding-left: 15px
+  width: 100%
+  display: flex
+  align-items: center
+  justify-content: space-between
+  border-bottom: 1px solid #293441
+  transition: 0.1s all
+
+  &:hover
+    cursor: pointer
+    background-color: #202934
+
+.task-name
+  font-weight: bold
+  color: rgb(212, 212, 212)
+  font-size: 18px
+
+.task-item-content
+  background-color: #171f28
+
+.task-item-left-side
+  align-items: center
+
+.new-task-container
+  height: 5.3vh
+  align-items: center
+  padding-left: 22px
+  background-color: #0d1014
+  border-top: 1px solid #293441
+  border-bottom: 1px solid #293441
+  transition: 0.2s all
+
+  &:hover
+    cursor: pointer
+    background-color: #1f252e
+
+.task-item
+  display: block
+  width: 100%
+  background-color: #11161c
+
+.task-content-search
+  width: 100%
+  display: flex
+  align-items: center
+
+.scan-types
+  width: 40%
+  display: flex
+  flex-wrap: wrap
+  gap: 5px
+  font-size: 14px

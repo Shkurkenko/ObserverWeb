@@ -1,0 +1,27 @@
+.table-basecol
+  height: 100%
+  padding-left: 10px
+  padding-right: 10px
+  border-bottom: 1px solid #262b36
+  line-height: 35px
+  position: relative
+  text-align: center
+
+  &::after
+    content: ''
+    width: 1px
+    height: 70%
+    background-color: #262b36
+    position: absolute
+    right: 0
+    top: 50%
+    transform: translateY(-50%)
+
+  &-hovered
+    background-color: black
+    transform: scale(1.2)
+    cursor: pointer
+
+  &-selected
+    background-color: black
+    border: 2px solid green
