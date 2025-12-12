@@ -1,0 +1,3 @@
+[submodule "ForensicThemes"]
+	path = ForensicThemes
+	url = git@github.com:VladNasirov/ForensicThemes.git
