@@ -9,7 +9,7 @@ interface IAlertListProps {
 
 export function AlertList({ model }: IAlertListProps) {
   return (
-    <div className='alert-list w-full scrollbar-thin'>
+    <div className='flex alert-list w-full scrollbar-thin'>
       {model.map((alert: AlertsSpace.IAlertType) => (
         <AlertItem
           key={alert.id}

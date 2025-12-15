@@ -71,8 +71,6 @@ export function ThemeSwitcher() {
       style.textContent = validCssClass(css)
       document.head.appendChild(style)
 
-      console.log(theme + ' ' + variant + ': ', style)
-
       document.documentElement.className = ''
       document.documentElement.classList.add(
         getClassNameFromThemeName(theme),

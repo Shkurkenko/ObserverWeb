@@ -22,7 +22,7 @@
     "react-chartjs-2": "^4.0.1",
     "tailwindcss": "^4.1.17",
     "uuid": "^13.0.0",
-    "wouter": "^2.8.0-alpha.2"
+    "wouter": "^2.12.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.2",

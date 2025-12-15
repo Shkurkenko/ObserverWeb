@@ -1,4 +1,4 @@
-import { AlertsSpace } from '../Shared/Interfaces/Alerts.interface'
+import { AlertsSpace } from '../Src/Shared/Interfaces/Alerts.interface'
 import { v4 as uuidv4 } from 'uuid'
 
 export const fastAlertsData: AlertsSpace.IAlertType[] = [

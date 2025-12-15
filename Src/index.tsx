@@ -1,16 +1,18 @@
 import 'preact/debug'
+import { Route } from 'wouter'
 import { render } from 'preact'
-import { LocationProvider, Router, Route } from 'preact-iso'
+import { LocationProvider, Router } from 'preact-iso'
 
 import TasksProvider from './Context/TasksContext.js'
 import SidebarProvider from './Context/SidebarContext.js'
 import AlertsProvider from './Context/AlertsContext.js'
 import ScanViewProvider from './Context/ReoScanViewContext.js'
 import { FastAlertsProvider } from './Context/FastAlertsContext.js'
-
-import { NotFound } from './Views/_404.js'
 import { ReoScan } from './Views/Pages/ReoScan'
 import { ThemeTester } from './Views/Pages/ThemeTester'
+import { SideNavigation } from './Components/Sidebar/SideNavigation/index.js'
+import { FastAlerts } from './Components/FastAlerts/index.js'
+import { NotFound } from './Views/_404.js'
 
 import './style.sass'
 
@@ -24,11 +26,13 @@ export function App() {
               <LocationProvider>
                 {/* <Header /> */}
                 <main className='app-container w-full flex'>
-                  <Router>
-                    <Route path='/' component={ReoScan} />
-                    <Route path='/theme-tester' component={ThemeTester} />
-                    <Route default component={NotFound} />
-                  </Router>
+                  <SideNavigation />
+                  <Route path='/'>
+                    <ReoScan />
+                    {/* <FastAlerts /> */}
+                  </Route>
+                  <Route path='/theme-tester' component={ThemeTester} />
+                  {/* <Route component={NotFound} /> */}
                 </main>
               </LocationProvider>
             </ScanViewProvider>

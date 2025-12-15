@@ -19,6 +19,7 @@ interface ISidebarContext {
 
   hideView: (id: string) => void
 }
+
 interface IScanViewProviderProps {
   children: ComponentChildren
 }
@@ -26,9 +27,14 @@ interface IScanViewProviderProps {
 export const ScanViewContext = createContext<ISidebarContext | null>(null)
 const ScanViewProvider = ({ children }: IScanViewProviderProps) => {
   const [scanViews, setScanViews] = useState<ReoView[]>([])
+  const [viewIds, setViewIds] = useState<Set<string>>(new Set())
 
   const addView = useCallback((view: ReoView): void => {
-    setScanViews((prev: ReoView[]) => [...prev, view])
+    if (!viewIds.has(view.viewId)) {
+      setViewIds((prev) => prev.add(view.viewId))
+      setViewVisibility(view.viewId, true)
+      setScanViews((prev: ReoView[]) => [...prev, view])
+    }
   }, [])
 
   const deleteView = useCallback((id: string): void => {

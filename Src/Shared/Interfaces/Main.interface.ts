@@ -18,7 +18,6 @@ export interface ITab<T> {
   label: string
   data: TableSpace.ITableData<T>
   tabIndex: number
-  role: string
 }
 
 export enum IMenubarSetup {

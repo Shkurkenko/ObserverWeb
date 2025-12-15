@@ -1,5 +1,6 @@
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
 
+import '/node_modules/flag-icons/css/flag-icons.min.css' // TODO: create patch for this file with only neighbors and needed icons. For now it costs too much space
 import './style.sass'
 
 interface IColumnCountryProps {

@@ -15,10 +15,6 @@ interface ITableProps {
 export function Table({ columnsProp, recordsProp }: ITableProps) {
   const { rows, columns, setColumns } = useTable()
 
-  useEffect(() => {
-    console.log(rows)
-  }, [])
-
   return (
     <div className='table-container relative w-full h-full flex flex-col'>
       <TableSearch />

@@ -44,9 +44,7 @@ export function SideNavigation() {
   return (
     <div className='menubar-container'>
       <Menubar model={menubarModel} itemOnClick={menubarHandleClick} />
-      <SlideSidebar>
-        {show ? menubarModel.items[menubarModel.currentIndex].content : <></>}
-      </SlideSidebar>
+      <SlideSidebar>{menubarModel.items[menubarModel.currentIndex].content}</SlideSidebar>
     </div>
   )
 }

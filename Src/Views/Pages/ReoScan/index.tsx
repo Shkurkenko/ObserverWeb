@@ -15,11 +15,14 @@ import { runWithInterval } from '../../../Utils/Helpers'
 
 import { journalAlertsData } from '../../../../Data/JournalAlerts'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import './style.sass'
 
 export interface ReoView {
-  show: boolean
+  viewId: string
   taskId: string
+  show: boolean
   tabsModel: ITab<ReoSpace.IReoTable>[]
 }
 
@@ -68,6 +71,7 @@ export const ReoScan = () => {
   const addReoTask = useCallback((task: ReoSpace.IScanTask) => {
     addTask(task)
     addView({
+      viewId: uuidv4(),
       taskId: task.id,
       show: scanViews.length === 0,
       tabsModel: getTabs(task),
@@ -114,9 +118,10 @@ export const ReoScan = () => {
     <div className='reo-scan-container w-full flex'>
       {tasks.length !== 0 &&
         scanViews.length !== 0 &&
-        scanViews.map((view: ReoView, index: number) => (
-          <ReoContentView header={tasks[index].name} model={view} />
-        ))}
+        scanViews.map(
+          (view: ReoView, index: number) =>
+            view.show && <ReoContentView header={tasks[index].name} model={view} />,
+        )}
     </div>
   )
 }
