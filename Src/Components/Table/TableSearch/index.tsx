@@ -2,7 +2,7 @@ import './style.sass'
 
 export function TableSearch() {
   return (
-    <div className='reo-scan-search'>
+    <div className='reo-scan-search mt-5'>
       <div class='w-full min-w-[200px]'>
         <div class='table-search-component flex items-center relative'>
           <div className='table-search-input-container w-full flex items-center'>
@@ -17,7 +17,7 @@ export function TableSearch() {
             </div>
             <div className='table-search-input-container w-full'>
               <input
-                class='table-search-input w-full bg-transparent placeholder:text-slate-400 text-slate-400 text-lg pl-16 pr-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow'
+                class='table-search-input w-full bg-surface-container placeholder:text-on-surface text-slate-400 text-lg pl-16 pr-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow'
                 placeholder='Поиск по таблице'
               />
             </div>

@@ -18,6 +18,7 @@ import { journalAlertsData } from '../../../../Data/JournalAlerts'
 import { v4 as uuidv4 } from 'uuid'
 
 import './style.sass'
+import { useTheme } from '../../../Context/ThemeContext'
 
 export interface ReoView {
   viewId: string
@@ -31,6 +32,7 @@ export const ReoScan = () => {
   const { scanViews, addView } = useScanView()
   const { addAlert } = useAlerts()
   const { addFastNotification } = useFastAlerts()
+  const { setThemeVariant } = useTheme()
 
   const getTabs = useCallback(
     (task: ReoSpace.IScanTask): ITab<ReoSpace.IReoTable>[] => {
@@ -92,6 +94,8 @@ export const ReoScan = () => {
   }, [journalAlertsData])
 
   useEffect(() => {
+    setThemeVariant('ForensicBlue', 'light')
+
     const loadTasks = async () => {
       const tasks = MockGenHelpers.generateMockScanTasks(10)
 

@@ -4,7 +4,7 @@ import './style.sass'
 
 export function ThemeTester() {
   return (
-    <div class='home flex-col items-center'>
+    <div class='home flex-col items-center w-full'>
       <div class='min-h-screen bg-background text-on-background p-8'>
         <ThemeSwitcher />
 

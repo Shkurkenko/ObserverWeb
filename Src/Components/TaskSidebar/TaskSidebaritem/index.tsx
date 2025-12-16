@@ -22,7 +22,7 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
         <div className='task-item-left-side flex'>
           <div className='task-item-header-more-button'>
             <svg
-              class='w-6 h-6 text-gray-800 dark:text-white'
+              class='w-6 h-6 text-on-background'
               aria-hidden='true'
               width='24'
               height='24'
@@ -63,8 +63,8 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
                   />
                 </svg>
               </div>
-              <div className='scan-date'>{task.date}</div>
-              <div className='scan-time ml-2'>{task.time}</div>
+              <div className='scan-date text-on-background'>{task.date}</div>
+              <div className='scan-time text-on-background ml-2'>{task.time}</div>
             </div>
           </div>
         </div>

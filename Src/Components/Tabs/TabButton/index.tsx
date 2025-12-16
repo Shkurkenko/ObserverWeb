@@ -15,12 +15,11 @@ export function TabButton<T>({ tabData, isActive, handleClick }: ITabButton<T>) 
       key={tabData.id}
       className={`${
         isActive
-          ? 'font-semibold border-[#36B37E] text-[#36B37E] border-b-2'
+          ? 'font-semibold border-primary text-primary border-b-2'
           : 'text-gray-500 border-transparent'
       } text-lg py-4 px-1 inline-flex items-center gap-x-2 whitespace-nowrap 
-                             hover:text-[#36B37E] focus:outline-hidden focus:text-[#36B37E] 
-                             disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 
-                             dark:hover:text-[#36B37E]`}
+                             hover:text-[#36B37E] focus:outline-hidden 
+                             disabled:opacity-50 disabled:pointer-events-none`}
       aria-controls={`tabs-with-underline-${tabData.tabIndex + 1}`}
       onClick={(e) => handleClick(e, tabData)}
     >

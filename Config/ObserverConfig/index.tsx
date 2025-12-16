@@ -16,7 +16,7 @@ export namespace ObserverConfig {
       color: '#F44336',
       icon: (
         <svg
-          class='w-8 h-8 text-[#F44336]'
+          class='w-8 h-8 text-error'
           aria-hidden='true'
           xmlns='http://www.w3.org/2000/svg'
           width='24'

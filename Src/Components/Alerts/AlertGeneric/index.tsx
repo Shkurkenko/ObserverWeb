@@ -21,7 +21,7 @@ export function AlertGeneric({
   }
 
   return (
-    <div className='alert-item' style={{ borderLeft: `4px solid ${color}` }}>
+    <div className='alert-item' style={{ borderLeft: `0.25rem solid ${color}` }}>
       <div className='notification-icon'>{icon}</div>
       <div className='notification-content'>
         <h4 style={{ color }}>{header}</h4>

@@ -66,7 +66,7 @@ export function TableHelper() {
         <li className='table-helper-item'>
           <button
             type='button'
-            class='table-helper-action-button px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-[#252b36] hover:bg-[#252b36] focus:ring-4 focus:outline-none rounded-lg text-center dark:bg-[#252b36] dark:hover:bg-[#252b36]'
+            class='table-helper-action-button px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-secondary hover:bg-[#252b36] focus:ring-4 focus:outline-none rounded-lg text-center dark:bg-[#252b36] dark:hover:bg-[#252b36]'
             disabled={rows.length === 0}
             onClick={() => {
               try {

@@ -14,7 +14,7 @@ const config: Config = {
       const newUtilities = {
         '.scrollbar-thin': {
           scrollbarWidth: 'thin',
-          scrollbarColor: '#363c45 #11161c',
+          scrollbarColor: 'var(--color-surface-container-high) var(--color-surface-container)',
         },
         '.scrollbar-webkit': {
           '&::-webkit-scrollbar': {
@@ -24,7 +24,7 @@ const config: Config = {
             background: 'white',
           },
           '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'rgb(31 41 55)',
+            backgroundColor: 'var(--color-surface-container)',
             borderRadius: '20px',
             border: '1px solid white',
           },
