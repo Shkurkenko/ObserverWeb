@@ -1,6 +1,7 @@
 import { useState } from 'preact/hooks'
 import { generateCsv, mkConfig, download } from 'export-to-csv'
 import { useTable } from '../Hooks/UseTable'
+import { Button } from '../../Button'
 
 import './style.sass'
 
@@ -11,6 +12,15 @@ export function TableHelper() {
 
   const clearCycles = () => {
     setCurrentCycle(0)
+  }
+
+  const handleSaveFileButtonClick = () => {
+    try {
+      const csv = generateCsv(csvConfig)(getValidData())
+      download(csvConfig)(csv)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const emptyTable = () => {
@@ -50,7 +60,7 @@ export function TableHelper() {
       <ul className='table-helper-list'>
         <li className='table-helper-item'>
           <div className='scan-info'>
-            <h5 className='scan-count-label'>
+            <h5 className='scan-count-label text-on-background'>
               Всего результатов:
               <span className='scan-count ml-1'>{rows.length}</span>
             </h5>
@@ -58,64 +68,54 @@ export function TableHelper() {
         </li>
         <li className='table-helper-item'>
           <div className='scan-info'>
-            <h5 className='scan-count-label'>
+            <h5 className='scan-count-label text-on-background'>
               Циклов: <span className='scan-count ml-1'>{currentCycle}</span>
             </h5>
           </div>
         </li>
         <li className='table-helper-item'>
-          <button
-            type='button'
-            class='table-helper-action-button px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-secondary hover:bg-[#252b36] focus:ring-4 focus:outline-none rounded-lg text-center dark:bg-[#252b36] dark:hover:bg-[#252b36]'
-            disabled={rows.length === 0}
-            onClick={() => {
-              try {
-                const csv = generateCsv(csvConfig)(getValidData())
-                download(csvConfig)(csv)
-              } catch (error) {
-                console.error(error)
-              }
-            }}
-          >
-            <svg
-              class='w-3.5 h-3.5 text-gray-800 dark:text-white'
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 16 18'
-            >
-              <path
-                stroke='currentColor'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                stroke-width='2'
-                d='M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3'
-              />
-            </svg>
-            {''}
-          </button>
-          <button
-            type='button'
-            class='ml-3 mt-2 px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-[#252b36] hover:bg-[#252b36] focus:ring-4 focus:outline-none rounded-lg text-center dark:bg-[#252b36] dark:hover:bg-[#252b36]'
-            onClick={() => emptyTable()}
-          >
-            <svg
-              class='w-3.5 h-3.5 text-gray-800 dark:text-white'
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-            >
-              <path
-                stroke='currentColor'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-                stroke-width='2'
-                d='M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z'
-              />
-            </svg>
-            {''}
-          </button>
+          <Button
+            isDisabled={rows.length === 0}
+            onClicked={handleSaveFileButtonClick}
+            iconElement={
+              <svg
+                class='w-3.5 h-3.5 text-on-primary'
+                aria-hidden='true'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 16 18'
+              >
+                <path
+                  stroke='currentColor'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3'
+                />
+              </svg>
+            }
+          />
+          <Button
+            onClicked={emptyTable}
+            iconElement={
+              <svg
+                class='w-3.5 h-3.5 text-on-primary'
+                aria-hidden='true'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  stroke='currentColor'
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z'
+                />
+              </svg>
+            }
+            additionalClasses='ml-3'
+          />
         </li>
       </ul>
     </div>
