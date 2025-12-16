@@ -9,31 +9,7 @@ const config: Config = {
     './Autogen/**/*.{ts, tsx, css}',
     './Config/**/*.{ts, tsx, css}',
   ],
-  plugins: [
-    function ({ addUtilities }) {
-      const newUtilities = {
-        '.scrollbar-thin': {
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'var(--color-surface-container-high) var(--color-surface-container)',
-        },
-        '.scrollbar-webkit': {
-          '&::-webkit-scrollbar': {
-            width: '8px',
-          },
-          '&::-webkit-scrollbar-track': {
-            background: 'white',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'var(--color-surface-container)',
-            borderRadius: '20px',
-            border: '1px solid white',
-          },
-        },
-      }
-
-      addUtilities(newUtilities, ['responsive', 'hover'])
-    },
-  ],
+  plugins: [],
   theme: {
     extend: {},
   },

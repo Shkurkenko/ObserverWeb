@@ -17,7 +17,7 @@ export function TableSearch() {
             </div>
             <div className='table-search-input-container w-full'>
               <input
-                class='table-search-input w-full bg-surface-container placeholder:text-on-surface text-slate-400 text-lg pl-16 pr-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow'
+                class='table-search-input w-full bg-surface-container placeholder:text-on-surface-container-high text-lg pl-16 pr-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow'
                 placeholder='Поиск по таблице'
               />
             </div>

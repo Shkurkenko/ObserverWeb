@@ -72,7 +72,7 @@ export namespace TableSpace {
   }
 
   export enum IRoles {
-    Enum,
+    Enum = 'Enum',
   }
 
   export interface IRow {

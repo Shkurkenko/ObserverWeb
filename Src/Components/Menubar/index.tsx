@@ -12,6 +12,8 @@ export interface IMenubarModel {
   items: IMenubarItem[]
 }
 
+import './style.sass'
+
 export function Menubar({ model, itemOnClick }: IMenubarProps) {
   const { show } = useSidebar()
 

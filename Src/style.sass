@@ -12,12 +12,34 @@
   -moz-osx-font-smoothing: grayscale
   -webkit-text-size-adjust: 100%
 
+/* Standard properties for Firefox */
+/* The first color is for the thumb, the second for the track */
+::-webkit-scrollbar
+  width: 10px /* width for vertical scrollbar */
+  height: 10px /* height for horizontal scrollbar */
+
+/* Styles the track (the background of the scrollbar) */
+::-webkit-scrollbar-track
+  background: #f1f1f1
+  border-radius: 10px
+
+/* Styles the thumb (the draggable part)
+::-webkit-scrollbar-thumb
+  background: var(--color-background)
+  border-radius: 10px /* roundness of the scroll thumb */
+
+/* Styles the thumb on hover */
+::-webkit-scrollbar-thumb:hover
+  background: #555
+
 body
   font-family: 'Inter Variable'
   font-size: 1rem
   margin: 0
   background-color: var(--color-background)
   color: var(--color-on-background)
+  scrollbar-color: var(--color-on-background) var(--color-background)
+  scrollbar-width: thin; /* auto | thin | none */
 
 #app
   display: flex

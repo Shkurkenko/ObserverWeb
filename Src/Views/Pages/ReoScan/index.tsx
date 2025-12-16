@@ -3,22 +3,20 @@ import { useTasks } from '../../../Components/TaskSidebar/Hooks/UseTasks'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
-import { ITab } from '../../../Shared/Interfaces/Main.interface'
+import { IReoColumnsModelsConfig, ITab } from '../../../Shared/Interfaces/Main.interface'
 import { useCallback, useEffect } from 'preact/hooks'
 import { useScanView } from '../../../Hooks/UseScanView'
 import { useFastAlerts } from '../../../Components/FastAlerts/Hooks/UseFastAlerts'
 import { useAlerts } from '../../../Components/Alerts/Hooks/UseAlerts'
 import { ReoContentView } from '../../Components/ReoContentView'
-
 import { MockGenHelpers } from '../../../Utils/MockGen'
 import { runWithInterval } from '../../../Utils/Helpers'
-
 import { journalAlertsData } from '../../../../Data/JournalAlerts'
-
 import { v4 as uuidv4 } from 'uuid'
+import { useTheme } from '../../../Context/ThemeContext'
 
 import './style.sass'
-import { useTheme } from '../../../Context/ThemeContext'
+import { ObserverConfig } from '../../../../Config/ObserverConfig'
 
 export interface ReoView {
   viewId: string
@@ -46,23 +44,12 @@ export const ReoScan = () => {
             scanStatus: task.status,
             currentScanCycle: task.currentScanCycle,
           },
+          // NOTE: instead this shit we need to fetch rows from esp32 protocol
           rows: MockGenHelpers.generateMockReoTableData(30, [
             TableSpace.IColumnTypes.Enum,
-            TableSpace.IColumnTypes.Operator,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Signal,
-            TableSpace.IColumnTypes.Checkbox,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Country,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
-            TableSpace.IColumnTypes.Text,
+            ...ObserverConfig.ReoColumnModelsConfig[type].map((column) => {
+              return column.type
+            }),
           ]),
         },
       }))

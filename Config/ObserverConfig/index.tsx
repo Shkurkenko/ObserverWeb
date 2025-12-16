@@ -79,10 +79,10 @@ export namespace ObserverConfig {
       ),
     },
     warning: {
-      color: '#FDD835',
+      color: '#e9c731',
       icon: (
         <svg
-          class='w-8 h-8 text-[#FDD835]'
+          class='w-8 h-8 text-[#e9c731]'
           aria-hidden='true'
           xmlns='http://www.w3.org/2000/svg'
           width='24'
@@ -145,7 +145,7 @@ export namespace ObserverConfig {
         active: false,
         icon: (
           <svg
-            class='w-9 h-9 text-gray-800 dark:text-white'
+            class='w-9 h-9 text-on-background'
             aria-hidden='true'
             width='24'
             height='24'
@@ -169,7 +169,7 @@ export namespace ObserverConfig {
         active: false,
         icon: (
           <svg
-            class='w-6 h-6 text-gray-800 dark:text-white'
+            class='w-6 h-6 text-on-background'
             aria-hidden='true'
             width='24'
             height='24'
@@ -192,15 +192,6 @@ export namespace ObserverConfig {
 
   export const ReoColumnModelsConfig: IReoColumnsModelsConfig = {
     [ReoSpace.IScanTypes.Gsm]: [
-      {
-        role: TableSpace.IRoles.Enum.toString(),
-        type: TableSpace.IColumnTypes.Enum,
-        width: 130,
-        minWidth: 50,
-        maxWidth: 200,
-        label: '#',
-        align: TableSpace.IColumnAlignment.Center,
-      },
       {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
@@ -258,15 +249,6 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Lte]: [
       {
-        role: TableSpace.IRoles.Enum.toString(),
-        type: TableSpace.IColumnTypes.Enum,
-        width: 130,
-        minWidth: 50,
-        maxWidth: 200,
-        label: '#',
-        align: TableSpace.IColumnAlignment.Center,
-      },
-      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
         width: 130,
@@ -304,15 +286,6 @@ export namespace ObserverConfig {
       },
     ],
     [ReoSpace.IScanTypes.Umts]: [
-      {
-        role: TableSpace.IRoles.Enum.toString(),
-        type: TableSpace.IColumnTypes.Enum,
-        width: 130,
-        minWidth: 50,
-        maxWidth: 200,
-        label: '#',
-        align: TableSpace.IColumnAlignment.Center,
-      },
       {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
@@ -370,15 +343,6 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Bluetooth]: [
       {
-        role: TableSpace.IRoles.Enum.toString(),
-        type: TableSpace.IColumnTypes.Enum,
-        width: 130,
-        minWidth: 50,
-        maxWidth: 200,
-        label: '#',
-        align: TableSpace.IColumnAlignment.Center,
-      },
-      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
         width: 130,
@@ -408,15 +372,6 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Wifi]: [
       {
-        role: TableSpace.IRoles.Enum.toString(),
-        type: TableSpace.IColumnTypes.Enum,
-        width: 130,
-        minWidth: 50,
-        maxWidth: 200,
-        label: '#',
-        align: TableSpace.IColumnAlignment.Center,
-      },
-      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
         width: 130,
@@ -445,15 +400,6 @@ export namespace ObserverConfig {
       },
     ],
     [ReoSpace.IScanTypes.FiveG]: [
-      {
-        role: TableSpace.IRoles.Enum.toString(),
-        type: TableSpace.IColumnTypes.Enum,
-        width: 130,
-        minWidth: 50,
-        maxWidth: 200,
-        label: '#',
-        align: TableSpace.IColumnAlignment.Center,
-      },
       {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,

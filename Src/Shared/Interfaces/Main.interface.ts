@@ -2,9 +2,7 @@ import preact from 'preact'
 import { TableSpace } from './Table.interface'
 import { ReoSpace } from './Reo.interface'
 
-export type IReoColumnsModelsConfig = {
-  [key in ReoSpace.IScanTypes]: TableSpace.IColumn[]
-}
+export type IReoColumnsModelsConfig = Record<ReoSpace.IScanTypes, TableSpace.IColumn[]>
 
 export interface IIconProps {
   width?: number

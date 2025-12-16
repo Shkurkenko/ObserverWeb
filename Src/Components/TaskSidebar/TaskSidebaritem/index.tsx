@@ -47,7 +47,7 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
             <div className='scan-time-info flex'>
               <div className='scan-time-icon flex mr-1.5'>
                 <svg
-                  class='w-4 h-4 text-gray-800 dark:text-white'
+                  class='w-4 h-4 text-on-background'
                   aria-hidden='true'
                   width='24'
                   height='24'
@@ -79,7 +79,7 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
 
         <div className='task-item-expand'>
           <svg
-            class='w-4 h-4 text-gray-800 dark:text-white'
+            class='w-4 h-4 text-on-background'
             aria-hidden='true'
             width='24'
             height='24'

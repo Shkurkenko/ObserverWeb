@@ -9,7 +9,7 @@ export function AddTask() {
     <div className='new-task-container flex'>
       <div className='new-task-icon'>
         <svg
-          class='w-6 h-6 text-[#9f9f9f] dark:text-[#9f9f9f]'
+          class='w-6 h-6 text-on-surface-container'
           aria-hidden='true'
           xmlns='http://www.w3.org/2000/svg'
           width='24'

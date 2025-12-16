@@ -43,7 +43,7 @@ interface IThemeContext {
   variant: Variant
   variants?: Variant[]
   themes?: Theme[]
-  setThemeVariant?: (theme: Theme, variant: Variant) => void
+  setThemeVariant: (theme: Theme, variant: Variant) => void
 }
 
 const ThemeContext = createContext<IThemeContext | null>(null)

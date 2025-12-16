@@ -81,6 +81,7 @@ export const TableProvider = ({
 
   useEffect(() => {
     if (data !== null && data !== undefined) {
+      setColumns(columnsModel)
       setTableInfo(data.metaInfo)
       setRows(data.rows)
     }
