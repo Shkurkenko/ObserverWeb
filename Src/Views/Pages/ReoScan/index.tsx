@@ -45,7 +45,7 @@ export const ReoScan = () => {
             currentScanCycle: task.currentScanCycle,
           },
           // NOTE: instead this shit we need to fetch rows from esp32 protocol
-          rows: MockGenHelpers.generateMockReoTableData(30, [
+          rows: MockGenHelpers.generateMockReoTableData(100, [
             TableSpace.IColumnTypes.Enum,
             ...ObserverConfig.ReoColumnModelsConfig[type].map((column) => {
               return column.type

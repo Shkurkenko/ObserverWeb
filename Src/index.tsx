@@ -1,4 +1,5 @@
 import 'preact/debug'
+
 import { Route } from 'wouter'
 import { render } from 'preact'
 import { LocationProvider, Router } from 'preact-iso'

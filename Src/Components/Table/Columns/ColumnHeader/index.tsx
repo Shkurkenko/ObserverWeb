@@ -37,7 +37,7 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
 
   return (
     <td
-      className='table-header-column hover:bg-surface-container-highest'
+      className='table-header-column hover:bg-surface-container-highest select-none'
       onClick={() => {
         handleColumnHeaderClick()
       }}
