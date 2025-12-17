@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'preact/hooks'
+import { MutableRef, useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useTable } from '../../Hooks/UseTable'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
 
 import './style.sass'
@@ -15,11 +16,12 @@ const arrowAngleClassStates = {
 }
 
 export function ColumnHeader({ header }: IColumnHeaderProps) {
+  const headerRef = useRef<HTMLDivElement | null>(null)
   const [currentState, setCurrentState] = useState(0)
+  const { setHeaderRefs } = useTable()
 
   const handleColumnHeaderClick = useCallback(() => {
     setCurrentState((prevCount) => (prevCount + 1) % 3)
-    console.log(currentState)
   }, [])
 
   const getRotationAngle = useCallback(() => {
@@ -35,14 +37,26 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
     }
   }, [currentState])
 
+  const getColumnWidth = () => {
+    return header.width ? { width: `${header.width}px` } : { flex: 1 }
+  }
+
+  useEffect(() => {
+    setHeaderRefs((prev) => [...prev, headerRef])
+  }, [])
+
   return (
-    <td
-      className='table-header-column hover:bg-surface-container-highest select-none'
+    <div
+      className={`table-header-column h-full hover:bg-surface-container-highest select-none flex`}
+      ref={headerRef}
+      style={{
+        ...getColumnWidth(),
+      }}
       onClick={() => {
         handleColumnHeaderClick()
       }}
     >
-      <div className='header-cell-content w-full flex items-center'>
+      <div className='header-cell-content w-full flex items-center justify-around'>
         <b>{header.label}</b>
         <div className={`header-cell-icon ${getRotationAngle()}`}>
           <svg
@@ -63,6 +77,6 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
           </svg>
         </div>
       </div>
-    </td>
+    </div>
   )
 }

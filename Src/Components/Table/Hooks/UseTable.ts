@@ -9,6 +9,8 @@ export function useTable(): ITableContext {
   }
 
   const {
+    setHeaderRefs,
+    setRows,
     tableInfo,
     rows,
     columns,
@@ -30,6 +32,8 @@ export function useTable(): ITableContext {
   } = context
 
   return {
+    setHeaderRefs,
+    setRows,
     tableInfo,
     rows,
     columns,

@@ -1,5 +1,6 @@
 import { ComponentChildren } from 'preact'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
+import { useTable } from '../../Hooks/UseTable'
 
 import './style.sass'
 
@@ -20,6 +21,8 @@ export function ColumnBase({
   handleHoverEnter,
   handleHoverLeave,
 }: IColumnBaseProps) {
+  const { columns } = useTable()
+
   const handleMouseEnter = () => {
     if (handleHoverEnter) handleHoverEnter()
   }
@@ -28,15 +31,22 @@ export function ColumnBase({
     if (handleHoverLeave) handleHoverLeave()
   }
 
+  const getColumnWidth = () => {
+    return columns[position.colIndex].width
+      ? { width: columns[position.colIndex].width + 'px' }
+      : { flex: 1 }
+  }
+
   return (
-    <td
+    <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`table-basecol ${hovered && 'table-basecol-hovered'} ${
-        selected && 'table-basecol-selected'
-      }`}
+      style={{
+        ...getColumnWidth(),
+      }}
+      className={`table-basecol`}
     >
       {children}
-    </td>
+    </div>
   )
 }

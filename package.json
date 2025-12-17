@@ -20,6 +20,7 @@
     "preact": "^10.26.9",
     "preact-iso": "^2.11.0",
     "react-chartjs-2": "^4.0.1",
+    "react-tiny-virtual-list": "^2.2.0",
     "tailwindcss": "^4.1.17",
     "uuid": "^13.0.0",
     "wouter": "^2.12.1"

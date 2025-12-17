@@ -85,11 +85,11 @@ export namespace TableSpace {
   export interface IColumn {
     role: string
     type: IColumnTypes
-    width: number
-    minWidth: number
-    maxWidth: number
-    label: string
+    width?: number
     align?: IColumnAlignment
+    minWidth?: number
+    maxWidth?: number
+    label: string
   }
 
   export interface ITableData<T> {

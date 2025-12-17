@@ -28,6 +28,9 @@ export default defineConfig({
     },
   },
   build: {
+    rollupOptions: {
+      external: ['fs'],
+    },
     assetsDir: 'assets',
     cssCodeSplit: false,
   },

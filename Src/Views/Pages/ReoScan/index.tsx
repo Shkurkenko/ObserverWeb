@@ -44,9 +44,7 @@ export const ReoScan = () => {
             scanStatus: task.status,
             currentScanCycle: task.currentScanCycle,
           },
-          // NOTE: instead this shit we need to fetch rows from esp32 protocol
           rows: MockGenHelpers.generateMockReoTableData(100, [
-            TableSpace.IColumnTypes.Enum,
             ...ObserverConfig.ReoColumnModelsConfig[type].map((column) => {
               return column.type
             }),
@@ -81,7 +79,7 @@ export const ReoScan = () => {
   }, [journalAlertsData])
 
   useEffect(() => {
-    setThemeVariant('ForensicBlue', 'light')
+    setThemeVariant('ForensicGreen', 'dark')
 
     const loadTasks = async () => {
       const tasks = MockGenHelpers.generateMockScanTasks(10)

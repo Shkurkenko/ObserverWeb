@@ -193,9 +193,15 @@ export namespace ObserverConfig {
   export const ReoColumnModelsConfig: IReoColumnsModelsConfig = {
     [ReoSpace.IScanTypes.Gsm]: [
       {
+        role: ReoSpace.IRoles.Enum.toString(),
+        type: TableSpace.IColumnTypes.Enum,
+        width: 70,
+        label: '#',
+      },
+      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 230,
         minWidth: 50,
         maxWidth: 200,
         label: 'CID',
@@ -204,7 +210,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.LacTac.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 330,
         minWidth: 50,
         maxWidth: 200,
         label: 'LAC/TAC',
@@ -213,16 +219,15 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mcc.toString(),
         type: TableSpace.IColumnTypes.Country,
-        width: 130,
         minWidth: 50,
-        maxWidth: 200,
+        // maxWidth: 200,
         label: 'Страна',
         align: TableSpace.IColumnAlignment.Center,
       },
       {
         role: ReoSpace.IRoles.Mnc.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Регион',
@@ -231,7 +236,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Operator.toString(),
         type: TableSpace.IColumnTypes.Operator,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Оператор',
@@ -240,7 +245,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.RxLevel.toString(),
         type: TableSpace.IColumnTypes.Signal,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Уровень Сигнала',
@@ -249,9 +254,15 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Lte]: [
       {
+        role: ReoSpace.IRoles.Enum.toString(),
+        type: TableSpace.IColumnTypes.Enum,
+        width: 70,
+        label: '#',
+      },
+      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'CID',
@@ -260,7 +271,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mcc.toString(),
         type: TableSpace.IColumnTypes.Country,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Страна',
@@ -269,7 +280,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Operator.toString(),
         type: TableSpace.IColumnTypes.Operator,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Оператор',
@@ -278,7 +289,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.RxLevel.toString(),
         type: TableSpace.IColumnTypes.Signal,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Уровень Сигнала',
@@ -287,9 +298,15 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Umts]: [
       {
+        role: ReoSpace.IRoles.Enum.toString(),
+        type: TableSpace.IColumnTypes.Enum,
+        width: 70,
+        label: '#',
+      },
+      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'CID',
@@ -298,7 +315,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.LacTac.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'LAC/TAC',
@@ -307,7 +324,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mcc.toString(),
         type: TableSpace.IColumnTypes.Country,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Страна',
@@ -316,7 +333,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mnc.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Регион',
@@ -325,7 +342,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Operator.toString(),
         type: TableSpace.IColumnTypes.Operator,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Оператор',
@@ -334,7 +351,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.RxLevel.toString(),
         type: TableSpace.IColumnTypes.Signal,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Уровень Сигнала',
@@ -343,9 +360,15 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Bluetooth]: [
       {
+        role: ReoSpace.IRoles.Enum.toString(),
+        type: TableSpace.IColumnTypes.Enum,
+        width: 70,
+        label: '#',
+      },
+      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Some',
@@ -354,7 +377,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.LacTac.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Bluetooth',
@@ -363,7 +386,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mcc.toString(),
         type: TableSpace.IColumnTypes.Country,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Columns',
@@ -372,9 +395,15 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.Wifi]: [
       {
+        role: ReoSpace.IRoles.Enum.toString(),
+        type: TableSpace.IColumnTypes.Enum,
+        width: 70,
+        label: '#',
+      },
+      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Some',
@@ -383,7 +412,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.LacTac.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'WiFi',
@@ -392,7 +421,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mcc.toString(),
         type: TableSpace.IColumnTypes.Country,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'Columns',
@@ -401,9 +430,15 @@ export namespace ObserverConfig {
     ],
     [ReoSpace.IScanTypes.FiveG]: [
       {
+        role: ReoSpace.IRoles.Enum.toString(),
+        type: TableSpace.IColumnTypes.Enum,
+        width: 70,
+        label: '#',
+      },
+      {
         role: ReoSpace.IRoles.Cid.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: '5G',
@@ -412,7 +447,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.LacTac.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'for',
@@ -421,7 +456,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mcc.toString(),
         type: TableSpace.IColumnTypes.Country,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: 'real',
@@ -430,7 +465,7 @@ export namespace ObserverConfig {
       {
         role: ReoSpace.IRoles.Mnc.toString(),
         type: TableSpace.IColumnTypes.Text,
-        width: 130,
+        // width: 130,
         minWidth: 50,
         maxWidth: 200,
         label: '?',

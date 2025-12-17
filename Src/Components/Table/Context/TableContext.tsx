@@ -1,5 +1,5 @@
 import { createContext } from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { MockGenHelpers } from '../../../Utils/MockGen'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
@@ -17,11 +17,15 @@ export interface ITableContext {
 
   currentSelectedCell: { rowIndex: number; colIndex: number }
 
+  setHeaderRefs: (refs: MutableRef<HTMLDivElement | null>) => void
+
+  setRows: (rows: TableSpace.IRow[]) => void
+
   setTableInfo: (tableInfo: unknown) => void
 
   isRowValid: (row: TableSpace.IRow) => boolean
 
-  setColumns: (headers: TableSpace.IColumn[]) => void
+  setColumns: (columns: TableSpace.IColumn[]) => void
 
   setDefaultHeaders: () => void
 
@@ -78,6 +82,8 @@ export const TableProvider = ({
   })
 
   const [columns, setColumns] = useState<TableSpace.IColumn[]>([])
+
+  const [headerRefs, setHeaderRefs] = useState<any[]>()
 
   useEffect(() => {
     if (data !== null && data !== undefined) {
@@ -145,6 +151,8 @@ export const TableProvider = ({
   return (
     <TableContext.Provider
       value={{
+        setHeaderRefs,
+        setRows,
         tableInfo,
         rows,
         columns,

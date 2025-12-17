@@ -1,5 +1,4 @@
-import { MouseEventHandler } from 'preact'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useState } from 'preact/hooks'
 import { Table } from '../../../Components/Table'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TableProvider } from '../../../Components/Table/Context/TableContext'
@@ -44,11 +43,6 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
   const getCurrentTableModel = useCallback((): TableSpace.ITableData<ReoSpace.IReoTable> => {
     return model.tabsModel[activeIndex].data
   }, [model])
-
-  useEffect(() => {
-    console.log(model.tabsModel[activeIndex].data.metaInfo.scanType)
-    console.log(getCurrentColumnsModel())
-  }, [])
 
   return (
     <div className={`reo-content w-full ${model.show ? '' : 'reo-content-view-hide'}`}>

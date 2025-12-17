@@ -60,16 +60,17 @@ export function ColumnMatcher({
       )
   }
 }
+
 export interface ITableRowProps {
   rowData: TableSpace.IRow
 }
 
 export function TableRow({ rowData }: ITableRowProps) {
   return (
-    <tr key={rowData.index} className='observer-table-body-row'>
+    <>
       {rowData.columns.map((column: TableSpace.ICell<unknown>, counter: number) => (
         <ColumnMatcher columnData={column} key={counter} />
       ))}
-    </tr>
+    </>
   )
 }
