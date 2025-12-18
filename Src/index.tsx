@@ -14,13 +14,11 @@ import { ThemeTester } from './Views/Pages/ThemeTester'
 import { SideNavigation } from './Components/Sidebar/SideNavigation/index.js'
 import { FastAlerts } from './Components/FastAlerts/index.js'
 import { NotFound } from './Views/_404.js'
-import { ThemeProvider, useTheme } from './Context/ThemeContext.js'
+import { ThemeProvider } from './Context/ThemeContext.js'
 
 import './style.sass'
 
 export function App() {
-  // const [setThemeVariant, theme, variant] = useTheme()
-
   return (
     <ThemeProvider>
       <TasksProvider>
@@ -30,7 +28,7 @@ export function App() {
               <ScanViewProvider>
                 <LocationProvider>
                   {/* <Header /> */}
-                  <main className='app-container w-full flex'>
+                  <main className='app-container h-screen w-screen flex'>
                     <SideNavigation />
                     <Route path='/'>
                       <ReoScan />

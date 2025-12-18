@@ -9,7 +9,7 @@ export interface TabView {
 
 export const TabView = ({ children, currentIndex }: TabView) => {
   return (
-    <div className='table-tabview w-full h-full tab-view'>
+    <div className='table-tabview w-full tab-view'>
       <div
         id='tabs-with-underline-1'
         role='tabpanel'

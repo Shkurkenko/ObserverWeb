@@ -7,5 +7,7 @@ interface ITextColumnProps {
 }
 
 export const ColumnText = ({ data }: ITextColumnProps) => {
-  return <div className='w-full h-full column-text'>{data.text}</div>
+  return (
+    <div className='w-full h-full flex items-center justify-center column-text'>{data.text}</div>
+  )
 }

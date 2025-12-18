@@ -5,5 +5,5 @@ interface IColumnEnumProps {
 }
 
 export const ColumnEnum = ({ index }: IColumnEnumProps) => {
-  return <div className='w-full h-full column-enum'>{index + 1}</div>
+  return <div className='w-full h-full flex items-center column-enum'>{index + 1}</div>
 }

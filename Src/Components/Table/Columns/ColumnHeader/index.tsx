@@ -42,7 +42,7 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
   }
 
   useEffect(() => {
-    setHeaderRefs((prev) => [...prev, headerRef])
+    // setHeaderRefs((prev) => [...prev, headerRef])
   }, [])
 
   return (

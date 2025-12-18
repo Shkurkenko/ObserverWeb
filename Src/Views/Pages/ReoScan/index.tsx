@@ -1,9 +1,7 @@
-import { SideNavigation } from '../../../Components/Sidebar/SideNavigation'
 import { useTasks } from '../../../Components/TaskSidebar/Hooks/UseTasks'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
-import { IReoColumnsModelsConfig, ITab } from '../../../Shared/Interfaces/Main.interface'
+import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { useCallback, useEffect } from 'preact/hooks'
 import { useScanView } from '../../../Hooks/UseScanView'
 import { useFastAlerts } from '../../../Components/FastAlerts/Hooks/UseFastAlerts'
@@ -14,9 +12,9 @@ import { runWithInterval } from '../../../Utils/Helpers'
 import { journalAlertsData } from '../../../../Data/JournalAlerts'
 import { v4 as uuidv4 } from 'uuid'
 import { useTheme } from '../../../Context/ThemeContext'
+import { ObserverConfig } from '../../../../Config/ObserverConfig'
 
 import './style.sass'
-import { ObserverConfig } from '../../../../Config/ObserverConfig'
 
 export interface ReoView {
   viewId: string

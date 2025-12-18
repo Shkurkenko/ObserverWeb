@@ -38,13 +38,7 @@ export function TableContainer({ columns, records, customEmpty }: ITableContaine
     >
       <div className='reo-data-table w-full'>
         <TableHeader headerColumns={columns} />
-        {records.length !== 0 ? (
-          <TableBody rows={records} />
-        ) : customEmpty ? (
-          customEmpty()
-        ) : (
-          renderEmpty()
-        )}
+        {records.length !== 0 && <TableBody rows={records} />}
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'preact/hooks'
+import { useCallback, useState, useEffect } from 'preact/hooks'
 import { Table } from '../../../Components/Table'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TableProvider } from '../../../Components/Table/Context/TableContext'
@@ -25,6 +25,7 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
   const [reoColumnsModelConfig, setReoColumnsModelConfig] = useState<IReoColumnsModelsConfig>(
     ObserverConfig.ReoColumnModelsConfig,
   )
+  const [isVisible, setIsVisible] = useState<boolean>(false)
 
   const handleRenderEmpty = useCallback((): JSX.Element => {
     return <ObserverTableEmpty />
@@ -44,8 +45,15 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
     return model.tabsModel[activeIndex].data
   }, [model])
 
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 50)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
-    <div className={`reo-content w-full ${model.show ? '' : 'reo-content-view-hide'}`}>
+    <div
+      className={`reo-content w-full ${model.show ? 'reo-content-view-visible' : 'reo-content-view-hide'}`}
+    >
       <ReoTop data={{ scanName: header }} />
       <TabButtonGroup
         currentIndex={activeIndex}

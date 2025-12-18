@@ -2,8 +2,8 @@ import './style.sass'
 
 export function TableSearch() {
   return (
-    <div className='reo-scan-search mt-5'>
-      <div class='w-full min-w-[200px]'>
+    <div className='reo-scan-search'>
+      <div class='w-full min-w-50'>
         <div class='table-search-component flex items-center relative'>
           <div className='table-search-input-container w-full flex items-center'>
             <div className='w-6 h-6 table-search-component-icon ml-5'>

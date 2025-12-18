@@ -1,15 +1,49 @@
-.reo-content-view-hide
-  display: none
-  visibility: hidden
+.reo-content
+  height: 100vh
+  display: flex
+  flex-direction: column
+  overflow: hidden
+  opacity: 0
+  transform: translateX(30px)
+  transition: opacity 400ms ease-out, transform 400ms ease-out
+
+  &.reo-content-view-visible
+    opacity: 1
+    transform: translateX(0)
+
+  &.reo-content-view-hide
+    display: none
 
 .reo-content-top
-  display: flex
   align-items: center
+  flex-shrink: 0
   padding-left: 2.5rem
-  height: 9vh
-
-.reo-content
-  height: 91vh
+  padding-top: 2rem
+  line-height: 2.8rem
 
 .table-tabview
-  height: 91vh
+  flex: 1 1 auto
+  display: flex
+  flex-direction: column
+
+.table-container
+  flex: 1 1 auto
+  display: flex
+  flex-direction: column
+  overflow: hidden
+
+.table-viewport
+  flex: 1 1 auto
+  -webkit-overflow-scrolling: touch
+
+.reo-data-table
+  display: flex
+  flex-direction: column
+  height: 100%
+  min-height: 0
+
+.reo-content-view-hide
+  display: none
+
+.observer-tabs
+  padding-bottom: 1.2rem

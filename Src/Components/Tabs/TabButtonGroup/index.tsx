@@ -11,7 +11,7 @@ export interface ITabButtonGroup<T> {
 
 export function TabButtonGroup<T>({ currentIndex, model, handleClick }: ITabButtonGroup<T>) {
   return (
-    <div className='observer-tabs mb-1 ml-10 w-full'>
+    <div className='observer-tabs ml-10 w-full'>
       <nav className='flex gap-x-7' aria-label='Tabs' role='tablist' aria-orientation='horizontal'>
         {model.map((tab: ITab<T>) => (
           <TabButton
