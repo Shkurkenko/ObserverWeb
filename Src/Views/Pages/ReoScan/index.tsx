@@ -77,7 +77,7 @@ export const ReoScan = () => {
   }, [journalAlertsData])
 
   useEffect(() => {
-    setThemeVariant('ForensicBlue', 'light')
+    setThemeVariant('ForensicBlue', 'dark')
 
     const loadTasks = async () => {
       const tasks = MockGenHelpers.generateMockScanTasks(10)

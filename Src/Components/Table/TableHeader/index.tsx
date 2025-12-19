@@ -1,8 +1,11 @@
-import { useEffect } from 'preact/hooks'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ColumnHeader } from '../Columns/ColumnHeader'
+import { useContainerSize } from '../../../Hooks/UseContainerSize'
+import { SkeletonTableHeader } from '../Skeleton/SkeletonTableHeader'
+import { Skeletoned } from '../../Skeletoned'
 
 import './style.sass'
+import { TableHeaderRow } from '../TableHeaderRow'
 
 interface ITableHeaderProps {
   headerColumns: TableSpace.IColumn[]
@@ -15,11 +18,17 @@ export enum ColumnHeaderSorters {
 }
 
 export const TableHeader = ({ headerColumns }: ITableHeaderProps) => {
+  const { ref, containerHeight } = useContainerSize()
+
+  const isLoading = headerColumns.length === 0 || containerHeight === 0
+
   return (
-    <div className='sticky top-0 z-10 shadow-lg table-header w-full cursor-pointer table-header-row flex items-center'>
-      {headerColumns.map((headerColumnProps: TableSpace.IColumn) => {
-        return <ColumnHeader header={headerColumnProps} />
-      })}
-    </div>
+    <Skeletoned
+      isLoading={isLoading}
+      minDelay={100500}
+      skeleton={<SkeletonTableHeader columns={5} />}
+    >
+      <TableHeaderRow ref={ref} columns={headerColumns} />
+    </Skeletoned>
   )
 }
