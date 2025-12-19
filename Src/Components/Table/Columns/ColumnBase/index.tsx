@@ -32,8 +32,11 @@ export function ColumnBase({
   }
 
   const getColumnWidth = () => {
+    if (!columns[position.colIndex] || columns[position.colIndex] === null) return { flex: 1 }
     return columns[position.colIndex].width
-      ? { width: columns[position.colIndex].width + 'px' }
+      ? {
+          width: columns[position.colIndex].width?.toString() + 'px',
+        }
       : { flex: 1 }
   }
 

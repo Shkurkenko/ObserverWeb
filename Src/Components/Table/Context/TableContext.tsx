@@ -53,7 +53,7 @@ export interface ITableProviderProps {
 
   data: TableSpace.ITableData<ReoSpace.IReoTable>
 
-  renderEmpty: () => JSX.Element
+  renderEmpty?: () => JSX.Element
 }
 
 export const TableContext = createContext<ITableContext | null>(null)

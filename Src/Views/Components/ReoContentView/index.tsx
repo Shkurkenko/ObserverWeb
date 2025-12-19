@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from 'preact/hooks'
-import { Table } from '../../../Components/Table'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TableProvider } from '../../../Components/Table/Context/TableContext'
 import { ObserverTableEmpty } from '../../../Components/Table/ObserverTableEmptyState'
@@ -11,6 +10,10 @@ import { ReoTop } from '../ReoTop'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
+import { TableSearch } from '../../../Components/Table/TableSearch'
+import { TableBody } from '../../../Components/Table/TableBody'
+import { TableHeader } from '../../../Components/Table/TableHeader'
+import { TableHelper } from '../../../Components/Table/TableHelper'
 
 import './style.sass'
 
@@ -21,54 +24,52 @@ interface IReoContentViewProps {
 
 export function ReoContentView({ header, model }: IReoContentViewProps) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [activeTab, setActiveTab] = useState(model.tabsModel[activeIndex].id)
   const [reoColumnsModelConfig, setReoColumnsModelConfig] = useState<IReoColumnsModelsConfig>(
     ObserverConfig.ReoColumnModelsConfig,
   )
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
-  const handleRenderEmpty = useCallback((): JSX.Element => {
-    return <ObserverTableEmpty />
-  }, [])
+  const currentTab = model.tabsModel[activeIndex]
+
+  const currentColumns = ObserverConfig.ReoColumnModelsConfig[currentTab.data.metaInfo.scanType]
+  const currentRows = currentTab.data.rows
+  const currentData = currentTab.data
 
   const handleTabClick = useCallback((e: Event, tab: ITab<ReoSpace.IReoTable>) => {
     e.preventDefault()
-    setActiveTab(tab.id)
     setActiveIndex(tab.tabIndex)
   }, [])
 
-  const getCurrentColumnsModel = useCallback((): TableSpace.IColumn[] => {
-    return reoColumnsModelConfig[model.tabsModel[activeIndex].data.metaInfo.scanType]
-  }, [reoColumnsModelConfig, model])
-
-  const getCurrentTableModel = useCallback((): TableSpace.ITableData<ReoSpace.IReoTable> => {
-    return model.tabsModel[activeIndex].data
-  }, [model])
-
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 50)
-    return () => clearTimeout(timer)
-  }, [])
+    if (model.show) {
+      const timer = setTimeout(() => setIsVisible(true), 50)
+      return () => clearTimeout(timer)
+    } else {
+      setIsVisible(false)
+    }
+  }, [model.show])
 
   return (
     <div
       className={`reo-content w-full ${model.show ? 'reo-content-view-visible' : 'reo-content-view-hide'}`}
     >
       <ReoTop data={{ scanName: header }} />
-      <TabButtonGroup
-        currentIndex={activeIndex}
-        model={model.tabsModel}
-        handleClick={handleTabClick}
-      />
-      <TabView currentIndex={activeIndex}>
-        <TableProvider
-          columnsModel={getCurrentColumnsModel()}
-          data={getCurrentTableModel()}
-          renderEmpty={handleRenderEmpty}
-        >
-          <Table />
+
+      <div className='observer-tabs w-full'>
+        <TabButtonGroup
+          currentIndex={activeIndex}
+          model={model.tabsModel}
+          handleClick={handleTabClick}
+        />
+      </div>
+      <div className='table-area'>
+        <TableProvider columnsModel={currentColumns} data={currentData}>
+          <TableSearch />
+          <TableHelper />
+          <TableHeader headerColumns={currentColumns} />
+          <TableBody rows={currentRows} />
         </TableProvider>
-      </TabView>
+      </div>
     </div>
   )
 }
