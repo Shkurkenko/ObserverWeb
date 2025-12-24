@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { ReoSpace } from '../Shared/Interfaces/Reo.interface'
+import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
 
 export namespace ReoSpaceTestData {
   // export const handMadeScanTasks: ReoSpace.IScanTask[] = [

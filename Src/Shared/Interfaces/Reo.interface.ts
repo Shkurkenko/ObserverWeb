@@ -30,10 +30,10 @@ export namespace ReoSpace {
   }
 
   export enum IScanStatusTypes {
-    Finished,
-    Running,
-    Pending,
-    Failed,
+    Finished = 'finished',
+    Running = 'running',
+    Pending = 'pending',
+    Failed = 'failed',
   }
 
   export enum ISignalLevels {

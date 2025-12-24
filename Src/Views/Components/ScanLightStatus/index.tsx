@@ -1,4 +1,4 @@
-import { useEffect } from 'preact/hooks'
+import { useMemo } from 'preact/hooks'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 
 import './style.sass'
@@ -8,26 +8,20 @@ interface IScanLightStatusProps {
 }
 
 export function ScanLightStatus({ statusType }: IScanLightStatusProps) {
-  const defaultStatusColors = {
-    running: '#36b37e', // Some sort of green
-    pending: '#FFEE58', // Some sort of yellow
-    failed: '#FF5722', // Some sort of red
-  }
-
-  function getColor() {
-    switch (statusType) {
-      case ReoSpace.IScanStatusTypes.Running:
-        return defaultStatusColors.running
-      case ReoSpace.IScanStatusTypes.Pending:
-        return defaultStatusColors.pending
-      case ReoSpace.IScanStatusTypes.Failed:
-        return defaultStatusColors.failed
+  const color = useMemo(() => {
+    const defaultStatusColors: Record<ReoSpace.IScanStatusTypes, string> = {
+      [ReoSpace.IScanStatusTypes.Running]: '#36b37e', // Some sort of green
+      [ReoSpace.IScanStatusTypes.Pending]: '#FFEE58', // Some sort of yellow
+      [ReoSpace.IScanStatusTypes.Failed]: '#FF5722', // Some sort of red
+      [ReoSpace.IScanStatusTypes.Finished]: 'grey',
     }
-  }
+
+    return defaultStatusColors[statusType] || 'pink'
+  }, [statusType])
 
   return (
-    <div className='scan-light' style={{ background: getColor() }}>
-      <div className='scan-light-core' style={{ background: getColor() }}></div>
+    <div className='scan-light' style={{ background: color }}>
+      <div className='scan-light-core' style={{ background: color }}></div>
     </div>
   )
 }
