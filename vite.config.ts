@@ -5,11 +5,11 @@ import preact from '@preact/preset-vite'
 export default defineConfig({
   plugins: [
     preact({
-      babel: {
-        plugins: [
-          ['@babel/plugin-transform-react-jsx', { runtime: 'automatic', importSource: 'preact' }],
-        ],
-      },
+      // babel: {
+      //   plugins: [
+      //     ['@babel/plugin-transform-react-jsx', { runtime: 'automatic', importSource: 'preact' }],
+      //   ],
+      // },
     }),
   ],
   optimizeDeps: {
