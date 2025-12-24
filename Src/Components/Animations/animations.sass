@@ -1,0 +1,73 @@
+@mixin fadeIn($duration: 0.3s)
+    animation: fadeIn $duration ease
+
+    @keyframes fadeInAnimation
+        from
+            opacity: 0
+        to
+            opacity: 1
+
+@mixin fadeOut($duration: 0.3s)
+    animation: fadeOut $duration ease
+
+    @keyframes fadeOutAnimation
+        from
+            opacity: 1
+        to
+            opacity: 0
+
+@mixin slideInUp($duration: 0.5s)
+    animation: slideInUpAnimation $duration ease
+
+    @keyframes slideInUpAnimation
+        from
+            transform: translateY(1.2rem)
+            opacity: 0
+        to
+            transfrom: translateY(0)
+            opacity: 1
+
+@mixin slideInDown($duration: 0.5s)
+    animation: slideInDownAnimation $duration ease
+
+    @keyframes slideInDownAnimation
+        from
+            transform: translateY(-1.2rem)
+            opacity: 0
+        to
+            transform: translateY(0)
+            opacity: 1
+
+@mixin slideInRight($duration: 0.5s)
+    animation: slideIn $duration 1 ease-in-out
+
+    @keyframes slideIn
+        from
+            transform: translateX(100%)
+        to
+            transform: translateX(0)
+
+@mixin slideInLeft($duration: 0.5s)
+    animation: slideInLeft $duration 1 ease-in-out
+
+    @keyframes slideInLeft
+        from
+            transform: translateX(-100%)
+        to
+            transform: translateX(0)
+
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)
+
+$animations: (
+        fadeIn: fadeIn,
+        fadeOut: fadeOut,
+        slideInUp: slideInUp,
+        slideInDown: slideInDown,
+        slideInRight: slideInRight,
+        slideInLeft: slideInLeft,
+        spin: spin
+)

@@ -34,7 +34,6 @@ export function AddTask() {
       </div>
 
       <Modal isOpen={isOpen} onClose={() => close()} title='Новое сканирование'>
-        <h1>Новое сканирование</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. In totam veritatis perspiciatis
           expedita adipisci. Quia fugiat earum aliquam magni qui porro obcaecati dolores, similique

@@ -38,7 +38,14 @@ export function Modal({ isOpen, onClose, children, title, width, height }: Modal
   return (
     <Portal>
       <div className='modal-overlay' onClick={handleOverlayClick}>
-        <div className='modal'>{children}</div>
+        <div className='modal'>
+          {title && (
+            <div className='modal-title'>
+              <h1>{title}</h1>
+            </div>
+          )}
+          {children}
+        </div>
       </div>
     </Portal>
   )
