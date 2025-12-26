@@ -1,4 +1,11 @@
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
 export type DynamicCallback = (...args: any[]) => void
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
 
 export function inRange(num: number, firstNum: number, secondNum: number): boolean {
   const max = Math.max(firstNum, secondNum)

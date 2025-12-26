@@ -13,6 +13,7 @@
     "generate:process-python-theme": "python3 ./Config/Themes/ForensicThemes/Scripts/buildTheme.py"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "dequal": "^2.0.3",
     "export-to-csv": "^1.4.0",
     "flag-icons": "^7.5.0",
@@ -21,6 +22,7 @@
     "preact-iso": "^2.11.0",
     "react-chartjs-2": "^4.0.1",
     "react-tiny-virtual-list": "^2.2.0",
+    "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
     "uuid": "^13.0.0",
     "wouter": "^2.12.1"

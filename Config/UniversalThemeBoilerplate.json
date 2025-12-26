@@ -1,0 +1,137 @@
+{
+    "$schema": "./UniversalThemeBoilerplateScheme.json",
+    "name": "forensic-green",
+    "version": "1.0.0",
+    "description": "Forensic зеленая тема для криминалистики",
+    "colors": {
+        "light": {
+            "primary": "#8FD5AF",
+            "onPrimary": "#003823",
+            "primaryContainer": "#005235",
+            "onPrimaryContainer": "#ABF2CA",
+            "secondary": "#B4CCBC",
+            "onSecondary": "#203529",
+            "secondaryContainer": "#364B3F",
+            "onSecondaryContainer": "#D0E8D7",
+            "background": "#F5FBF4",
+            "onBackground": "#171D19",
+            "surface": "#F5FBF4",
+            "onSurface": "#171D19",
+            "error": "#BA1A1A",
+            "onError": "#FFFFFF",
+            "errorContainer": "#FFDAD6",
+            "onErrorContainer": "#410002",
+            "outline": "#727F77",
+            "outlineVariant": "#C1C9C1"
+        },
+        "dark": {
+            "primary": "#8FD5AF",
+            "onPrimary": "#003823",
+            "primaryContainer": "#005235",
+            "onPrimaryContainer": "#ABF2CA",
+            "secondary": "#B4CCBC",
+            "onSecondary": "#203529",
+            "secondaryContainer": "#364B3F",
+            "onSecondaryContainer": "#D0E8D7",
+            "background": "#0F1511",
+            "onBackground": "#DEE4DE",
+            "surface": "#0F1511",
+            "onSurface": "#DEE4DE",
+            "error": "#FFB4AB",
+            "onError": "#690005",
+            "errorContainer": "#93000A",
+            "onErrorContainer": "#FFDAD6",
+            "outline": "#8B938B",
+            "outlineVariant": "#414940"
+        }
+    },
+    "spacing": {
+        "unit": 4,
+        "scale": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8,
+            10,
+            12,
+            16,
+            20,
+            24,
+            32,
+            40,
+            48,
+            56,
+            64
+        ]
+    },
+    "typography": {
+        "fontFamily": {
+            "sans": "Segoe UI, Roboto, system-ui",
+            "mono": "Consolas, Monaco, monospace"
+        },
+        "fontSize": {
+            "xs": 12,
+            "sm": 14,
+            "base": 16,
+            "lg": 18,
+            "xl": 20,
+            "2xl": 24,
+            "3xl": 30,
+            "4xl": 36,
+            "5xl": 48,
+            "6xl": 60
+        },
+        "fontWeight": {
+            "light": 300,
+            "normal": 400,
+            "medium": 500,
+            "semibold": 600,
+            "bold": 700
+        },
+        "lineHeight": {
+            "none": 1,
+            "tight": 1.25,
+            "snug": 1.375,
+            "normal": 1.5,
+            "relaxed": 1.625,
+            "loose": 2
+        }
+    },
+    "shape": {
+        "borderRadius": {
+            "none": 0,
+            "sm": 4,
+            "md": 8,
+            "lg": 12,
+            "xl": 16,
+            "2xl": 24,
+            "full": 9999
+        },
+        "borderWidth": {
+            "none": 0,
+            "thin": 1,
+            "medium": 2,
+            "thick": 4
+        }
+    },
+    "elevation": {
+        "levels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "shadow": {
+            "color": "#000000",
+            "opacity": 0.1,
+            "blur": 4,
+            "offsetY": 2
+        }
+    }
+}
