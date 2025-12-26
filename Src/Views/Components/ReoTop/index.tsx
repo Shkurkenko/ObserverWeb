@@ -1,3 +1,5 @@
+import { Container } from '../../../Components/Layouts/Container'
+
 import './style.sass'
 
 interface ReoTopData {
@@ -10,11 +12,9 @@ interface ReoTopProps {
 
 export function ReoTop({ data }: ReoTopProps) {
   return (
-    <div className='reo-content-top'>
-      <div className='reo-header-info'>
-        <h1 className='reo-content-header'>{`Результаты сканирования`}</h1>
-        <h4 className='reo-content-scan-name'>{data.scanName}</h4>
-      </div>
-    </div>
+    <Container align='left' className='reo-content-top' paddingX='lg' paddingY='lg'>
+      <h1 className='reo-content-header'>{`Результаты сканирования`}</h1>
+      <h4 className='reo-content-scan-name'>{data.scanName}</h4>
+    </Container>
   )
 }

@@ -1,10 +1,22 @@
 import { ComponentChildren, FunctionalComponent } from 'preact'
+import { AriaRole } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 
 export type ContainerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'fluid'
 export type ContainerPadding = 'none' | 'sm' | 'md' | 'lg' | 'xl'
 export type ContainerMargin = 'none' | 'auto' | 'sm' | 'md' | 'lg'
 export type ContainerAlign = 'left' | 'center' | 'right' | 'stretch'
+
+export type ContainerRole =
+  | 'button'
+  | 'link'
+  | 'tab'
+  | 'listitem'
+  | 'menuitem'
+  | 'option'
+  | 'radio'
+  | 'checkbox'
+  | AriaRole
 
 export interface IContainerProps {
   children?: ComponentChildren
@@ -14,7 +26,7 @@ export interface IContainerProps {
   paddingX?: ContainerPadding
   marginTop?: ContainerMargin
   marginBottom?: ContainerMargin
-  as?: 'div' | 'section' | 'main' | 'article' | 'header' | 'footer' | 'nav'
+  as?: 'div' | 'section' | 'main' | 'article' | 'header' | 'footer' | 'nav' | 'button'
   background?: 'transparent' | 'white' | 'gray' | 'primary' | 'secondary'
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
@@ -29,9 +41,13 @@ export interface IContainerProps {
   }
   className?: string
   id?: string
+  role?: ContainerRole
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean // ← Добавляем disabled
   'aria-label'?: string
   'aria-labelledby'?: string
   'aria-describedby'?: string
+  'aria-disabled'?: boolean
 
   onClick?: (event: MouseEvent) => void
 }
@@ -126,9 +142,13 @@ export const Container: FunctionalComponent<IContainerProps> = ({
   hidden,
   className,
   id,
+  role,
+  type,
+  disabled = false, // ← Значение по умолчанию
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledby,
   'aria-describedby': ariaDescribedby,
+  'aria-disabled': ariaDisabled,
   onClick,
   ...props
 }) => {
@@ -138,6 +158,10 @@ export const Container: FunctionalComponent<IContainerProps> = ({
         .map(([breakpoint]) => `${breakpoint}:hidden`)
         .join(' ')
     : ''
+
+  // Определяем, является ли элемент кликабельным
+  const isClickable = onClick || Component === 'button'
+  const isDisabled = disabled || ariaDisabled
 
   const classes = cn(
     'w-full',
@@ -165,10 +189,31 @@ export const Container: FunctionalComponent<IContainerProps> = ({
 
     hiddenClasses,
 
-    onClick && 'transition-transform hover:scale-[1.005] active:scale-[0.995]',
+    // Стили для disabled состояния
+    isDisabled && ['opacity-60', 'cursor-not-allowed', 'pointer-events-none', 'select-none'],
+
+    // Стили для hover/active только если не disabled и кликабельный
+    isClickable &&
+      !isDisabled && [
+        'transition-all duration-150',
+        'hover:shadow-lg',
+        'active:scale-[0.98]',
+        Component === 'button' && 'cursor-pointer',
+      ],
 
     className,
   )
+
+  // Определяем роль и tabindex
+  const finalRole = role || (isClickable && Component !== 'button' ? 'button' : undefined)
+  const finalTabIndex = isClickable && !isDisabled ? 0 : undefined
+  const finalAriaDisabled = isDisabled || undefined
+
+  const handleClick = (event: MouseEvent) => {
+    if (!isDisabled && onClick) {
+      onClick(event)
+    }
+  }
 
   return (
     <Component
@@ -177,9 +222,12 @@ export const Container: FunctionalComponent<IContainerProps> = ({
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
       aria-describedby={ariaDescribedby}
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      tabindex={onClick ? 0 : undefined}
+      aria-disabled={finalAriaDisabled}
+      onClick={handleClick}
+      role={finalRole}
+      type={type}
+      tabindex={finalTabIndex}
+      disabled={Component === 'button' ? isDisabled : undefined}
       {...props}
     >
       {children}
@@ -209,7 +257,7 @@ export const ContainerLayouts = {
   ),
 
   /** Container for cards in grid */
-  Card: (props: Omit<IContainerProps, 'backgound' | 'rounded' | 'shadow'>) => (
+  Card: (props: Omit<IContainerProps, 'background' | 'rounded' | 'shadow'>) => (
     <Container background='white' rounded='lg' shadow='md' {...props} />
   ),
 }

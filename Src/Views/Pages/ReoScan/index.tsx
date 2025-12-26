@@ -13,6 +13,7 @@ import { journalAlertsData } from '../../../../Data/JournalAlerts'
 import { v4 as uuidv4 } from 'uuid'
 import { useTheme } from '../../../Context/ThemeContext'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
+import { ContainerLayouts } from '../../../Components/Layouts/Container'
 
 import './style.sass'
 
@@ -102,13 +103,13 @@ export const ReoScan = () => {
   }, [])
 
   return (
-    <div className='reo-scan-container w-full flex'>
+    <ContainerLayouts.FullWidth>
       {tasks.length !== 0 &&
         scanViews.length !== 0 &&
         scanViews.map(
           (view: ReoView, index: number) =>
             view.show && <ReoContentView header={tasks[index].name} model={view} />,
         )}
-    </div>
+    </ContainerLayouts.FullWidth>
   )
 }

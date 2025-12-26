@@ -93,6 +93,7 @@ export namespace TableSpace {
   }
 
   export interface ITableData<T> {
+    hasNewData: boolean
     metaInfo: T
     rows: IRow[]
   }
