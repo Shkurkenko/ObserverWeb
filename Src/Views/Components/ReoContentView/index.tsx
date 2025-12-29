@@ -1,9 +1,7 @@
-import { useCallback, useState, useEffect, MouseEvent } from 'preact/hooks'
+import { useCallback, useState, useEffect } from 'preact/hooks'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TableProvider } from '../../../Components/Table/Context/TableContext'
-import { ObserverTableEmpty } from '../../../Components/Table/ObserverTableEmptyState'
 import { TabButtonGroup } from '../../../Components/Tabs/TabButtonGroup'
-import { IReoColumnsModelsConfig } from '../../../Shared/Interfaces/Main.interface'
 import { ReoView } from '../../Pages/ReoScan'
 import { ReoTop } from '../ReoTop'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
@@ -12,7 +10,7 @@ import { TableSearch } from '../../../Components/Table/TableSearch'
 import { TableBody } from '../../../Components/Table/TableBody'
 import { TableHeader } from '../../../Components/Table/TableHeader'
 import { TableHelper } from '../../../Components/Table/TableHelper'
-import { Container, ContainerLayouts } from '../../../Components/Layouts/Container'
+import { ContainerLayouts } from '../../../Components/Layouts/Container'
 import { cn } from '../../../Utils/Helpers'
 
 import './style.sass'
@@ -90,13 +88,6 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
             <TableHelper />
             <TableHeader headerColumns={currentColumns} />
             <TableBody rows={currentRows} />
-
-            {/* Пустое состояние
-            {currentRows.length === 0 && ObserverTableEmpty && (
-              <div className='p-12'>
-                <ObserverTableEmpty />
-              </div>
-            )} */}
           </TableProvider>
         </div>
       </div>
