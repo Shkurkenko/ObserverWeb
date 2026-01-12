@@ -1,4 +1,4 @@
-import { Container } from '../../../Components/Layouts/Container'
+import { Container } from '../../../Components/Layouts/Box'
 
 import './style.sass'
 

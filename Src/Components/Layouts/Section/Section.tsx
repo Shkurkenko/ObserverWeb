@@ -1,5 +1,5 @@
 import { FunctionalComponent } from 'preact'
-import { Container, ContainerPadding, IContainerProps } from '../Container'
+import { Container, ContainerPadding, IContainerProps } from '../Box'
 import { cn } from '../../../Utils/Helpers'
 
 export interface ISectionProps extends IContainerProps {

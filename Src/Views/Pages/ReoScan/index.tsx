@@ -13,7 +13,7 @@ import { journalAlertsData } from '../../../../Data/JournalAlerts'
 import { v4 as uuidv4 } from 'uuid'
 import { useTheme } from '../../../Context/ThemeContext'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
-import { ContainerLayouts } from '../../../Components/Layouts/Container'
+import { ContainerLayouts } from '../../../Components/Layouts/Box'
 
 import './style.sass'
 

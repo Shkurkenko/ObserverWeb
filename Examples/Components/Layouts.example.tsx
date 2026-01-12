@@ -1,4 +1,4 @@
-import { Container, ContainerLayouts } from '../../Src/Components/Layouts/Container'
+import { Container, ContainerLayouts } from '../../Src/Components/Layouts/Box'
 import { Section } from '../../Src/Components/Layouts/Section/Section'
 import { GridContainer } from '../../Src/Components/Layouts/GirdContainer'
 import { Text } from '../../Src/Components/Typography'

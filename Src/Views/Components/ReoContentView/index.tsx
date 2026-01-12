@@ -10,7 +10,7 @@ import { TableSearch } from '../../../Components/Table/TableSearch'
 import { TableBody } from '../../../Components/Table/TableBody'
 import { TableHeader } from '../../../Components/Table/TableHeader'
 import { TableHelper } from '../../../Components/Table/TableHelper'
-import { ContainerLayouts } from '../../../Components/Layouts/Container'
+import { ContainerLayouts } from '../../../Components/Layouts/Box'
 import { cn } from '../../../Utils/Helpers'
 
 import './style.sass'
