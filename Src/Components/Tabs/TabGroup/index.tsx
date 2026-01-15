@@ -1,18 +1,25 @@
 // TabGroup.tsx
-import { FunctionalComponent } from 'preact'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TabButton } from '../TabButton'
-import { Flex, FlexProps } from '../../Layouts/Flex'
+import { Flex, IFlexProps } from '../../Layouts/Flex'
 import { cn } from '../../../Utils/Helpers'
+import { createPreset } from '../../../../Utils/CreatePreset'
 
-export interface TabGroupProps<T = any> extends Omit<FlexProps, 'children' | 'as' | 'role'> {
-  tabs: ITab<T>[]
+export interface ITabGroupProps extends Omit<IFlexProps, 'children' | 'as' | 'role'> {
+  tabs: ITab[]
+
   activeTabId?: string | number
-  onTabClick?: (tab: ITab<T>) => void
+
+  onTabClick?: (tab: ITab) => void
+
   variant?: 'default' | 'underline' | 'pills' | 'outline'
+
   size?: 'sm' | 'md' | 'lg'
+
   showCounts?: boolean
+
   fullWidth?: boolean
+
   orientation?: 'horizontal' | 'vertical'
 }
 
@@ -34,7 +41,7 @@ export function TabGroup<T = any>({
   inline,
   className,
   ...flexProps
-}: TabGroupProps<T>) {
+}: ITabGroupProps) {
   const flexDirection = orientation === 'vertical' ? 'col' : 'row'
   const shouldStretch = fullWidth || orientation === 'vertical'
 
@@ -43,10 +50,19 @@ export function TabGroup<T = any>({
   const autoGap = gap || (variant === 'pills' ? 'sm' : 'md')
   const autoWrap = wrap || (orientation === 'horizontal' ? false : 'nowrap')
 
+  const isTabActive = (tab: ITab) => {
+    if (activeTabId === undefined) return false
+    return tab.id === activeTabId
+  }
+
+  const handleTabClick = (e: MouseEvent, tab: ITab) => {
+    console.log(tab)
+    onTabClick?.(tab)
+  }
+
   return (
     <Flex
       as='nav'
-      role='tablist'
       aria-orientation={orientation}
       direction={direction || flexDirection}
       justify={autoJustify}
@@ -61,17 +77,16 @@ export function TabGroup<T = any>({
       {...flexProps}
     >
       {tabs.map((tab) => {
-        const isActive =
-          activeTabId !== undefined ? tab.id === activeTabId || tab.tabIndex === activeTabId : false
+        const isActive = isTabActive(tab)
 
         return (
           <TabButton<T>
             key={tab.id}
             tabData={tab}
             isActive={isActive}
-            onClick={(e, clickedTab) => onTabClick?.(clickedTab)}
-            variant={variant || tab.variant}
-            size={size || tab.size}
+            onClick={handleTabClick}
+            variant={variant}
+            size={size}
             fullWidth={shouldStretch}
             showCount={showCounts}
           />
@@ -81,39 +96,30 @@ export function TabGroup<T = any>({
   )
 }
 
-// Создаем HOC для пресетов
-const createTabGroupPreset = <T = any,>(presetProps: Partial<TabGroupProps<T>>) => {
-  return function TabGroupPresetComponent(props: Omit<TabGroupProps<T>, keyof typeof presetProps>) {
-    return <TabGroup<T> {...presetProps} {...props} />
-  }
-}
+const createTabGroupPreset = createPreset(TabGroup)
 
-// Пресеты
 export const TabGroupPresets = {
-  /** Горизонтальные табы с подчеркиванием (по умолчанию) */
-  Underline: createTabGroupPreset({ variant: 'underline', orientation: 'horizontal' }),
+  Underline: createTabGroupPreset({
+    variant: 'underline' as const,
+    orientation: 'horizontal' as const,
+  }),
 
-  /** Табы в виде пилюль */
-  Pills: createTabGroupPreset({ variant: 'pills' }),
+  Pills: createTabGroupPreset({
+    variant: 'pills' as const,
+  }),
 
-  /** Контурные табы */
-  Outline: createTabGroupPreset({ variant: 'outline' }),
+  Outline: createTabGroupPreset({
+    variant: 'outline' as const,
+  }),
 
-  /** Вертикальные табы */
-  Vertical: createTabGroupPreset({ orientation: 'vertical' }),
-
-  /** Полноширинные табы */
-  FullWidth: createTabGroupPreset({ fullWidth: true }),
-
-  /** Маленькие табы */
-  Small: createTabGroupPreset({ size: 'sm' }),
-
-  /** Большие табы */
-  Large: createTabGroupPreset({ size: 'lg' }),
-
-  /** Центрированные табы */
-  Centered: createTabGroupPreset({ justify: 'center' }),
-
-  /** Табы растянутые по ширине */
-  Justified: createTabGroupPreset({ justify: 'between', fullWidth: true }),
+  Vertical: createTabGroupPreset({
+    orientation: 'vertical' as const,
+  }),
 }
+
+export type TabGroupPreset = keyof typeof TabGroupPresets
+
+export const UnderlineTabs = TabGroupPresets.Underline
+export const OutlineTabs = TabGroupPresets.Outline
+export const PillsTabs = TabGroupPresets.Pills
+export const VerticalTabs = TabGroupPresets.Vertical

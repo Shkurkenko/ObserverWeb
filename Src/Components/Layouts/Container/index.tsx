@@ -1,9 +1,12 @@
-import { Component, FunctionalComponent } from 'preact'
+import { FunctionalComponent } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 import { Box, IBoxProps } from '../Box'
-export interface IContainerProps extends Omit<IBoxProps, 'as'> {
+
+export type ContainerPadding = boolean | 'sm' | 'md' | 'lg'
+
+export interface IContainerProps extends IBoxProps {
   size?: ContainerSizeOptions
-  padding?: boolean | 'sm' | 'md' | 'lg'
+  padding?: ContainerPadding
   centered?: boolean
 }
 

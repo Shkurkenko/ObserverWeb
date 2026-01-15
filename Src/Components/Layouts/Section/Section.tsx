@@ -1,5 +1,5 @@
 import { FunctionalComponent } from 'preact'
-import { Container, ContainerPadding, IContainerProps } from '../Box'
+import { Container, IContainerProps, ContainerPadding } from '../Container'
 import { cn } from '../../../Utils/Helpers'
 
 export interface ISectionProps extends IContainerProps {
@@ -21,6 +21,7 @@ export interface ISectionProps extends IContainerProps {
   /** Плотность контента */
   density?: 'compact' | 'comfortable' | 'spacious'
 }
+
 const densityToPadding: Record<'compact' | 'comfortable' | 'spacious', ContainerPadding> = {
   compact: 'sm',
   comfortable: 'md',
@@ -35,15 +36,12 @@ export const Section: FunctionalComponent<ISectionProps> = ({
   divider = false,
   density = 'comfortable',
   children,
-  paddingY,
   ...containerProps
 }) => {
-  const currentPaddingY = paddingY || densityToPadding[density]
-
   const TitleTag = titleVariant
 
   return (
-    <Container as='section' paddingY={currentPaddingY} {...containerProps}>
+    <Container as='section' {...containerProps}>
       {(title || description || actions) && (
         <div className='mb-8'>
           <div className='flex items-start justify-between gap-4'>

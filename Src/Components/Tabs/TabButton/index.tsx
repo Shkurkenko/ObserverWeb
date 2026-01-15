@@ -5,13 +5,14 @@ import { Icon } from '../../Typography'
 import { Button, IButtonProps } from '../../Button'
 import { cn } from '../../../Utils/Helpers'
 
-export interface TabButtonProps<T> extends Omit<
+// Объявляем пропсы с обобщенным типом T
+export interface TabButtonProps extends Omit<
   IButtonProps,
   'children' | 'onClick' | 'variant' | 'size'
 > {
-  tabData: ITab<T>
+  tabData: ITab
   isActive: boolean
-  onClick?: (e: MouseEvent, tab: ITab<T>) => void
+  onClick?: (e: MouseEvent, tab: ITab) => void
   variant?: 'default' | 'underline' | 'pills' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
@@ -63,7 +64,8 @@ const sizeClasses = {
   },
 }
 
-export const TabButton: FunctionalComponent<TabButtonProps<T>> = ({
+// Используем функцию вместо FunctionalComponent
+export function TabButton<T>({
   tabData,
   isActive,
   onClick,
@@ -76,7 +78,7 @@ export const TabButton: FunctionalComponent<TabButtonProps<T>> = ({
   badge: propBadge,
   className,
   ...buttonProps
-}) => {
+}: TabButtonProps) {
   const handleClick = (e: MouseEvent) => {
     if (tabData.disabled || tabData.loading) {
       e.preventDefault()
@@ -162,17 +164,15 @@ export const TabButton: FunctionalComponent<TabButtonProps<T>> = ({
   )
 }
 
-// Пресеты для TabButton
+// Обновляем пресеты
 export const TabButtonPresets = {
-  Pill: <T,>(props: Omit<TabButtonProps<T>, 'variant'>) => (
-    <TabButton<T> variant='pills' {...props} />
-  ),
+  Pill: <T,>(props: Omit<TabButtonProps, 'variant'>) => <TabButton<T> variant='pills' {...props} />,
 
-  UnderlineSmall: <T,>(props: Omit<TabButtonProps<T>, 'variant' | 'size'>) => (
+  UnderlineSmall: <T,>(props: Omit<TabButtonProps, 'variant' | 'size'>) => (
     <TabButton<T> variant='underline' size='sm' {...props} />
   ),
 
-  OutlineLarge: <T,>(props: Omit<TabButtonProps<T>, 'variant' | 'size'>) => (
+  OutlineLarge: <T,>(props: Omit<TabButtonProps, 'variant' | 'size'>) => (
     <TabButton<T> variant='outline' size='lg' {...props} />
   ),
 }

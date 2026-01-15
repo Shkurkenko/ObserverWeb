@@ -2,12 +2,12 @@ import { ComponentChildren, FunctionalComponent } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 import { Box, IBoxProps } from '../Box'
 
-export interface FlexProps extends Omit<IBoxProps, 'as'> {
+export interface IFlexProps extends IBoxProps {
   /** Направление flex контейнера */
   direction?: 'row' | 'col' | 'row-reverse' | 'col-reverse'
 
   /** Выравнивание по главной оси */
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'stretch'
 
   /** Выравнивание по поперечной оси */
   align?: 'start' | 'center' | 'end' | 'baseline' | 'stretch'
@@ -35,6 +35,7 @@ const justifyClasses = {
   end: 'justify-end',
   between: 'justify-between',
   around: 'justify-around',
+  stretch: 'justify-stretch',
   evenly: 'justify-evenly',
 }
 
@@ -63,7 +64,7 @@ const wrapClasses = {
   'wrap-reverse': 'flex-wrap-reverse',
 }
 
-export const Flex: FunctionalComponent<FlexProps> = ({
+export const Flex: FunctionalComponent<IFlexProps> = ({
   children,
   direction = 'row',
   justify = 'start',
@@ -101,18 +102,18 @@ export const Flex: FunctionalComponent<FlexProps> = ({
 // Дополнительные пресеты для удобства
 export const FlexPresets = {
   /** Центрированный flex контейнер */
-  Center: (props: Omit<FlexProps, 'justify' | 'align'>) => (
+  Center: (props: Omit<IFlexProps, 'justify' | 'align'>) => (
     <Flex justify='center' align='center' {...props} />
   ),
 
   /** Flex с элементами по краям */
-  Between: (props: Omit<FlexProps, 'justify'>) => <Flex justify='between' {...props} />,
+  Between: (props: Omit<IFlexProps, 'justify'>) => <Flex justify='between' {...props} />,
 
   /** Вертикальный стек */
-  Stack: (props: Omit<FlexProps, 'direction'>) => <Flex direction='col' {...props} />,
+  Stack: (props: Omit<IFlexProps, 'direction'>) => <Flex direction='col' {...props} />,
 
   /** Горизонтальный ряд с выравниванием по центру */
-  RowCenter: (props: Omit<FlexProps, 'direction' | 'justify' | 'align'>) => (
+  RowCenter: (props: Omit<IFlexProps, 'direction' | 'justify' | 'align'>) => (
     <Flex direction='row' justify='center' align='center' {...props} />
   ),
 }

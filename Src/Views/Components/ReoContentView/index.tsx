@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from 'preact/hooks'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TableProvider } from '../../../Components/Table/Context/TableContext'
-import { TabButtonGroup } from '../../../Components/Tabs/TabButtonGroup'
+import { TabGroup } from '../../../Components/Tabs/TabGroup'
 import { ReoView } from '../../Pages/ReoScan'
 import { ReoTop } from '../ReoTop'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
@@ -10,7 +10,7 @@ import { TableSearch } from '../../../Components/Table/TableSearch'
 import { TableBody } from '../../../Components/Table/TableBody'
 import { TableHeader } from '../../../Components/Table/TableHeader'
 import { TableHelper } from '../../../Components/Table/TableHelper'
-import { ContainerLayouts } from '../../../Components/Layouts/Box'
+import { Container } from '../../../Components/Layouts/Container'
 import { cn } from '../../../Utils/Helpers'
 
 import './style.sass'
@@ -44,14 +44,7 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
   }, [model.show])
 
   return (
-    <ContainerLayouts.FullWidth
-      hidden={{
-        sm: !model.show,
-        md: !model.show,
-        lg: !model.show,
-        xl: !model.show, // ← Добавил xl
-        '2xl': !model.show,
-      }}
+    <Container
       className={cn(
         'reo-content',
         model.show ? 'reo-content-view-visible' : 'reo-content-view-hide',
@@ -65,7 +58,7 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
 
         {/* Табы */}
         <div className='border-b border-gray-200'>
-          <TabButtonGroup
+          <TabGroup
             currentIndex={activeIndex}
             model={model.tabsModel.map((tab, index) => ({
               ...tab,
@@ -73,7 +66,6 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
               count: tab.data.rows?.length || 0,
             }))}
             handleClick={handleTabClick}
-            direction='horizontal'
             spacing='lg'
             align='start'
             variant='underline'
@@ -91,6 +83,6 @@ export function ReoContentView({ header, model }: IReoContentViewProps) {
           </TableProvider>
         </div>
       </div>
-    </ContainerLayouts.FullWidth>
+    </Container>
   )
 }

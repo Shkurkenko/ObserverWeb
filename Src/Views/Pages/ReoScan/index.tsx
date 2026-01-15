@@ -13,7 +13,6 @@ import { journalAlertsData } from '../../../../Data/JournalAlerts'
 import { v4 as uuidv4 } from 'uuid'
 import { useTheme } from '../../../Context/ThemeContext'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
-import { ContainerLayouts } from '../../../Components/Layouts/Box'
 
 import './style.sass'
 
@@ -21,7 +20,7 @@ export interface ReoView {
   viewId: string
   taskId: string
   show: boolean
-  tabsModel: ITab<ReoSpace.IReoTable>[]
+  tabsModel: ITab[]
 }
 
 export const ReoScan = () => {
@@ -32,7 +31,7 @@ export const ReoScan = () => {
   const { setThemeVariant } = useTheme()
 
   const getTabs = useCallback(
-    (task: ReoSpace.IScanTask): ITab<ReoSpace.IReoTable>[] => {
+    (task: ReoSpace.IScanTask): ITab[] => {
       return task.types.map((type: ReoSpace.IScanTypes, index: number) => ({
         tabIndex: index,
         id: `tabs-with-underline-item-${index + 1}`,
@@ -103,13 +102,13 @@ export const ReoScan = () => {
   }, [])
 
   return (
-    <ContainerLayouts.FullWidth>
+    <div className='w-full'>
       {tasks.length !== 0 &&
         scanViews.length !== 0 &&
         scanViews.map(
           (view: ReoView, index: number) =>
             view.show && <ReoContentView header={tasks[index].name} model={view} />,
         )}
-    </ContainerLayouts.FullWidth>
+    </div>
   )
 }
