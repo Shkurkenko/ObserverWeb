@@ -5,7 +5,7 @@ import { cn } from '../../../Utils/Helpers'
 export type SurfaceVariantOptions =
   | 'surface'
   | 'surface-container'
-  | 'surface-container-low'
+  | 'surface-container-lowest'
   | 'surface-container-high'
   | 'surface-container-highest'
   | 'primary-container'
@@ -26,7 +26,7 @@ export interface ISurfaceProps extends Omit<IBoxProps, 'as'> {
 const variantClasses: Record<SurfaceVariantOptions, string> = {
   surface: 'bg-surface',
   'surface-container': 'bg-surface-container',
-  'surface-container-low': 'bg-surface-container-low',
+  'surface-container-lowest': 'bg-surface-container-low',
   'surface-container-high': 'bg-surface-container-high',
   'surface-container-highest': 'bg-surface-container-highest',
   'primary-container': 'bg-primary-container',

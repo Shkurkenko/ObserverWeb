@@ -70,7 +70,7 @@ export function TabGroup<T = any>({
       gap={autoGap}
       wrap={autoWrap}
       className={cn(
-        orientation === 'horizontal' && variant === 'underline' && 'border-b border-outline',
+        orientation === 'horizontal' && variant === 'underline',
         variant === 'pills' && 'rounded-lg p-1 bg-surface-container',
         className,
       )}

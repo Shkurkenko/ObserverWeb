@@ -7,17 +7,29 @@ export type ButtonSize = 'sm' | 'md' | 'lg'
 
 export interface IButtonProps {
   children: ComponentChildren
+
   variant?: ButtonVariant
+
   size?: ButtonSize
+
   disabled?: boolean
+
   loading?: boolean
+
   fullWidth?: boolean
+
   leftIcon?: ComponentChildren
+
   rightIcon?: ComponentChildren
+
   type?: 'button' | 'submit' | 'reset'
+
   iconElement?: JSX.Element
-  onClick: (event: MouseEvent) => void
+
+  onClick?: (event: MouseEvent) => void
+
   className?: string
+
   'aria-label'?: string
 }
 

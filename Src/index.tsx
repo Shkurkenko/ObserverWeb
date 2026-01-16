@@ -16,8 +16,10 @@ import SidebarProvider from './Context/SidebarContext.js'
 import AlertsProvider from './Context/AlertsContext.js'
 import ScanViewProvider from './Context/ReoScanViewContext.js'
 
-import './style.sass'
 import { TabsExamplePage } from './Views/Pages/TabsExamplePage/index.js'
+import { ForensicTester } from './Views/Pages/ForensicTester/index.js'
+
+import './style.sass'
 
 export function App() {
   return (
@@ -39,6 +41,7 @@ export function App() {
                     <Route path='/typography-tester' component={TypographyTester} />
                     {/* <Route path='/layout-tester' component={LayoutsExample}></Route> */}
                     <Route path='/tabs-tester' component={TabsExamplePage}></Route>
+                    <Route path='/rf-scan-tester' component={ForensicTester}></Route>
                     {/* <Route component={NotFound} /> */}
                   </main>
                 </LocationProvider>
