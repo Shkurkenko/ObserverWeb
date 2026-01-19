@@ -3,21 +3,27 @@ import 'preact/debug'
 import { Route } from 'wouter'
 import { render } from 'preact'
 import { LocationProvider } from 'preact-iso'
-import { FastAlertsProvider } from './Context/FastAlertsContext.js'
+
+// Context Providers
+import { ThemeProvider } from './Context/ThemeContext'
+import { TasksProvider } from './Context/TasksContext'
+import { SidebarProvider } from './Context/SidebarContext'
+import { FastAlertsProvider } from './Context/FastAlertsContext'
+import { AlertsProvider } from './Context/AlertsContext'
+import { ScanViewProvider } from './Context/ReoScanViewContext'
+
+// Components
+import { SideNavigation } from './Components/Sidebar/SideNavigation'
+
+// Pages
 import { ReoScan } from './Views/Pages/ReoScan'
 import { ThemeTester } from './Views/Pages/ThemeTester'
-import { SideNavigation } from './Components/Sidebar/SideNavigation/index.js'
-import { ThemeProvider } from './Context/ThemeContext.js'
-import { TypographyTester } from './Views/Pages/TypographyTester/index.js'
-// import { LayoutsExample } from '../Examples/Components/Layouts.example.js'
+import { TypographyTester } from './Views/Pages/TypographyTester'
+import { TabsExamplePage } from './Views/Pages/TabsExamplePage'
+import { ForensicTester } from './Views/Pages/ForensicTester'
 
-import TasksProvider from './Context/TasksContext.js'
-import SidebarProvider from './Context/SidebarContext.js'
-import AlertsProvider from './Context/AlertsContext.js'
-import ScanViewProvider from './Context/ReoScanViewContext.js'
-
-import { TabsExamplePage } from './Views/Pages/TabsExamplePage/index.js'
-import { ForensicTester } from './Views/Pages/ForensicTester/index.js'
+// Создаем компонент для главной страницы
+// import { RfScannerFinal } from './Boilerplates/RfScannerFinal'
 
 import './style.sass'
 
@@ -30,19 +36,28 @@ export function App() {
             <AlertsProvider>
               <ScanViewProvider>
                 <LocationProvider>
-                  {/* <Header /> */}
                   <main className='app-container h-screen w-screen flex'>
                     <SideNavigation />
-                    <Route path='/'>
-                      <ReoScan />
-                      {/* <FastAlerts /> */}
-                    </Route>
-                    <Route path='/theme-tester' component={ThemeTester} />
-                    <Route path='/typography-tester' component={TypographyTester} />
-                    {/* <Route path='/layout-tester' component={LayoutsExample}></Route> */}
-                    <Route path='/tabs-tester' component={TabsExamplePage}></Route>
-                    <Route path='/rf-scan-tester' component={ForensicTester}></Route>
-                    {/* <Route component={NotFound} /> */}
+                    <div className='flex-1 overflow-auto'>
+                      <Route path='/'>
+                        <ReoScan />
+                      </Route>
+                      <Route path='/theme-tester'>
+                        <ThemeTester />
+                      </Route>
+                      <Route path='/typography-tester'>
+                        <TypographyTester />
+                      </Route>
+                      <Route path='/tabs-tester'>
+                        <TabsExamplePage />
+                      </Route>
+                      <Route path='/rf-scan-tester'>
+                        <ForensicTester />
+                      </Route>
+                      {/* <Route path='/rf-scanner'>
+                        <RfScannerFinal />
+                      </Route> */}
+                    </div>
                   </main>
                 </LocationProvider>
               </ScanViewProvider>

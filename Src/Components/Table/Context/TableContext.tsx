@@ -17,7 +17,7 @@ export interface ITableContext {
 
   currentSelectedCell: { rowIndex: number; colIndex: number }
 
-  setHeaderRefs: (refs: MutableRef<HTMLDivElement | null>) => void
+  // setHeaderRefs: (refs: MutableRef<HTMLDivElement | null>) => void
 
   setRows: (rows: TableSpace.IRow[]) => void
 
@@ -43,7 +43,7 @@ export interface ITableContext {
 
   mockAddRows: (interval: number, count: number) => void
 
-  renderEmpty: () => JSX.Element
+  renderEmpty?: () => JSX.Element
 }
 
 export interface ITableProviderProps {
@@ -151,7 +151,6 @@ export const TableProvider = ({
   return (
     <TableContext.Provider
       value={{
-        setHeaderRefs,
         setRows,
         tableInfo,
         rows,
@@ -167,7 +166,6 @@ export const TableProvider = ({
         clearRows,
         selectColumn,
         selectRow,
-        renderEmpty,
         setDefaultHeaders,
         mockAddRows,
         selectCell,

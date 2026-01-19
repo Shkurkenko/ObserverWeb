@@ -1,6 +1,8 @@
+// src/Context/TasksContext.tsx
 import { createContext, ComponentChildren } from 'preact'
-import { useCallback, useState } from 'preact/hooks'
+import { useCallback, useState, useEffect } from 'preact/hooks'
 import { ReoSpace } from '../Shared/Interfaces/Reo.interface'
+import { MockGenHelpers } from '../Utils/MockGen'
 
 export interface ITasksContext {
   tasks: ReoSpace.IScanTask[]
@@ -20,46 +22,69 @@ export interface ITasksContext {
   waitTask: (id: string) => void
 
   failTask: (id: string) => void
-}
 
-export interface ITaskProviderProps {
-  children: ComponentChildren
+  generateDemoTasks: (count?: number) => void
+
+  clearAllTasks: () => void
 }
 
 export const TasksContext = createContext<ITasksContext | null>(null)
-export const TasksProvider = ({ children }: ITaskProviderProps) => {
+
+export const TasksProvider = ({ children }: { children: ComponentChildren }) => {
   const [tasks, setTasks] = useState<ReoSpace.IScanTask[]>([])
 
+  // Генерация демо-задач при монтировании
+  useEffect(() => {
+    generateDemoTasks(5)
+  }, [])
+
+  const generateDemoTasks = useCallback((count: number = 5) => {
+    const demoTasks = MockGenHelpers.generateMockScanTasks(count)
+    setTasks(demoTasks)
+  }, [])
+
   const addTask = useCallback((task: ReoSpace.IScanTask) => {
-    setTasks((prev: ReoSpace.IScanTask[]) => [...prev, task])
+    setTasks((prev) => [...prev, task])
   }, [])
 
   const deleteTask = useCallback((id: string) => {
-    setTasks((prev: ReoSpace.IScanTask[]) =>
-      prev.filter((task: ReoSpace.IScanTask) => task.id !== id),
-    )
+    setTasks((prev) => prev.filter((task) => task.id !== id))
   }, [])
 
   const setTaskStatus = useCallback((id: string, status: ReoSpace.IScanStatusTypes) => {
-    setTasks((prev: ReoSpace.IScanTask[]) =>
-      prev.map((task: ReoSpace.IScanTask) => (id === task.id ? { ...task, status } : task)),
-    )
+    setTasks((prev) => prev.map((task) => (id === task.id ? { ...task, status } : task)))
   }, [])
 
-  const startTask = useCallback((id: string) => {
-    setTaskStatus(id, ReoSpace.IScanStatusTypes.Running)
-  }, [])
+  const startTask = useCallback(
+    (id: string) => {
+      setTaskStatus(id, ReoSpace.IScanStatusTypes.Running)
+    },
+    [setTaskStatus],
+  )
 
-  const stopTask = useCallback((id: string) => {
-    setTaskStatus(id, ReoSpace.IScanStatusTypes.Finished)
-  }, [])
+  const stopTask = useCallback(
+    (id: string) => {
+      setTaskStatus(id, ReoSpace.IScanStatusTypes.Finished)
+    },
+    [setTaskStatus],
+  )
 
-  const waitTask = useCallback((id: string) => {
-    setTaskStatus(id, ReoSpace.IScanStatusTypes.Pending)
-  }, [])
+  const waitTask = useCallback(
+    (id: string) => {
+      setTaskStatus(id, ReoSpace.IScanStatusTypes.Pending)
+    },
+    [setTaskStatus],
+  )
 
-  const failTask = useCallback((id: string) => {
-    setTaskStatus(id, ReoSpace.IScanStatusTypes.Failed)
+  const failTask = useCallback(
+    (id: string) => {
+      setTaskStatus(id, ReoSpace.IScanStatusTypes.Failed)
+    },
+    [setTaskStatus],
+  )
+
+  const clearAllTasks = useCallback(() => {
+    setTasks([])
   }, [])
 
   return (
@@ -74,11 +99,11 @@ export const TasksProvider = ({ children }: ITaskProviderProps) => {
         stopTask,
         waitTask,
         failTask,
+        generateDemoTasks,
+        clearAllTasks,
       }}
     >
       {children}
     </TasksContext.Provider>
   )
 }
-
-export default TasksProvider

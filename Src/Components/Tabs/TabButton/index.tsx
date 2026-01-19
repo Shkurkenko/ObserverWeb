@@ -150,6 +150,7 @@ export function TabButton<T>({
       {badgeContent && (
         <span
           className={cn(
+            'cursor-pointer',
             'ml-2 flex items-center justify-center font-medium rounded-full',
             currentSize.badge,
             isActive && variant === 'pills'

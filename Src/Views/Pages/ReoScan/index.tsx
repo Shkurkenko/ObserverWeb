@@ -1,114 +1,228 @@
-import { useTasks } from '../../../Components/TaskSidebar/Hooks/UseTasks'
-import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
-import { ITab } from '../../../Shared/Interfaces/Main.interface'
-import { useCallback, useEffect } from 'preact/hooks'
+// src/Views/Pages/ReoScan.tsx
+import { useEffect, useState } from 'preact/hooks'
 import { useScanView } from '../../../Hooks/UseScanView'
-import { useFastAlerts } from '../../../Components/FastAlerts/Hooks/UseFastAlerts'
-import { useAlerts } from '../../../Components/Alerts/Hooks/UseAlerts'
+import { useTasks } from '../../../Components/TaskSidebar/Hooks/UseTasks'
+import { TaskSidebar } from '../../../Components/TaskSidebar'
 import { ReoContentView } from '../../Components/ReoContentView'
 import { MockGenHelpers } from '../../../Utils/MockGen'
-import { runWithInterval } from '../../../Utils/Helpers'
-import { journalAlertsData } from '../../../../Data/JournalAlerts'
-import { v4 as uuidv4 } from 'uuid'
-import { useTheme } from '../../../Context/ThemeContext'
+import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
+import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 
-import './style.sass'
+export function ReoScan() {
+  const { scanViews, activeViewId, addView, showView, updateViewData, getViewById } = useScanView()
+  const { tasks } = useTasks()
+  const [isScanning, setIsScanning] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [sessionData, setSessionData] = useState({
+    id: `session-${Date.now()}`,
+    startTime: new Date(),
+    duration: 0,
+    networksFound: 0,
+    frequencyRange: { min: 2400, max: 6000 },
+    isActive: false,
+    scanMode: 'continuous' as const,
+  })
 
-export interface ReoView {
-  viewId: string
-  taskId: string
-  show: boolean
-  tabsModel: ITab[]
-}
+  // Инициализация начальных данных
+  useEffect(() => {
+    if (scanViews.length === 0 && tasks.length > 0) {
+      tasks.forEach((task, taskIndex) => {
+        task.types.forEach((networkType, typeIndex) => {
+          const viewId = `${task.id}-${networkType}-${Date.now()}`
 
-export const ReoScan = () => {
-  const { tasks, addTask } = useTasks()
-  const { scanViews, addView } = useScanView()
-  const { addAlert } = useAlerts()
-  const { addFastNotification } = useFastAlerts()
-  const { setThemeVariant } = useTheme()
+          // Генерация демо-данных для таблицы
+          const columnsConfig = ObserverConfig.ReoColumnModelsConfig[networkType]
+          const columnsPattern = columnsConfig.map((col) => col.type)
+          const demoRows = MockGenHelpers.generateMockReoTableData(10, columnsPattern)
 
-  const getTabs = useCallback(
-    (task: ReoSpace.IScanTask): ITab[] => {
-      return task.types.map((type: ReoSpace.IScanTypes, index: number) => ({
-        tabIndex: index,
-        id: `tabs-with-underline-item-${index + 1}`,
-        label: type,
-        data: {
-          metaInfo: {
-            scanType: type,
-            scanStatus: task.status,
-            currentScanCycle: task.currentScanCycle,
-          },
-          rows: MockGenHelpers.generateMockReoTableData(100, [
-            ...ObserverConfig.ReoColumnModelsConfig[type].map((column) => {
-              return column.type
-            }),
-          ]),
-        },
-      }))
-    },
-    [tasks],
-  )
+          addView({
+            viewId,
+            taskId: task.id,
+            show: taskIndex === 0 && typeIndex === 0,
+            tabsModel: [
+              {
+                id: networkType,
+                label: ScanConfigHelpers.getTitleForNetworkType(networkType),
+                icon: ScanConfigHelpers.getIconForNetworkType(networkType),
+                badge: demoRows.length,
+                data: {
+                  metaInfo: {
+                    scanType: networkType,
+                    scanStatus: task.status,
+                    currentScanCycle: task.currentScanCycle,
+                  },
+                  rows: demoRows,
+                  hasNewData: false,
+                },
+              },
+            ],
+          })
 
-  const addReoTask = useCallback((task: ReoSpace.IScanTask) => {
-    addTask(task)
-    addView({
-      viewId: uuidv4(),
-      taskId: task.id,
-      show: scanViews.length === 0,
-      tabsModel: getTabs(task),
+          if (taskIndex === 0 && typeIndex === 0) {
+            showView(viewId)
+          }
+        })
+      })
+    }
+  }, [tasks])
+
+  // Таймер сессии
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+    if (isScanning) {
+      interval = setInterval(() => {
+        setSessionData((prev) => ({
+          ...prev,
+          duration: prev.duration + 1,
+          isActive: true,
+        }))
+      }, 1000)
+    }
+    return () => clearInterval(interval)
+  }, [isScanning])
+
+  const activeView = getViewById(activeViewId || '')
+
+  const handleStartScan = () => {
+    setIsLoading(true)
+    setIsScanning(true)
+
+    setSessionData({
+      id: `session-${Date.now()}`,
+      startTime: new Date(),
+      duration: 0,
+      networksFound: 0,
+      frequencyRange: { min: 2400, max: 6000 },
+      isActive: true,
+      scanMode: 'continuous',
     })
-  }, [])
 
-  const emitTestAlerts = async (data: AlertsSpace.IAlertType[], testDelay: number) => {
-    for (let i = 0; i < data.length; i++) {
-      setTimeout(() => {
-        addAlert(data[i])
-        addFastNotification(data[i])
-      }, testDelay * i)
+    // Обновляем статус вьюшки
+    if (activeViewId && activeView) {
+      updateViewData(activeViewId, {
+        ...activeView,
+        tabsModel: activeView.tabsModel.map((tab) => ({
+          ...tab,
+          data: tab.data
+            ? {
+                ...tab.data,
+                metaInfo: {
+                  ...tab.data.metaInfo,
+                  scanStatus: ReoSpace.IScanStatusTypes.Running,
+                },
+              }
+            : tab.data,
+        })),
+      })
+    }
+
+    // Симуляция загрузки
+    setTimeout(() => setIsLoading(false), 800)
+  }
+
+  const handleStopScan = () => {
+    setIsScanning(false)
+    setSessionData((prev) => ({ ...prev, isActive: false }))
+
+    if (activeViewId && activeView) {
+      updateViewData(activeViewId, {
+        ...activeView,
+        tabsModel: activeView.tabsModel.map((tab) => ({
+          ...tab,
+          data: tab.data
+            ? {
+                ...tab.data,
+                metaInfo: {
+                  ...tab.data.metaInfo,
+                  scanStatus: ReoSpace.IScanStatusTypes.Finished,
+                },
+              }
+            : tab.data,
+        })),
+      })
     }
   }
 
-  useEffect(() => {
-    emitTestAlerts(journalAlertsData, 1000)
-  }, [journalAlertsData])
+  const handleClearData = () => {
+    setIsLoading(true)
 
-  useEffect(() => {
-    setThemeVariant('ForensicBlue', 'dark')
-
-    const loadTasks = async () => {
-      const tasks = MockGenHelpers.generateMockScanTasks(10)
-
-      for (let i = 0; i < tasks.length; i++) {
-        addReoTask(tasks[i])
-      }
-
-      // if (tasks.length !== 0 && tasks !== null && tasks !== undefined) {
-      //   runWithInterval<ReoSpace.IScanTask>(
-      //     tasks,
-      //     1000,
-      //     tasks.length,
-      //     (task: ReoSpace.IScanTask) => {
-      //       addReoTask(task)
-      //     },
-      //   )
-      // }
+    if (activeViewId && activeView) {
+      updateViewData(activeViewId, {
+        ...activeView,
+        tabsModel: activeView.tabsModel.map((tab) => ({
+          ...tab,
+          badge: 0,
+          data: tab.data
+            ? {
+                ...tab.data,
+                rows: [],
+                hasNewData: false,
+              }
+            : tab.data,
+        })),
+      })
     }
 
-    loadTasks()
-  }, [])
+    setSessionData((prev) => ({ ...prev, networksFound: 0 }))
+
+    setTimeout(() => setIsLoading(false), 600)
+  }
+
+  const handleExportData = () => {
+    console.log('Exporting data:', {
+      view: activeView,
+      session: sessionData,
+      timestamp: new Date().toISOString(),
+    })
+    // Здесь будет реальная логика экспорта
+  }
 
   return (
-    <div className='w-full'>
-      {tasks.length !== 0 &&
-        scanViews.length !== 0 &&
-        scanViews.map(
-          (view: ReoView, index: number) =>
-            view.show && <ReoContentView header={tasks[index].name} model={view} />,
+    <div className='h-full w-full flex bg-surface'>
+      {/* Основной контент */}
+      <div className='flex-1 overflow-auto'>
+        {activeView ? (
+          <ReoContentView
+            header={activeView.taskId}
+            model={activeView}
+            isScanning={isScanning}
+            onStartScan={handleStartScan}
+            onStopScan={handleStopScan}
+            onClearData={handleClearData}
+            onExportData={handleExportData}
+          />
+        ) : (
+          <div className='h-full flex flex-col items-center justify-center p-8'>
+            <div className='text-center max-w-lg'>
+              <div className='text-8xl mb-6 opacity-20'>📡</div>
+              <h2 className='text-3xl font-bold text-on-surface mb-4'>Сканер радиоэфира</h2>
+              <p className='text-lg text-on-surface-variant mb-8'>
+                Выберите задачу сканирования из списка слева или создайте новую для начала работы
+              </p>
+              <div className='grid grid-cols-2 gap-4 text-sm text-on-surface-variant'>
+                <div className='text-center p-4 bg-surface-container rounded-lg'>
+                  <div className='text-2xl mb-2'>📶</div>
+                  <div>GSM/LTE/5G сети</div>
+                </div>
+                <div className='text-center p-4 bg-surface-container rounded-lg'>
+                  <div className='text-2xl mb-2'>📡</div>
+                  <div>Wi-Fi сети</div>
+                </div>
+                <div className='text-center p-4 bg-surface-container rounded-lg'>
+                  <div className='text-2xl mb-2'>🔵</div>
+                  <div>Bluetooth</div>
+                </div>
+                <div className='text-center p-4 bg-surface-container rounded-lg'>
+                  <div className='text-2xl mb-2'>📊</div>
+                  <div>Анализ в реальном времени</div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
+      </div>
     </div>
   )
 }

@@ -18,6 +18,8 @@ export const useTasks = () => {
     stopTask,
     waitTask,
     failTask,
+    generateDemoTasks,
+    clearAllTasks,
   } = context
 
   return {
@@ -30,5 +32,7 @@ export const useTasks = () => {
     stopTask,
     waitTask,
     failTask,
+    generateDemoTasks,
+    clearAllTasks,
   }
 }

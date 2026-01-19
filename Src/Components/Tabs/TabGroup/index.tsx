@@ -1,9 +1,9 @@
-// TabGroup.tsx
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TabButton } from '../TabButton'
 import { Flex, IFlexProps } from '../../Layouts/Flex'
 import { cn } from '../../../Utils/Helpers'
 import { createPreset } from '../../../../Utils/CreatePreset'
+import { useEffect } from 'preact/hooks'
 
 export interface ITabGroupProps extends Omit<IFlexProps, 'children' | 'as' | 'role'> {
   tabs: ITab[]

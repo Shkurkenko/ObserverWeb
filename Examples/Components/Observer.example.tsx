@@ -17,6 +17,9 @@ import { Button } from '../../Src/Components/Button'
 import { Divider } from '../../Src/Components/Typography/Divider'
 import { Skeletoned } from '../../Src/Components/Skeletoned'
 import { SignalStrength } from '../../Src/Components/SignalStrength'
+import { ScanSession } from '../../Src/Views/Components/ScannerControl'
+import { ScannerControl } from '../../Src/Views/Components/ScannerControl'
+import { ScanViewHeader } from '../../Src/Views/Components/ScanViewHeader'
 
 // ============================================================================
 // 1. ТИПЫ И КОНСТАНТЫ
@@ -53,16 +56,6 @@ interface ScannerMetric {
   status: MetricStatus
   description?: string
   unit?: string
-}
-
-interface ScanSession {
-  id: string
-  startTime: Date
-  duration: number // seconds
-  networksFound: number
-  frequencyRange: { min: number; max: number }
-  isActive: boolean
-  scanMode: 'quick' | 'full' | 'continuous'
 }
 
 // Константы для генерации реалистичных данных
@@ -102,17 +95,6 @@ const getSignalStatus = (dbm: number): SignalStatus => {
   return 'none'
 }
 
-const formatDuration = (seconds: number): string => {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const secs = seconds % 60
-
-  if (hours > 0) {
-    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-  }
-  return `${minutes}:${secs.toString().padStart(2, '0')}`
-}
-
 const formatTimeAgo = (date: Date): string => {
   const now = new Date()
   const diffMs = now.getTime() - date.getTime()
@@ -125,18 +107,18 @@ const formatTimeAgo = (date: Date): string => {
 }
 
 // ============================================================================
-// 3. СКЕЛЕТОН КОМПОНЕНТЫ (ЧИСТЫЕ, АНИМИРОВАННЫЕ)
+// 3. СКЕЛЕТОН КОМПОНЕНТЫ
 // ============================================================================
 
 const MetricCardSkeleton = () => (
   <Card className='border border-outline-variant/50 bg-surface-container p-6'>
     <div className='flex items-start justify-between'>
       <div className='space-y-3 flex-1'>
-        <div className='h-4 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-3/4 animate-pulse' />
-        <div className='h-10 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-1/2 animate-pulse' />
-        <div className='h-3 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-1/3 animate-pulse' />
+        <div className='h-4 from-surface-container-high to-surface-container rounded-lg w-3/4 animate-pulse' />
+        <div className='h-10 from-surface-container-high to-surface-container rounded-lg w-1/2 animate-pulse' />
+        <div className='h-3 from-surface-container-high to-surface-container rounded-lg w-1/3 animate-pulse' />
       </div>
-      <div className='w-12 h-12 bg-gradient-to-r from-surface-container-high to-surface-container rounded-xl animate-pulse' />
+      <div className='w-12 h-12 from-surface-container-high to-surface-container rounded-xl animate-pulse' />
     </div>
   </Card>
 )
@@ -146,13 +128,13 @@ const NetworkCardSkeleton = () => (
     <div className='flex items-start justify-between mb-4'>
       <div className='space-y-2 flex-1'>
         <div className='flex gap-2'>
-          <div className='h-6 bg-gradient-to-r from-surface-container-high to-surface-container rounded-full w-16 animate-pulse' />
-          <div className='h-6 bg-gradient-to-r from-surface-container-high to-surface-container rounded-full w-20 animate-pulse' />
+          <div className='h-6 rounded-full w-16 animate-pulse' />
+          <div className='h-6 rounded-full w-20 animate-pulse' />
         </div>
-        <div className='h-6 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-2/3 animate-pulse' />
-        <div className='h-4 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-1/2 animate-pulse' />
+        <div className='h-6 rounded-lg w-2/3 animate-pulse' />
+        <div className='h-4 rounded-lg w-1/2 animate-pulse' />
       </div>
-      <div className='w-16 h-12 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg animate-pulse' />
+      <div className='w-16 h-12 rounded-lg animate-pulse' />
     </div>
 
     <Divider className='my-4' />
@@ -160,59 +142,17 @@ const NetworkCardSkeleton = () => (
     <Grid columns={2} gap='md'>
       {[...Array(4)].map((_, i) => (
         <div key={i} className='space-y-2'>
-          <div className='h-3 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-2/3 animate-pulse' />
-          <div className='h-4 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-full animate-pulse' />
+          <div className='h-3 rounded-lg w-2/3 animate-pulse' />
+          <div className='h-4 rounded-lg w-full animate-pulse' />
         </div>
       ))}
     </Grid>
 
     <div className='mt-5 flex justify-between items-center'>
-      <div className='h-3 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-1/3 animate-pulse' />
-      <div className='h-8 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-20 animate-pulse' />
+      <div className='h-3 rounded-lg w-1/3 animate-pulse' />
+      <div className='h-8 rounded-lg w-20 animate-pulse' />
     </div>
   </Card>
-)
-
-const ScannerControlSkeleton = () => (
-  <Card className='border border-outline-variant/50 bg-surface-container p-6'>
-    <div className='flex items-center justify-between mb-6'>
-      <div className='flex items-center gap-4'>
-        <div className='w-12 h-12 bg-gradient-to-r from-surface-container-high to-surface-container rounded-xl animate-pulse' />
-        <div className='space-y-2'>
-          <div className='h-5 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-40 animate-pulse' />
-          <div className='h-3 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-60 animate-pulse' />
-        </div>
-      </div>
-      <div className='flex gap-2'>
-        <div className='h-10 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-32 animate-pulse' />
-        <div className='h-10 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-28 animate-pulse' />
-      </div>
-    </div>
-
-    <Divider />
-
-    <Grid columns={3} gap='lg' className='mt-6'>
-      {[...Array(3)].map((_, i) => (
-        <div key={i} className='text-center p-4'>
-          <div className='h-8 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-24 mx-auto mb-2 animate-pulse' />
-          <div className='h-3 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-16 mx-auto animate-pulse' />
-        </div>
-      ))}
-    </Grid>
-  </Card>
-)
-
-const HeaderSkeleton = () => (
-  <div className='flex items-center justify-between'>
-    <div className='flex items-center gap-4'>
-      <div className='w-14 h-14 bg-gradient-to-r from-surface-container-high to-surface-container rounded-xl animate-pulse' />
-      <div className='space-y-2'>
-        <div className='h-7 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-56 animate-pulse' />
-        <div className='h-4 bg-gradient-to-r from-surface-container-high to-surface-container rounded-lg w-40 animate-pulse' />
-      </div>
-    </div>
-    <div className='h-9 bg-gradient-to-r from-surface-container-high to-surface-container rounded-full w-28 animate-pulse' />
-  </div>
 )
 
 // ============================================================================
@@ -417,127 +357,6 @@ const NetworkCard = ({ network, onAnalyze, loading = false }: NetworkCardProps) 
               </div>
             </Button>
           )}
-        </div>
-      </Card>
-    </Skeletoned>
-  )
-}
-
-interface ScannerControlProps {
-  isScanning: boolean
-  isLoading: boolean
-  session: ScanSession
-  onStartScan: () => void
-  onStopScan: () => void
-  onClearData?: () => void
-  onExportData?: () => void
-}
-
-const ScannerControl = ({
-  isScanning,
-  isLoading,
-  session,
-  onStartScan,
-  onStopScan,
-  onClearData,
-  onExportData,
-}: ScannerControlProps) => {
-  return (
-    <Skeletoned isLoading={isLoading} skeleton={<ScannerControlSkeleton />}>
-      <Card className='border border-outline-variant/50 bg-surface-container'>
-        <div className='p-6'>
-          <div className='flex items-center justify-between mb-6'>
-            <div className='flex items-center gap-4'>
-              <div
-                className={`relative p-3 rounded-xl ${isScanning ? 'bg-primary/10 animate-pulse' : 'bg-surface-container-high'}`}
-              >
-                <Icon size='xl' className={isScanning ? 'text-primary' : 'text-on-surface-variant'}>
-                  {isScanning ? '📡' : '⏸️'}
-                </Icon>
-                {isScanning && (
-                  <>
-                    <span className='absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-ping' />
-                    <span className='absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full' />
-                  </>
-                )}
-              </div>
-
-              <div>
-                <Text bold className='text-lg text-on-surface'>
-                  {isScanning ? 'Сканирование активно' : 'Сканирование остановлено'}
-                </Text>
-                <Caption className='text-on-surface-variant mt-1'>
-                  {isScanning
-                    ? `Режим: ${session.scanMode} • Диапазон: ${session.frequencyRange.min}-${session.frequencyRange.max} MHz`
-                    : 'Нажмите "Запуск" для начала сканирования'}
-                </Caption>
-              </div>
-            </div>
-
-            <div className='flex gap-3'>
-              {onExportData && (
-                <Button
-                  variant='outline'
-                  onClick={onExportData}
-                  disabled={isLoading}
-                  leftIcon={<Icon size='sm'>📊</Icon>}
-                  className='border-outline-variant hover:border-primary'
-                >
-                  Экспорт
-                </Button>
-              )}
-
-              {onClearData && !isScanning && (
-                <Button
-                  variant='outline'
-                  onClick={onClearData}
-                  disabled={isLoading}
-                  leftIcon={<Icon size='sm'>🗑️</Icon>}
-                  className='border-outline-variant hover:border-error text-error hover:text-error'
-                >
-                  Очистить
-                </Button>
-              )}
-
-              <Button
-                variant={isScanning ? 'danger' : 'primary'}
-                onClick={isScanning ? onStopScan : onStartScan}
-                loading={isLoading}
-                leftIcon={isScanning ? <Icon size='sm'>⏸️</Icon> : <Icon size='sm'>▶️</Icon>}
-                className='min-w-[140px]'
-              >
-                {isScanning ? 'Остановить' : 'Запуск'}
-              </Button>
-            </div>
-          </div>
-
-          <Divider />
-
-          <Grid columns={3} gap='lg' className='mt-6'>
-            <div className='text-center p-4'>
-              <Text bold className='text-3xl text-primary font-mono'>
-                {formatDuration(session.duration)}
-              </Text>
-              <Caption className='text-on-surface-variant mt-1'>Длительность</Caption>
-            </div>
-
-            <div className='text-center p-4'>
-              <Text bold className='text-3xl text-secondary font-mono'>
-                {session.networksFound}
-              </Text>
-              <Caption className='text-on-surface-variant mt-1'>Обнаружено сетей</Caption>
-            </div>
-
-            <div className='text-center p-4'>
-              <div className='flex items-center justify-center gap-2'>
-                <Text bold className='text-3xl text-tertiary font-mono'>
-                  {isScanning ? 'LIVE' : 'IDLE'}
-                </Text>
-                {isScanning && <span className='w-2 h-2 bg-tertiary rounded-full animate-pulse' />}
-              </div>
-              <Caption className='text-on-surface-variant mt-1'>Статус</Caption>
-            </div>
-          </Grid>
         </div>
       </Card>
     </Skeletoned>
@@ -1058,53 +877,21 @@ export function RfScannerFinal() {
   )
 
   return (
-    <Container size='xl' padding='lg'>
+    <Container size='full' padding='lg'>
       {/* Header */}
-      <div className='mb-8'>
-        <Skeletoned isLoading={isLoading} skeleton={<HeaderSkeleton />}>
-          <div className='flex items-center justify-between mb-6'>
-            <div className='flex items-center gap-4'>
-              <div className='p-3 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20'>
-                <Icon size='2xl' className='text-primary'>
-                  📡
-                </Icon>
-              </div>
+      <ScanViewHeader
+        title='Сканирование #1'
+        description='Результаты сканирования'
+        isLoading={isLoading}
+        isScanning={isScanning}
+      />
 
-              <div>
-                <Heading level={1} className='text-3xl font-bold text-on-surface tracking-tight'>
-                  STC Signal Scout Pro
-                </Heading>
-                <Caption className='text-on-surface-variant mt-1'>
-                  Professional RF Spectrum Analyzer • Forensic Design System
-                </Caption>
-              </div>
-            </div>
-
-            <Badge
-              variant={isScanning ? 'primary' : 'outline'}
-              size='lg'
-              className={`font-medium ${isScanning ? 'animate-pulse' : ''}`}
-            >
-              <div className='flex items-center gap-2'>
-                <Icon size='sm'>{isScanning ? '⚡' : '⏸️'}</Icon>
-                {isScanning ? 'СКАНИРУЕТ' : 'НА ПАУЗЕ'}
-              </div>
-            </Badge>
-          </div>
-        </Skeletoned>
-
-        <Divider />
-      </div>
-
-      {/* Navigation */}
-      <div className='mb-8'>
-        <UnderlineTabs
-          tabs={scannerTabs}
-          activeTabId={activeTab}
-          onTabClick={(tab) => setActiveTab(tab.id)}
-          fullWidth
-        />
-      </div>
+      <UnderlineTabs
+        tabs={scannerTabs}
+        activeTabId={activeTab}
+        onTabClick={(tab) => setActiveTab(tab.id)}
+        fullWidth
+      />
 
       {/* Main Content */}
       <Section>{renderDashboard()}</Section>
@@ -1114,7 +901,7 @@ export function RfScannerFinal() {
         <Grid columns={2} lg={4} gap='lg'>
           <div className='space-y-1'>
             <Caption className='text-on-surface-variant'>Сессия</Caption>
-            <Text className='font-mono font-medium text-on-surface' title={scanSession.id}>
+            <Text className='font-mono font-medium text-on-surface'>
               {scanSession.id.slice(0, 12)}...
             </Text>
           </div>

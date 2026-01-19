@@ -7,6 +7,7 @@ import './style.sass'
 
 interface TaskSidebarItem {
   task: ReoSpace.IScanTask
+  onClick?: () => void
 }
 
 export function TaskSidebarItem({ task }: TaskSidebarItem) {

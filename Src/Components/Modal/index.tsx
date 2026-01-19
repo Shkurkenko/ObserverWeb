@@ -41,8 +41,8 @@ export function Modal({ isOpen, onClose, children, title, width, height }: Modal
         <div
           className='modal'
           style={{
-            width: width || '50vw',
-            height: height || '60vh',
+            width: width || '60vw',
+            height: height || '80vh',
           }}
         >
           {title && (
