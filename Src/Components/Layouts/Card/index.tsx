@@ -4,12 +4,19 @@ import { cn } from '../../../Utils/Helpers'
 
 export interface ICardProps extends Omit<ISurfaceProps, 'variant' | 'elevation' | 'rounded'> {
   title?: string
+
   subtitle?: string
+
   actions?: ComponentChildren
+
   header?: ComponentChildren
+
   footer?: ComponentChildren
+
   variant?: 'default' | 'elevated' | 'filled' | 'outlined'
+
   accent?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'none'
+
   compact?: boolean
 }
 

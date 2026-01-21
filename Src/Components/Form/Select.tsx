@@ -2,26 +2,40 @@
 import { FunctionalComponent } from 'preact'
 import { Label } from '../Typography'
 import { cn } from '../../Utils/Helpers'
+
 import './Form.sass'
 
 export interface ISelectOption {
   value: string
+
   label: string
+
   disabled?: boolean
 }
 
 export interface ISelectProps {
   label?: string
+
   value: string
+
   onChange: (value: string) => void
+
   options: ISelectOption[]
+
   error?: string
+
   helperText?: string
+
   disabled?: boolean
+
   required?: boolean
+
   className?: string
+
   id?: string
+
   name?: string
+
   placeholder?: string
 }
 

@@ -14,8 +14,11 @@ export type ContainerPadding =
 
 export interface IContainerProps extends IBoxProps {
   size?: ContainerSizeOptions
+
   padding?: ContainerPadding
+
   centered?: boolean
+
   fullHeight?: boolean
 }
 
@@ -23,10 +26,15 @@ export type ContainerSizeOptions = 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'fluid'
 
 const sizeClasses: Record<ContainerSizeOptions, string> = {
   sm: 'max-w-screen-sm',
+
   md: 'max-w-screen-md',
+
   lg: 'max-w-screen-lg',
+
   xl: 'max-w-screen-xl',
+
   full: 'w-full',
+
   fluid: 'max-w-screen-2xl',
 }
 

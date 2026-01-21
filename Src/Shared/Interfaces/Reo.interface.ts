@@ -2,11 +2,11 @@ export namespace ReoSpace {
   export interface IScanTask {
     id: string
     name: string
-    date: string
-    time: string
     currentScanCycle: number
     types: IScanTypes[]
     status: IScanStatusTypes
+    createdAt: string // new Date().toISOString()
+    duration: number
   }
 
   export enum IRoles {
@@ -27,6 +27,7 @@ export namespace ReoSpace {
     Bluetooth = 'Bluetooth',
     Wifi = 'WiFi',
     FiveG = '5G',
+    Unknown = 'Unknown'
   }
 
   export enum IScanStatusTypes {

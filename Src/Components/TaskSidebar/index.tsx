@@ -1,6 +1,6 @@
 // src/Components/TaskSidebar/index.tsx
 import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
-import { TaskSidebarItem } from './TaskSidebaritem'
+import { TaskSidebarItem } from './TaskSidebarItem'
 import { AddTask } from './TaskSidebarItemAdd'
 import { useTasks } from './Hooks/UseTasks'
 import { useScanView } from '../../Hooks/UseScanView'

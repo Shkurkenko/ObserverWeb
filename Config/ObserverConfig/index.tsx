@@ -8,6 +8,35 @@ import { TableSpace } from '../../Src/Shared/Interfaces/Table.interface'
 import { IReoColumnsModelsConfig } from '../../Src/Shared/Interfaces/Main.interface'
 
 export namespace ObserverConfig {
+  export interface IDeviceConfig {
+    host: string
+    port: number
+    protocol: 'ws' | 'wss'
+    autoReconnect: boolean
+    reconnectInterval: number
+    maxReconnectAttempts: number
+  }
+
+  export const serviceConfigs = {
+    development: {
+      host: 'localhost',
+      posrt: 8080,
+      protocol: 'ws' as const,
+      autoReconnect: true,
+      reconnectInterval: 3000,
+      maxReconnectAttempts: 5,
+    },
+
+    production: {
+      host: '172.16.48.123',
+      port: 8080,
+      protocol: 'ws' as const,
+      autoReconnect: true,
+      reconnectInterval: 10000,
+      maxReconnectAttempts: 3,
+    },
+  }
+
   export const AlertsConfig = {
     general: {
       transition: 0.2,
