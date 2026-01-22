@@ -4,6 +4,7 @@ import { Text } from '../Typography/Text'
 import { Caption } from '../Typography/Caption'
 import { Icon } from '../Typography/Icon'
 import { Button } from '../Button'
+import { cn } from '../../Utils/Helpers'
 
 interface ActionCardProps {
   title: string
@@ -23,8 +24,10 @@ export const ActionCard = ({
   className,
 }: ActionCardProps) => (
   <Card
-    variant='filled'
-    className={`group transition-all hover:border-primary/50 hover:bg-surface-container-high ${className}`}
+    className={cn(
+      'group border border-outline-variant/50 bg-surface-container p-6 transition-all hover:border-primary/50 hover:bg-surface-container-high',
+      className,
+    )}
   >
     <div className='flex items-start justify-between'>
       <div className='space-y-2'>
@@ -44,7 +47,7 @@ export const ActionCard = ({
           </div>
         </div>
       </div>
-      {onAction && actionLabel && (
+      {onAction && (
         <Button
           variant='outline'
           size='sm'

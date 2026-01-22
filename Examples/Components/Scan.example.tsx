@@ -83,7 +83,7 @@ export function RadioScanner() {
   // Настройки подключения
   const [connectionSettings, setConnectionSettings] = useState({
     host: 'localhost',
-    port: '8889', // Изменено с 8888 на 8889 (WebSocket порт)
+    port: '8889',
     autoConnect: true,
   })
 

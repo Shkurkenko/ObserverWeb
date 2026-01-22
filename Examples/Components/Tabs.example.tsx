@@ -1,4 +1,3 @@
-// Boilerplates/TabsTest.tsx
 import { useState } from 'preact/hooks'
 import {
   TabGroup,
@@ -9,19 +8,18 @@ import {
 } from '../../Src/Components/Tabs/TabGroup'
 import { Card } from '../../Src/Components/Layouts/Card'
 import { Container } from '../../Src/Components/Layouts/Container'
-import { Section } from '../../Src/Components/Layouts/Section/Section'
 import { Stack } from '../../Src/Components/Layouts/Stack'
 import { Grid } from '../../Src/Components/Layouts/Grid'
 import { Heading } from '../../Src/Components/Typography/Heading'
 import { Text } from '../../Src/Components/Typography/Text'
 import { Caption } from '../../Src/Components/Typography/Caption'
 import { Icon } from '../../Src/Components/Typography/Icon'
-import { Label } from '../../Src/Components/Typography/Label'
 import { Badge } from '../../Src/Components/Badge'
 import { Button } from '../../Src/Components/Button'
 import { Flex } from '../../Src/Components/Layouts/Flex'
+import { MetricCard } from '../../Src/Components/MetricCard'
+import { ActionCard } from '../../Src/Components/ActionCard'
 
-// Данные для табов с улучшенной структурой
 const dashboardTabs = [
   {
     id: 'overview',
@@ -138,71 +136,6 @@ const verticalNavTabs = [
   },
 ]
 
-// Компонент метрики в стиле shadcn
-const MetricCard = ({ title, value, trend, icon }: any) => (
-  <Card className='relative overflow-hidden border border-outline-variant/50 bg-surface-container p-6 transition-all hover:shadow-lg hover:-translate-y-1'>
-    <div className='flex items-start justify-between'>
-      <div>
-        <Label className='text-sm font-medium text-on-surface-variant mb-2'>{title}</Label>
-        <Text bold className='text-3xl font-bold text-on-surface'>
-          {value}
-        </Text>
-        {trend && (
-          <div className='mt-2 flex items-center gap-1'>
-            <Icon size='sm' className={trend > 0 ? 'text-green-500' : 'text-red-500'}>
-              {trend > 0 ? '↑' : '↓'}
-            </Icon>
-            <Caption className={trend > 0 ? 'text-green-600' : 'text-red-600'}>
-              {Math.abs(trend)}%
-            </Caption>
-          </div>
-        )}
-      </div>
-      <div className='rounded-lg bg-primary/10 p-2'>
-        <Icon size='lg' className='text-primary'>
-          {icon}
-        </Icon>
-      </div>
-    </div>
-  </Card>
-)
-
-// Карточка действия в стиле shadcn
-const ActionCard = ({ title, description, actionLabel, onAction, icon }: any) => (
-  <Card className='group border border-outline-variant/50 bg-surface-container p-6 transition-all hover:border-primary/50 hover:bg-surface-container-high'>
-    <div className='flex items-start justify-between'>
-      <div className='space-y-2'>
-        <div className='flex items-center gap-3'>
-          {icon && (
-            <div className='rounded-lg bg-primary/10 p-2'>
-              <Icon size='md' className='text-primary'>
-                {icon}
-              </Icon>
-            </div>
-          )}
-          <div>
-            <Text bold className='text-on-surface'>
-              {title}
-            </Text>
-            <Caption className='mt-1 text-on-surface-variant'>{description}</Caption>
-          </div>
-        </div>
-      </div>
-      {onAction && (
-        <Button
-          variant='outline'
-          size='sm'
-          onClick={onAction}
-          className='opacity-0 group-hover:opacity-100 transition-all duration-200'
-        >
-          {actionLabel}
-        </Button>
-      )}
-    </div>
-  </Card>
-)
-
-// Dashboard Content
 const DashboardContent = ({ activeTab }: { activeTab: string }) => {
   const metrics = [
     { title: 'Посетители', value: '1.2K', trend: 12, icon: '👥' },
@@ -232,7 +165,7 @@ const DashboardContent = ({ activeTab }: { activeTab: string }) => {
                   Активный
                 </Badge>
               </div>
-              <div className='h-40 rounded-lg bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center'>
+              <div className='h-40 rounded-lg bg-lenear-to-br from-primary/5 to-secondary/5 flex items-center justify-center'>
                 <Icon size='2xl' className='text-primary/50'>
                   📈
                 </Icon>
@@ -276,7 +209,7 @@ const DashboardContent = ({ activeTab }: { activeTab: string }) => {
 
   if (activeTab === 'settings') {
     return (
-      <Card className='border-2 border-dashed border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8 text-center'>
+      <Card className='border-2 border-dashed border-primary/20 bg-lenear-to-br from-primary/5 to-transparent p-8 text-center'>
         <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10'>
           <Icon size='2xl' className='text-primary'>
             ⚙️
@@ -296,7 +229,6 @@ const DashboardContent = ({ activeTab }: { activeTab: string }) => {
     )
   }
 
-  // Overview
   return (
     <div className='space-y-8'>
       <div className='space-y-2'>
@@ -329,7 +261,7 @@ const UserContent = ({ activeTab }: { activeTab: string }) => {
       <Grid columns={1} lg={2} gap='lg'>
         <Card className='border border-outline-variant/50 p-6'>
           <Flex align='center' gap='lg'>
-            <div className='flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70'>
+            <div className='flex h-16 w-16 items-center justify-center rounded-full bg-lenear-to-br from-primary to-primary/70'>
               <Icon size='xl' className='text-on-primary'>
                 👤
               </Icon>
@@ -533,7 +465,7 @@ const ProductContent = ({ activeTab }: { activeTab: string }) => {
           </div>
         </Card>
 
-        <Card className='border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-6'>
+        <Card className='border-2 border-primary/20 bg-lenear-to-br from-primary/5 to-transparent p-6'>
           <Text bold className='text-on-surface mb-4'>
             Цена и наличие
           </Text>
@@ -866,7 +798,7 @@ export function TabsTest() {
                 </div>
               </div>
 
-              <div className='rounded-lg bg-gradient-to-br from-primary/5 to-secondary/5 p-6 text-center'>
+              <div className='rounded-lg bg-lenear-to-br from-primary/5 to-secondary/5 p-6 text-center'>
                 <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10'>
                   <Icon size='2xl' className='text-primary'>
                     🎯
@@ -885,8 +817,8 @@ export function TabsTest() {
 
         {/* Заключение */}
         <section>
-          <Card className='border-none bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10 p-8 text-center'>
-            <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70'>
+          <Card className='border-none bg-lenear-to-br from-primary/10 via-primary/5 to-secondary/10 p-8 text-center'>
+            <div className='mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-lenear-to-br from-primary to-primary/70'>
               <Icon size='2xl' className='text-on-primary'>
                 ✨
               </Icon>

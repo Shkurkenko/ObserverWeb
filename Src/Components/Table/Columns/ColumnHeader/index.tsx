@@ -1,5 +1,4 @@
-import { MutableRef, useCallback, useEffect, useRef, useState } from 'preact/hooks'
-import { useTable } from '../../Hooks/UseTable'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
 
 import './style.sass'
@@ -18,7 +17,6 @@ const arrowAngleClassStates = {
 export function ColumnHeader({ header }: IColumnHeaderProps) {
   const headerRef = useRef<HTMLDivElement | null>(null)
   const [currentState, setCurrentState] = useState(0)
-  const { setHeaderRefs } = useTable()
 
   const handleColumnHeaderClick = useCallback(() => {
     setCurrentState((prevCount) => (prevCount + 1) % 3)

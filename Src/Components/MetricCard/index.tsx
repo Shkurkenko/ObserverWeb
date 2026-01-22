@@ -4,6 +4,7 @@ import { Label } from '../Typography/Label'
 import { Text } from '../Typography/Text'
 import { Caption } from '../Typography/Caption'
 import { Icon } from '../Typography/Icon'
+import { cn } from '../../Utils/Helpers'
 
 interface MetricCardProps {
   title: string
@@ -15,8 +16,10 @@ interface MetricCardProps {
 
 export const MetricCard = ({ title, value, trend, icon, className }: MetricCardProps) => (
   <Card
-    variant='elevated'
-    className={`relative overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 ${className}`}
+    className={cn(
+      'relative overflow-hidden border border-outline-variant/50 bg-surface-container p-6 transition-all hover:shadow-lg hover:-translate-y-1',
+      className,
+    )}
   >
     <div className='flex items-start justify-between'>
       <div>
@@ -24,7 +27,7 @@ export const MetricCard = ({ title, value, trend, icon, className }: MetricCardP
         <Text bold className='text-3xl font-bold text-on-surface'>
           {value}
         </Text>
-        {trend !== undefined && (
+        {trend && (
           <div className='mt-2 flex items-center gap-1'>
             <Icon size='sm' className={trend > 0 ? 'text-green-500' : 'text-red-500'}>
               {trend > 0 ? '↑' : '↓'}
