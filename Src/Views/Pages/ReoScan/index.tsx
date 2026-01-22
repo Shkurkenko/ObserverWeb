@@ -1,13 +1,10 @@
-// src/Views/Pages/ReoScan.tsx
 import { useEffect, useState } from 'preact/hooks'
 import { useScanView } from '../../../Hooks/UseScanView'
 import { useTasks } from '../../../Components/TaskSidebar/Hooks/UseTasks'
-import { TaskSidebar } from '../../../Components/TaskSidebar'
 import { ReoContentView } from '../../Components/ReoContentView'
 import { MockGenHelpers } from '../../../Utils/MockGen'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 
 export function ReoScan() {
@@ -44,7 +41,7 @@ export function ReoScan() {
             tabsModel: [
               {
                 id: networkType,
-                label: ScanConfigHelpers.getTitleForNetworkType(networkType),
+                label: networkType as string,
                 icon: ScanConfigHelpers.getIconForNetworkType(networkType),
                 badge: demoRows.length,
                 data: {

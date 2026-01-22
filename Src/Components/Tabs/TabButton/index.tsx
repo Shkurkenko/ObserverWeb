@@ -1,4 +1,3 @@
-// TabButton.tsx
 import { ComponentChild, FunctionalComponent } from 'preact'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { Icon } from '../../Typography'

@@ -1,8 +1,7 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'eventemitter3'
 import { IRawScanMessage, IParsedScanMessage } from '.'
 import { ScanReoDataParser } from './ReoParser'
 import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
-import { THEMES_REGISTRY_OUTPUT_FILE_PATH } from '../../../Config/Global.config'
 
 export interface IScanClientConfig {
   host: string
@@ -21,9 +20,9 @@ export class ScanClient extends EventEmitter {
 
   private isConnected = false
 
-  private reconnectAttemts = 0
+  private reconnectAttempts = 0
 
-  private reconnectTimer: NodeJS.Timeout | null = null
+  private reconnectTimer: ReturnType<typeof setTimeout> | null = null
 
   private activeScanTypes: ReoSpace.IScanTypes[] = []
 
@@ -51,7 +50,7 @@ export class ScanClient extends EventEmitter {
         this.socket.onopen = () => {
           console.log('✅ Connected to scan device')
           this.isConnected = true
-          this.reconnectAttemts = 0
+          this.reconnectAttempts = 0
           this.emit('connected')
           resolve()
         }
@@ -129,16 +128,19 @@ export class ScanClient extends EventEmitter {
   }
 
   private scheduleReconnect(): void {
-    if (this.reconnectAttemts >= (this.config.maxReconnectAttempts || 10)) {
-      console.error('Max reconection attemts reached')
+    if (this.reconnectAttempts >= (this.config.maxReconnectAttempts || 10)) {
+      console.error('Max reconnection attempts reached')
       return
     }
 
-    this.reconnectAttemts++
+    this.reconnectAttempts++
     const delay = this.config.reconnectInterval || 5000
 
     this.reconnectTimer = setTimeout(() => {
-      this.connect().catch(() => this.scheduleReconnect)
+      this.connect().catch((error) => {
+        console.error('Reconnect failed:', error)
+        this.scheduleReconnect()
+      })
     }, delay)
   }
 

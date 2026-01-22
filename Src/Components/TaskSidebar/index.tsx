@@ -45,7 +45,7 @@ export function TaskSidebar() {
         tabsModel: [
           {
             id: networkType,
-            label: ScanConfigHelpers.getTitleForNetworkType(networkType),
+            label: networkType as string,
             icon: ScanConfigHelpers.getIconForNetworkType(networkType),
             badge: 0,
             data: {

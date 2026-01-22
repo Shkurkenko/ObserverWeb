@@ -5,15 +5,14 @@ import { IMenubarItem } from '../../Menubar/MenubarItem'
 import { SlideSidebar } from '..'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { useSidebar } from '../Hooks/UseSidebar'
-
-import './style.sass'
+import { IMenubarSetup } from '../../../Shared/Interfaces/Main.interface'
 
 const DEFAULT_MENUBAR_CONFIG: IMenubarModel = {
   currentIndex: 0,
   items: [
     {
       id: 0,
-      role: 'TaskManager',
+      role: IMenubarSetup.TaskManager,
       active: false,
       icon: (
         <svg
@@ -37,7 +36,7 @@ const DEFAULT_MENUBAR_CONFIG: IMenubarModel = {
     },
     {
       id: 1,
-      role: 'Notifications',
+      role: IMenubarSetup.Notifications,
       active: false,
       icon: (
         <svg

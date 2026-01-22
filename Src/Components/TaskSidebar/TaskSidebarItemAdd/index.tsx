@@ -134,9 +134,9 @@ export function AddTask() {
   }
 
   // Доступные типы для выбора
-  const availableTypes = SCAN_TYPES.filter((scanType) => !hasActiveScanOfType(scanType.id))
+  // const availableTypes = SCAN_TYPES.filter((scanType) => !hasActiveScanOfType(scanType.id))
   const selectedCount = selectedScanTypes.length
-  const availableCount = availableTypes.length
+  // const availableCount = availableTypes.length
 
   return (
     <div className='add-task-container'>
@@ -199,7 +199,7 @@ export function AddTask() {
                   type='button'
                   onClick={selectAllAvailable}
                   className='action-btn select-all mr-2'
-                  disabled={availableCount === 0}
+                  // disabled={availableCount === 0}
                 >
                   Выбрать все
                 </button>
@@ -216,14 +216,14 @@ export function AddTask() {
 
             <div className='scan-types-grid'>
               {SCAN_TYPES.map((scanType) => {
-                const isActive = hasActiveScanOfType(scanType.type)
+                // const isActive = hasActiveScanOfType(scanType.type)
                 const isSelected = selectedScanTypes.includes(scanType.type)
 
                 return (
                   <div
-                    key={scanType.id}
-                    className={`scan-type-card ${isSelected ? 'selected' : ''} ${isActive ? 'active' : ''}`}
-                    onClick={isActive ? undefined : () => toggleScanType(scanType.id)}
+                    key={scanType.name}
+                    className={`scan-type-card ${isSelected ? 'selected' : ''} ${'active'}`}
+                    onClick={() => toggleScanType(scanType.name as ReoSpace.IScanTypes)}
                   >
                     <div className='scan-type-icon' style={{ color: scanType.color }}>
                       <span className='icon-emoji'>{scanType.icon}</span>
@@ -243,7 +243,7 @@ export function AddTask() {
                       </Text>
                     </div>
 
-                    <div className='scan-type-status'>
+                    {/* <div className='scan-type-status'>
                       {isActive ? (
                         <div className='status-badge active'>
                           <Icon size='xs'>⏳</Icon>
@@ -259,7 +259,7 @@ export function AddTask() {
                           <span>Доступно</span>
                         </div>
                       )}
-                    </div>
+                    </div> */}
 
                     {isSelected && <div className='selection-indicator'></div>}
                   </div>

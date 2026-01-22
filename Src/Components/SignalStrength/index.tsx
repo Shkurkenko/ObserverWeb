@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'preact/hooks'
-import { inRange } from '../../Utils/Helpers'
+// SignalStrength.tsx
+import { useMemo } from 'preact/hooks'
 import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
-import { NoSignIcon } from '../Icons/NoSignIcon'
 
-import './style.sass'
-
+// Карта сигналов
 export const SignalStrengthMap: Record<ReoSpace.ISignalLevels, ReoSpace.ISignalRange> = {
   [ReoSpace.ISignalLevels.Excellent]: {
-    beginValue: Number.POSITIVE_INFINITY,
+    beginValue: -50,
     endValue: -70,
   },
   [ReoSpace.ISignalLevels.Good]: {
@@ -15,7 +13,7 @@ export const SignalStrengthMap: Record<ReoSpace.ISignalLevels, ReoSpace.ISignalR
     endValue: -85,
   },
   [ReoSpace.ISignalLevels.Fair]: {
-    beginValue: -86,
+    beginValue: -85,
     endValue: -100,
   },
   [ReoSpace.ISignalLevels.Poor]: {
@@ -24,101 +22,246 @@ export const SignalStrengthMap: Record<ReoSpace.ISignalLevels, ReoSpace.ISignalR
   },
   [ReoSpace.ISignalLevels.No]: {
     beginValue: -110,
-    endValue: Number.NEGATIVE_INFINITY,
+    endValue: -150,
   },
 }
 
-export const SignalSticksColorMap: Record<ReoSpace.ISignalLevels, string> = {
-  [ReoSpace.ISignalLevels.Excellent]: 'green',
-  [ReoSpace.ISignalLevels.Good]: 'lightgreen',
-  [ReoSpace.ISignalLevels.Fair]: 'yellow',
-  [ReoSpace.ISignalLevels.Poor]: 'orange',
-  [ReoSpace.ISignalLevels.No]: 'red',
+// Цвета для уровней сигнала
+export const SignalLevelColorMap: Record<ReoSpace.ISignalLevels, string> = {
+  [ReoSpace.ISignalLevels.Excellent]: '#10B981', // emerald-500
+  [ReoSpace.ISignalLevels.Good]: '#22C55E', // green-500
+  [ReoSpace.ISignalLevels.Fair]: '#EAB308', // yellow-500
+  [ReoSpace.ISignalLevels.Poor]: '#F97316', // orange-500
+  [ReoSpace.ISignalLevels.No]: '#EF4444', // red-500
 }
 
+// Цвета для неактивных палочек
+const INACTIVE_COLOR = '#4B5563' // gray-600
+const INACTIVE_OPACITY = 0.3
+
+// Получаем уровень сигнала по dBm
 export function getSignalStrengthStatus(dbm: number): ReoSpace.ISignalLevels {
-  for (const key in SignalStrengthMap) {
-    if (
-      inRange(
-        dbm,
-        SignalStrengthMap[key as ReoSpace.ISignalLevels].beginValue,
-        SignalStrengthMap[key as ReoSpace.ISignalLevels].endValue,
-      )
-    ) {
-      return key as ReoSpace.ISignalLevels
-    }
-  }
+  if (dbm >= -70) return ReoSpace.ISignalLevels.Excellent
+  if (dbm >= -85) return ReoSpace.ISignalLevels.Good
+  if (dbm >= -100) return ReoSpace.ISignalLevels.Fair
+  if (dbm >= -110) return ReoSpace.ISignalLevels.Poor
   return ReoSpace.ISignalLevels.No
 }
 
-export function getStickBackgroundColor(maxDbm: number, currentStickType: ReoSpace.ISignalLevels) {
-  const currentMaxSignalStatus = getSignalStrengthStatus(maxDbm)
+// Получаем количество активных палочек (1-5)
+export function getActiveSticksCount(dbm: number): number {
+  if (dbm >= -70) return 5
+  if (dbm >= -77) return 4
+  if (dbm >= -85) return 4
+  if (dbm >= -92) return 3
+  if (dbm >= -100) return 3
+  if (dbm >= -105) return 2
+  if (dbm >= -110) return 2
+  return 1
+}
 
-  const currentColor = SignalSticksColorMap[currentMaxSignalStatus as ReoSpace.ISignalLevels]
+// Плавный цвет для палочки
+export function getStickColor(dbm: number, stickIndex: number): { color: string; opacity: number } {
+  const stickNumber = stickIndex + 1
+  const activeSticks = getActiveSticksCount(dbm)
+  const level = getSignalStrengthStatus(dbm)
 
-  return 'grey'
+  // Если палочка активна
+  if (stickNumber <= activeSticks) {
+    return {
+      color: SignalLevelColorMap[level],
+      opacity: 1,
+    }
+  }
+
+  // Если это следующая палочка после активных (для плавности)
+  if (stickNumber === activeSticks + 1) {
+    // Проверяем, близко ли значение к следующему уровню
+    const nextThreshold = getNextThreshold(dbm)
+    const progress = Math.min(Math.max((dbm - (nextThreshold + 5)) / 5, 0), 1)
+
+    return {
+      color: SignalLevelColorMap[level],
+      opacity: 0.3 + progress * 0.4,
+    }
+  }
+
+  // Неактивная палочка
+  return {
+    color: INACTIVE_COLOR,
+    opacity: INACTIVE_OPACITY,
+  }
+}
+
+// Получаем следующий порог dBm
+function getNextThreshold(dbm: number): number {
+  if (dbm >= -70) return -70
+  if (dbm >= -85) return -85
+  if (dbm >= -100) return -100
+  if (dbm >= -110) return -110
+  return -150
 }
 
 export interface SignalStrengthProps {
-  width: number
-  height: number
+  width?: number
+  height?: number
   dbm: number
+  showValue?: boolean
+  compact?: boolean
 }
 
-export function SignalStrength({ width, height, dbm }: SignalStrengthProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [sticks, setSticks] = useState<JSX.Element[]>([])
+export function SignalStrength({
+  width = 80,
+  height = 32,
+  dbm,
+  showValue = false,
+  compact = false,
+}: SignalStrengthProps) {
+  const totalSticks = 5
+  const level = getSignalStrengthStatus(dbm)
+  const activeSticks = getActiveSticksCount(dbm)
 
-  useEffect(() => {
-    if (!containerRef.current) return
+  // Рассчитываем размеры палочек
+  const stickWidth = Math.max(width / (totalSticks * (compact ? 1.5 : 2)), 4)
+  const gap = stickWidth * 0.5
+  const maxStickHeight = height * (compact ? 0.9 : 0.8)
+  const minStickHeight = height * (compact ? 0.3 : 0.2)
 
-    const container = containerRef.current
+  // Создаем палочки
+  const sticks = useMemo(() => {
+    return Array.from({ length: totalSticks }).map((_, i) => {
+      // Высота увеличивается прогрессивно
+      const heightPercentage = 0.2 + i * 0.2
+      const stickHeight = minStickHeight + (maxStickHeight - minStickHeight) * heightPercentage
 
-    const sticksWidth = container.offsetWidth * 0.5
-    const sticksHeight = container.offsetHeight * 1.2
+      const { color, opacity } = getStickColor(dbm, i)
+      const isActive = i < activeSticks
 
-    const levelsCount = Object.keys(ReoSpace.ISignalLevels).length
-    const partHeight = sticksHeight / levelsCount
-    const partWidth = sticksWidth / levelsCount
-
-    if (width !== 0 && height !== 0) {
-      const newSticks = Object.keys(ReoSpace.ISignalLevels).map((_, i) => (
-        <div
-          key={i}
-          className='signal-stick w-full h-full'
-          style={{
-            height: `${i * partHeight}px`,
-            width: `${partWidth}px`,
-            backgroundColor: getStickBackgroundColor(dbm, Object.values(ReoSpace.ISignalLevels)[i]),
-          }}
-        />
-      ))
-
-      setSticks(newSticks)
-    }
-  }, [dbm, containerRef.current?.offsetWidth, containerRef.current?.offsetHeight])
+      return {
+        key: i,
+        height: stickHeight,
+        width: stickWidth,
+        color,
+        opacity,
+        marginRight: i < totalSticks - 1 ? gap : 0,
+        isActive,
+      }
+    })
+  }, [dbm, width, height, compact])
 
   return (
-    <div
-      ref={containerRef}
-      className='signal-strength-container relative flex gap-1 w-full h-full'
-      style={{
-        width,
-        height,
-      }}
-    >
-      {sticks}
-      {getSignalStrengthStatus(dbm) === ReoSpace.ISignalLevels.No && (
-        <NoSignIcon
-          width={width * 0.4}
-          height={width * 0.4}
-          style={{
-            position: 'absolute',
-            bottom: `-${height * 0.3}px`,
-            left: 0,
-          }}
-        />
+    <div className='flex flex-col items-center'>
+      <div
+        className='flex items-end'
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      >
+        {sticks.map((stick) => (
+          <div
+            key={stick.key}
+            className='rounded-sm transition-all duration-300'
+            style={{
+              width: `${stick.width}px`,
+              height: `${stick.height}px`,
+              backgroundColor: stick.color,
+              marginRight: `${stick.marginRight}px`,
+              opacity: stick.opacity,
+              boxShadow: stick.isActive
+                ? `0 0 4px ${stick.color}80, inset 0 1px 1px rgba(255,255,255,0.1)`
+                : 'none',
+            }}
+          />
+        ))}
+      </div>
+
+      {showValue && (
+        <div className='mt-1 text-xs font-medium' style={{ color: SignalLevelColorMap[level] }}>
+          {dbm} dBm
+        </div>
       )}
     </div>
   )
+}
+
+// Компактный вариант для таблиц
+export function CompactSignalStrength({ dbm }: { dbm: number }) {
+  const totalSticks = 5
+  const activeSticks = getActiveSticksCount(dbm)
+  const level = getSignalStrengthStatus(dbm)
+  const color = SignalLevelColorMap[level]
+
+  return (
+    <div className='flex items-end' style={{ height: '16px' }}>
+      {Array.from({ length: totalSticks }).map((_, i) => {
+        const isActive = i < activeSticks
+        const height = 4 + i * 3 // 4, 7, 10, 13, 16px
+
+        return (
+          <div
+            key={i}
+            className='rounded-sm transition-colors duration-200'
+            style={{
+              width: '3px',
+              height: `${height}px`,
+              backgroundColor: isActive ? color : INACTIVE_COLOR,
+              marginRight: i < totalSticks - 1 ? '2px' : '0',
+              opacity: isActive ? 1 : INACTIVE_OPACITY,
+            }}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+// Вариант с цифровым значением
+export function SignalStrengthWithValue({ dbm }: { dbm: number }) {
+  const level = getSignalStrengthStatus(dbm)
+  const color = SignalLevelColorMap[level]
+  const label = {
+    [ReoSpace.ISignalLevels.Excellent]: 'Отлично',
+    [ReoSpace.ISignalLevels.Good]: 'Хорошо',
+    [ReoSpace.ISignalLevels.Fair]: 'Удовл.',
+    [ReoSpace.ISignalLevels.Poor]: 'Слабо',
+    [ReoSpace.ISignalLevels.No]: 'Нет',
+  }[level]
+
+  return (
+    <div className='flex items-center gap-2'>
+      <SignalStrength width={60} height={20} dbm={dbm} compact={true} />
+      <div className='flex flex-col'>
+        <span className='text-xs font-mono font-bold' style={{ color }}>
+          {dbm} dBm
+        </span>
+        <span className='text-xs text-gray-500'>{label}</span>
+      </div>
+    </div>
+  )
+}
+
+// Хук для использования уровня сигнала
+export function useSignalStrength(dbm: number) {
+  const level = getSignalStrengthStatus(dbm)
+  const activeSticks = getActiveSticksCount(dbm)
+  const color = SignalLevelColorMap[level]
+
+  const label = {
+    [ReoSpace.ISignalLevels.Excellent]: 'Отлично',
+    [ReoSpace.ISignalLevels.Good]: 'Хорошо',
+    [ReoSpace.ISignalLevels.Fair]: 'Удовл.',
+    [ReoSpace.ISignalLevels.Poor]: 'Слабо',
+    [ReoSpace.ISignalLevels.No]: 'Нет сигнала',
+  }[level]
+
+  return {
+    level,
+    activeSticks,
+    color,
+    label,
+    isGood: level === ReoSpace.ISignalLevels.Excellent || level === ReoSpace.ISignalLevels.Good,
+    isFair: level === ReoSpace.ISignalLevels.Fair,
+    isPoor: level === ReoSpace.ISignalLevels.Poor || level === ReoSpace.ISignalLevels.No,
+  }
 }

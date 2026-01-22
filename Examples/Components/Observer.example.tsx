@@ -165,9 +165,24 @@ interface MetricCardProps {
 
 const MetricCard = ({ metric, loading = false }: MetricCardProps) => {
   const statusConfig = {
-    normal: { bg: 'bg-primary/10', icon: 'text-primary', border: '' },
-    warning: { bg: 'bg-warning/10', icon: 'text-warning', border: 'border-warning/20' },
-    critical: { bg: 'bg-error/10', icon: 'text-error', border: 'border-error/20' },
+    normal: {
+      bg: 'bg-primary/10',
+      icon: 'text-primary',
+      border: '',
+      accent: 'none' as const,
+    },
+    warning: {
+      bg: 'bg-warning/10',
+      icon: 'text-warning',
+      border: 'border-warning/20',
+      accent: 'secondary' as const, // или 'tertiary' в зависимости от вашего дизайна
+    },
+    critical: {
+      bg: 'bg-error/10',
+      icon: 'text-error',
+      border: 'border-error/20',
+      accent: 'error' as const,
+    },
   }
 
   const config = statusConfig[metric.status]
@@ -176,9 +191,7 @@ const MetricCard = ({ metric, loading = false }: MetricCardProps) => {
     <Skeletoned isLoading={loading} skeleton={<MetricCardSkeleton />}>
       <Card
         className={`border border-outline-variant/50 bg-surface-container hover:shadow-lg transition-all duration-200 ${config.border}`}
-        accent={
-          metric.status === 'critical' ? 'error' : metric.status === 'warning' ? 'warning' : 'none'
-        }
+        accent={config.accent}
       >
         <div className='flex items-start justify-between'>
           <div>
@@ -524,7 +537,7 @@ export function RfScannerFinal() {
 
   // Таймер сессии
   useEffect(() => {
-    let interval: number
+    let interval: ReturnType<typeof setInterval> | null = null
 
     if (isScanning) {
       interval = setInterval(() => {
@@ -543,7 +556,7 @@ export function RfScannerFinal() {
 
   // Симуляция сканирования
   useEffect(() => {
-    let interval: number
+    let interval: NodeJS.Timeout | null = null
 
     if (isScanning) {
       interval = setInterval(() => {

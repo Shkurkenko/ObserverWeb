@@ -131,6 +131,86 @@ export namespace ObserverConfig {
     },
   }
 
+  export const ScanViewTitles: Record<ReoSpace.IScanTypes, string> = {
+    [ReoSpace.IScanTypes.Gsm]: 'GSM Сканирование',
+    [ReoSpace.IScanTypes.Lte]: 'LTE Сканирование',
+    [ReoSpace.IScanTypes.Umts]: 'UMTS Сканирование',
+    [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth Сканирование',
+    [ReoSpace.IScanTypes.Wifi]: 'WiFi Сканирование',
+    [ReoSpace.IScanTypes.FiveG]: '5G Сканирование',
+    [ReoSpace.IScanTypes.Unknown]: 'Неизвестное сканирование',
+  }
+
+  export const NetworkTypeColors: Record<ReoSpace.IScanTypes, string> = {
+    [ReoSpace.IScanTypes.Gsm]: 'rgb(59, 130, 246)', // Синий
+    [ReoSpace.IScanTypes.Lte]: 'rgb(34, 197, 94)', // Зеленый
+    [ReoSpace.IScanTypes.Umts]: 'rgb(245, 158, 11)', // Оранжевый
+    [ReoSpace.IScanTypes.Bluetooth]: 'rgb(99, 102, 241)', // Индиго
+    [ReoSpace.IScanTypes.Wifi]: 'rgb(168, 85, 247)', // Фиолетовый
+    [ReoSpace.IScanTypes.FiveG]: 'rgb(239, 68, 68)', // Красный
+    [ReoSpace.IScanTypes.Unknown]: 'rgb(148, 163, 184)', // Серый
+  }
+
+  export const NetworkTypeIcons: Record<ReoSpace.IScanTypes, string> = {
+    [ReoSpace.IScanTypes.Gsm]: '📶',
+    [ReoSpace.IScanTypes.Lte]: '📶',
+    [ReoSpace.IScanTypes.Umts]: '📶',
+    [ReoSpace.IScanTypes.Bluetooth]: '📱',
+    [ReoSpace.IScanTypes.Wifi]: '📡',
+    [ReoSpace.IScanTypes.FiveG]: '5G',
+    [ReoSpace.IScanTypes.Unknown]: '❓',
+  }
+
+  export const NetworkFrequencyRanges: Record<ReoSpace.IScanTypes, { min: number; max: number }> = {
+    [ReoSpace.IScanTypes.Gsm]: { min: 880, max: 960 }, // GSM 900 диапазон
+    [ReoSpace.IScanTypes.Lte]: { min: 700, max: 2600 }, // LTE диапазоны
+    [ReoSpace.IScanTypes.Umts]: { min: 1920, max: 2170 }, // UMTS/3G диапазон
+    [ReoSpace.IScanTypes.Bluetooth]: { min: 2400, max: 2480 }, // Bluetooth диапазон
+    [ReoSpace.IScanTypes.Wifi]: { min: 2400, max: 5900 }, // WiFi 2.4GHz и 5GHz
+    [ReoSpace.IScanTypes.FiveG]: { min: 600, max: 6000 }, // 5G диапазоны
+    [ReoSpace.IScanTypes.Unknown]: { min: 0, max: 0 },
+  }
+
+  export const DefaultScanSettings: Record<ReoSpace.IScanTypes, any> = {
+    [ReoSpace.IScanTypes.Gsm]: {
+      band: 'GSM900',
+      scanDuration: 30,
+      priority: 'medium',
+      autoScan: true,
+    },
+    [ReoSpace.IScanTypes.Lte]: {
+      band: 'LTE1800',
+      scanDuration: 45,
+      priority: 'high',
+      autoScan: true,
+    },
+    [ReoSpace.IScanTypes.Umts]: {
+      band: 'UMTS2100',
+      scanDuration: 35,
+      priority: 'medium',
+      autoScan: false,
+    },
+    [ReoSpace.IScanTypes.Bluetooth]: {
+      scanDuration: 60,
+      discoverable: true,
+      filterByStrength: true,
+      minRssi: -80,
+    },
+    [ReoSpace.IScanTypes.Wifi]: {
+      scanDuration: 40,
+      bands: ['2.4GHz', '5GHz'],
+      showHidden: false,
+      minSignal: -70,
+    },
+    [ReoSpace.IScanTypes.FiveG]: {
+      band: 'n78',
+      scanDuration: 50,
+      priority: 'high',
+      autoScan: true,
+    },
+    [ReoSpace.IScanTypes.Unknown]: {},
+  }
+
   export const FastAlerts: FastAlertsSpace.IStyleConfig = {
     general: {
       transition: 0.3,
@@ -501,5 +581,6 @@ export namespace ObserverConfig {
         align: TableSpace.IColumnAlignment.Center,
       },
     ],
+    [ReoSpace.IScanTypes.Unknown]: [],
   }
 }

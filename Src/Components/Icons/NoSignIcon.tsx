@@ -1,8 +1,9 @@
 import { IIconProps } from '../../Shared/Interfaces/Main.interface'
 
-export const NoSignIcon = ({ width, height, color, style }: IIconProps) => (
+export const NoSignalIcon = ({ width, height, color, style, className }: IIconProps) => (
   <svg
     width={width}
+    className={className}
     height={height}
     viewBox='0 0 12 12'
     style={style}

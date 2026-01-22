@@ -1,6 +1,73 @@
-.signal-stick
-  background-color: var(--color-surface-bright)
+// style.sass
+.signal-strength-wrapper
+  position: relative
+  display: inline-block
+  font-family: 'Inter', system-ui, sans-serif
 
-.signal-strength-container
-  max-width: 150px
-  align-items: flex-end
+  .signal-strength-container
+    position: relative
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+
+    &:hover
+      .signal-stick
+        transform: translateY(-2px)
+
+    .signal-stick
+      position: relative
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)
+      will-change: transform, opacity, background-color
+
+      &::after
+        content: ''
+        position: absolute
+        top: 1px
+        left: 1px
+        right: 1px
+        height: 30%
+        background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 100%)
+        border-radius: 1px
+        pointer-events: none
+
+      &:hover
+        transform: translateY(-4px) scale(1.05)
+        z-index: 10
+
+    // Анимация появления
+    @keyframes stickAppear
+      0%
+        transform: scaleY(0)
+        opacity: 0
+      60%
+        transform: scaleY(1.1)
+      100%
+        transform: scaleY(1)
+        opacity: 1
+
+    @keyframes stickPulse
+      0%, 100%
+        opacity: 1
+      50%
+        opacity: 0.7
+
+    @keyframes stickBounce
+      0%, 100%
+        transform: translateY(0)
+      50%
+        transform: translateY(-6px)
+
+    .signal-stick
+      animation: stickAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards
+
+      &.animate-bounce
+        animation: stickBounce 0.3s ease-in-out
+
+      &:nth-child(1)
+        animation-delay: 0ms
+      &:nth-child(2)
+        animation-delay: 50ms
+      &:nth-child(3)
+        animation-delay: 100ms
+      &:nth-child(4)
+        animation-delay: 150ms
+      &:nth-child(5)
+        animation-delay: 200ms

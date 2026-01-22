@@ -17,6 +17,13 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
     showView(task.id)
   }, [])
 
+  const [datePart, timePart] = task?.createdAt?.split('T')
+  const [year, month, day] = datePart.split('-')
+
+  const formattedDate = `${day}/${month}/${year}`
+
+  const timeWithoutSeconds = timePart.slice(0, 5)
+
   return (
     <li key={task.name} className='task-item' onClick={loadTaskContent}>
       <div className='task-item-header pr-8'>
@@ -64,8 +71,8 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
                   />
                 </svg>
               </div>
-              <div className='scan-date text-on-background'>{task.date}</div>
-              <div className='scan-time text-on-background ml-2'>{task.time}</div>
+              <div className='scan-date text-on-background'>{formattedDate}</div>
+              <div className='scan-time text-on-background ml-2'>{timeWithoutSeconds}</div>
             </div>
           </div>
         </div>

@@ -2,8 +2,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev:test-tcp": "REO_SCAN_DEVICE_PROTOCOL=ws REO_SCAN_DEVICE_HOST=localhost REO_SCAN_DEVICE_PORT=8889 vite",
     "dev": "vite",
     "dev:reconfigure": "npm run generate:themes && npm run dev",
+    "test-server:cjs": "node ./TestTcpServer/test-server.cjs",
     "build": "vite build",
     "preview": "vite preview",
     "generate:themes": "npm run generate:process-python-theme && npm run register:themes && npm run generate:themes-tailwind-config && npm run generate:themes-tailwind-css",
@@ -15,6 +17,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "dequal": "^2.0.3",
+    "eventemitter3": "^5.0.4",
     "export-to-csv": "^1.4.0",
     "flag-icons": "^7.5.0",
     "lodash.debounce": "^4.0.8",
@@ -25,7 +28,8 @@
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
     "uuid": "^13.0.0",
-    "wouter": "^2.12.1"
+    "wouter": "^2.12.1",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.2",

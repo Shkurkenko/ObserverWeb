@@ -92,6 +92,7 @@ const NETWORK_ICONS: Record<ReoSpace.IScanTypes, string> = {
   [ReoSpace.IScanTypes.FiveG]: '5️⃣',
   [ReoSpace.IScanTypes.Wifi]: '📡',
   [ReoSpace.IScanTypes.Bluetooth]: '🔵',
+  [ReoSpace.IScanTypes.Unknown]: '❓',
 }
 
 // Описания типов сетей
@@ -102,6 +103,7 @@ const NETWORK_DESCRIPTIONS: Record<ReoSpace.IScanTypes, string> = {
   [ReoSpace.IScanTypes.FiveG]: '5G сети',
   [ReoSpace.IScanTypes.Wifi]: 'Wi-Fi сети 2.4/5 GHz',
   [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth устройства',
+  [ReoSpace.IScanTypes.Unknown]: 'Неопознано вид связи'
 }
 
 export function ReoContentView({

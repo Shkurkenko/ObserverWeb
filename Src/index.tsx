@@ -21,6 +21,7 @@ import { ThemeTester } from './Views/Pages/ThemeTester'
 import { TypographyTester } from './Views/Pages/TypographyTester'
 import { TabsExamplePage } from './Views/Pages/TabsExamplePage'
 import { ForensicTester } from './Views/Pages/ForensicTester'
+import { TcpScanTester } from './Views/Pages/TcpScanTeseter'
 
 // Создаем компонент для главной страницы
 // import { RfScannerFinal } from './Boilerplates/RfScannerFinal'
@@ -53,6 +54,9 @@ export function App() {
                       </Route>
                       <Route path='/rf-scan-tester'>
                         <ForensicTester />
+                      </Route>
+                      <Route path='/tcp-scan-tester'>
+                        <TcpScanTester />
                       </Route>
                       {/* <Route path='/rf-scanner'>
                         <RfScannerFinal />

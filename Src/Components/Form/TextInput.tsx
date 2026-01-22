@@ -1,14 +1,14 @@
-// src/Components/Form/TextInput.tsx
 import { FunctionalComponent } from 'preact'
 import { Label } from '../Typography'
 import { cn } from '../../Utils/Helpers'
+
 import './Form.sass'
 
 export interface ITextInputProps {
   label?: string
   placeholder?: string
   value: string
-  onChange: (value: string) => void
+  onChange: (event: { currentTarget: HTMLInputElement }) => void
   error?: string
   helperText?: string
   disabled?: boolean
@@ -50,7 +50,7 @@ export const TextInput: FunctionalComponent<ITextInputProps> = ({
           id={inputId}
           type={type}
           value={value}
-          onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+          onChange={(e) => onChange({ currentTarget: e.target as HTMLInputElement })}
           placeholder={placeholder}
           disabled={disabled}
           required={required}

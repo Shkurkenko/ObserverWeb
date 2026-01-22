@@ -12,6 +12,8 @@ export interface IIconProps {
   color?: string
 
   style?: preact.JSX.CSSProperties
+
+  className?: string
 }
 
 export interface ITab {

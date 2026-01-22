@@ -95,6 +95,7 @@ export class ScanConfigHelpers {
       [ReoSpace.IScanTypes.FiveG]: '5G сети, новейшее поколение мобильной связи',
       [ReoSpace.IScanTypes.Wifi]: 'Wi-Fi сети 2.4/5 GHz, беспроводные локальные сети',
       [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth устройства, короткодистанционная связь',
+      [ReoSpace.IScanTypes.Unknown]: 'Такой тип связи не опознан или не поддерживается',
     }
     return descriptions[networkType] || 'Сети связи'
   }
