@@ -20,7 +20,7 @@ export namespace ObserverConfig {
   export const serviceConfigs = {
     development: {
       host: 'localhost',
-      posrt: 8080,
+      port: 8888,
       protocol: 'ws' as const,
       autoReconnect: true,
       reconnectInterval: 3000,

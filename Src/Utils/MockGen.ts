@@ -2,12 +2,7 @@ import { ReoSpace } from '../Shared/Interfaces/Reo.interface'
 import { TableSpace } from '../Shared/Interfaces/Table.interface'
 import { MockOperators } from '../../Data/TableData'
 import { MockCountries } from '../../Data/TableData'
-import {
-  getCurrentDDMMYY,
-  getCurrentTime24,
-  getRandomEnumValue,
-  getRandomIntegerInclusive,
-} from './Helpers'
+import { getCurrentDDMMYY, getRandomEnumValue, getRandomIntegerInclusive } from './Helpers'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -50,11 +45,11 @@ export namespace MockGenHelpers {
     return {
       id: uuidv4() as string,
       name: `Сканирование #${index + 1}`,
-      date: getCurrentDDMMYY(),
-      time: getCurrentTime24(),
+      createdAt: getCurrentDDMMYY(),
       currentScanCycle: getRandomIntegerInclusive(0, 10),
       types: generateRandomUniqueScanTypes(),
       status: getRandomEnumValue(ReoSpace.IScanStatusTypes),
+      duration: 0,
     }
   }
 
@@ -62,7 +57,7 @@ export namespace MockGenHelpers {
     rowIndex: number,
     columnsPattern: TableSpace.IColumnTypes[],
   ): TableSpace.IRow => {
-    if (columnsPattern.length === 0) throw new Error('ColumnsPattern should not be empty')
+    // if (columnsPattern.length === 0) throw new Error('ColumnsPattern should not be empty')
 
     const columns: TableSpace.ICell<unknown>[] = columnsPattern.map((colType, index) => {
       const position = { rowIndex, colIndex: index }

@@ -8,7 +8,6 @@ export interface IColumnHeaderProps {
 }
 
 const arrowAngleClassStates = {
-  // Tailwind classes
   down: 'rotate-90 mb-4',
   up: 'rotate-270 mt-6',
   hidden: 'hidden',
@@ -38,10 +37,6 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
   const getColumnWidth = () => {
     return header.width ? { width: `${header.width}px` } : { flex: 1 }
   }
-
-  useEffect(() => {
-    // setHeaderRefs((prev) => [...prev, headerRef])
-  }, [])
 
   return (
     <div

@@ -1,4 +1,3 @@
-// src/Views/ReoContentView.tsx
 import { useState, useEffect, useMemo } from 'preact/hooks'
 import TableProvider from '../../../Components/Table/Context/TableContext'
 import { UnderlineTabs } from '../../../Components/Tabs/TabGroup'
@@ -103,7 +102,7 @@ const NETWORK_DESCRIPTIONS: Record<ReoSpace.IScanTypes, string> = {
   [ReoSpace.IScanTypes.FiveG]: '5G сети',
   [ReoSpace.IScanTypes.Wifi]: 'Wi-Fi сети 2.4/5 GHz',
   [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth устройства',
-  [ReoSpace.IScanTypes.Unknown]: 'Неопознано вид связи'
+  [ReoSpace.IScanTypes.Unknown]: 'Неопознано вид связи',
 }
 
 export function ReoContentView({
@@ -251,6 +250,7 @@ export function ReoContentView({
 
   const renderNetworkTable = () => {
     const networkDescription = NETWORK_DESCRIPTIONS[activeNetworkType] || 'Сети связи'
+
     const frequencyRange = {
       min: activeNetworkType === ReoSpace.IScanTypes.Wifi ? 2400 : 800,
       max: activeNetworkType === ReoSpace.IScanTypes.Wifi ? 5900 : 2700,
@@ -364,10 +364,10 @@ export function ReoContentView({
                 )}
               </div>
 
-              {/* Панель управления таблицей */}
+              {/* Панель управления таблицей
               <div className='p-4 border-t border-outline-variant/50'>
                 <TableHelper />
-              </div>
+              </div> */}
             </>
           )}
         </Card>
