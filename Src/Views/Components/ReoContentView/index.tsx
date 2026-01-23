@@ -16,7 +16,7 @@ import { ScanViewHeader } from '../ScanViewHeader'
 import { TableSearch } from '../../../Components/Table/TableSearch'
 import { TableBody } from '../../../Components/Table/TableBody'
 import { TableHeader } from '../../../Components/Table/TableHeader'
-import { TableHelper } from '../../../Components/Table/TableHelper'
+// import { TableHelper } from '../../../Components/Table/TableHelper'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
@@ -102,7 +102,7 @@ const NETWORK_DESCRIPTIONS: Record<ReoSpace.IScanTypes, string> = {
   [ReoSpace.IScanTypes.FiveG]: '5G сети',
   [ReoSpace.IScanTypes.Wifi]: 'Wi-Fi сети 2.4/5 GHz',
   [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth устройства',
-  [ReoSpace.IScanTypes.Unknown]: 'Неопознано вид связи',
+  [ReoSpace.IScanTypes.Unknown]: 'Неопознаный вид связи',
 }
 
 export function ReoContentView({
@@ -388,7 +388,7 @@ export function ReoContentView({
       </div>
 
       {/* Панель управления сканированием */}
-      <Card className='mb-6 border border-outline-variant/50 bg-surface-container p-4'>
+      <Card className='mb-6 border border-outline-variant/50 bg-surface-container p-1'>
         <ScannerControl
           isScanning={isScanning}
           isLoading={isLoading}

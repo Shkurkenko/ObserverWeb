@@ -11,7 +11,7 @@ import { formatDuration } from '../../../../Utils/Helpers'
 export interface ScanSession {
   id: string
   startTime: Date
-  duration: number // seconds
+  duration: number
   networksFound: number
   frequencyRange: { min: number; max: number }
   isActive: boolean
@@ -69,7 +69,7 @@ export const ScannerControl = ({
   return (
     <Skeletoned isLoading={isLoading} skeleton={<ScannerControlSkeleton />}>
       <Card className='border border-outline-variant/50 bg-surface-container'>
-        <div className='p-6'>
+        <div className='p-2'>
           <div className='flex items-center justify-between mb-6'>
             <div className='flex items-center gap-4'>
               <div
@@ -138,23 +138,23 @@ export const ScannerControl = ({
           <Divider />
 
           <Grid columns={3} gap='lg' className='mt-6'>
-            <div className='text-center p-4'>
-              <Text bold className='text-3xl text-primary font-mono'>
+            <div className='text-center p-2'>
+              <Text bold className='text-2xl text-primary font-mono'>
                 {formatDuration(session.duration)}
               </Text>
               <Caption className='text-on-surface-variant mt-1'>Длительность</Caption>
             </div>
 
-            <div className='text-center p-4'>
-              <Text bold className='text-3xl text-secondary font-mono'>
+            <div className='text-center p-2'>
+              <Text bold className='text-2xl text-secondary font-mono'>
                 {session.networksFound}
               </Text>
               <Caption className='text-on-surface-variant mt-1'>Обнаружено сетей</Caption>
             </div>
 
-            <div className='text-center p-4'>
+            <div className='text-center p-2'>
               <div className='flex items-center justify-center gap-2'>
-                <Text bold className='text-3xl text-tertiary font-mono'>
+                <Text bold className='text-2xl text-tertiary font-mono'>
                   {isScanning ? 'LIVE' : 'IDLE'}
                 </Text>
                 {isScanning && <span className='w-2 h-2 bg-tertiary rounded-full animate-pulse' />}

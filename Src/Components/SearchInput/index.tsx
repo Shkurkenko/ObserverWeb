@@ -1,5 +1,5 @@
-// src/Components/SearchInput.tsx
 import { useState, useCallback, useRef, useEffect } from 'preact/hooks'
+
 import './style.sass'
 
 interface SearchInputProps {
@@ -12,14 +12,14 @@ interface SearchInputProps {
   initialValue?: string
 }
 
-export function SearchInput({ 
-  onSearch, 
-  placeholder = 'Поиск по задачам', 
+export function SearchInput({
+  onSearch,
+  placeholder = 'Поиск по задачам',
   delay = 300,
   className = '',
   autoFocus = false,
   disabled = false,
-  initialValue = ''
+  initialValue = '',
 }: SearchInputProps) {
   const [query, setQuery] = useState(initialValue)
   const [isFocused, setIsFocused] = useState(false)
@@ -38,21 +38,27 @@ export function SearchInput({
     setQuery(initialValue)
   }, [initialValue])
 
-  const handleSearch = useCallback((value: string) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
-    
-    timeoutRef.current = setTimeout(() => {
-      onSearch?.(value)
-    }, delay)
-  }, [onSearch, delay])
+  const handleSearch = useCallback(
+    (value: string) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
 
-  const handleChange = useCallback((e: Event) => {
-    const value = (e.target as HTMLInputElement).value
-    setQuery(value)
-    handleSearch(value)
-  }, [handleSearch])
+      timeoutRef.current = setTimeout(() => {
+        onSearch?.(value)
+      }, delay)
+    },
+    [onSearch, delay],
+  )
+
+  const handleChange = useCallback(
+    (e: Event) => {
+      const value = (e.target as HTMLInputElement).value
+      setQuery(value)
+      handleSearch(value)
+    },
+    [handleSearch],
+  )
 
   const handleClear = useCallback(() => {
     setQuery('')
@@ -60,17 +66,20 @@ export function SearchInput({
     inputRef.current?.focus()
   }, [onSearch])
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      handleClear()
-    }
-    if (e.key === 'Enter' && query.trim()) {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClear()
       }
-      onSearch?.(query)
-    }
-  }, [handleClear, query, onSearch])
+      if (e.key === 'Enter' && query.trim()) {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current)
+        }
+        onSearch?.(query)
+      }
+    },
+    [handleClear, query, onSearch],
+  )
 
   const handleFocus = useCallback(() => {
     setIsFocused(true)

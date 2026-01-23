@@ -29,10 +29,6 @@ export function ReoScan() {
         task.types.forEach((networkType, typeIndex) => {
           const viewId = `${task.id}-${networkType}-${Date.now()}`
 
-          console.log('===================')
-          console.log('Network type: ', networkType)
-          console.log('===================')
-
           // Генерация демо-данных для таблицы
           const columnsConfig =
             ObserverConfig.ReoColumnModelsConfig[networkType as ReoSpace.IScanTypes]
