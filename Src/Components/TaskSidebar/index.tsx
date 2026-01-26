@@ -41,6 +41,7 @@ export function TaskSidebar() {
       addView({
         viewId: viewConfig.viewId,
         taskId: task.id,
+        headerString: task.name,
         show: index === 0, // Показываем только первый тип сети
         tabsModel: [
           {
