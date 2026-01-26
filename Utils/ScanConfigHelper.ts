@@ -1,4 +1,3 @@
-// src/Utils/ScanConfigHelpers.ts
 import { ObserverConfig } from '../Config/ObserverConfig'
 import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
 import { TableSpace } from '../Src/Shared/Interfaces/Table.interface'
@@ -27,11 +26,6 @@ export class ScanConfigHelpers {
   // Получить частотный диапазон для типа сети
   static getFrequencyRange(networkType: ReoSpace.IScanTypes): { min: number; max: number } {
     return ObserverConfig.NetworkFrequencyRanges[networkType] || { min: 0, max: 0 }
-  }
-
-  // Получить настройки по умолчанию для типа сети
-  static getDefaultSettings(networkType: ReoSpace.IScanTypes): any {
-    return ObserverConfig.DefaultScanSettings[networkType] || {}
   }
 
   // Проверить, поддерживается ли тип сети
@@ -88,15 +82,6 @@ export class ScanConfigHelpers {
 
   // Получить описание для типа сети
   static getNetworkTypeDescription(networkType: ReoSpace.IScanTypes): string {
-    const descriptions: Record<ReoSpace.IScanTypes, string> = {
-      [ReoSpace.IScanTypes.Gsm]: 'GSM сети 900/1800 MHz, 2G технология',
-      [ReoSpace.IScanTypes.Lte]: 'LTE сети (4G), высокоскоростная мобильная связь',
-      [ReoSpace.IScanTypes.Umts]: 'UMTS сети (3G), широкополосная мобильная связь',
-      [ReoSpace.IScanTypes.FiveG]: '5G сети, новейшее поколение мобильной связи',
-      [ReoSpace.IScanTypes.Wifi]: 'Wi-Fi сети 2.4/5 GHz, беспроводные локальные сети',
-      [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth устройства, короткодистанционная связь',
-      [ReoSpace.IScanTypes.Unknown]: 'Такой тип связи не опознан или не поддерживается',
-    }
-    return descriptions[networkType] || 'Сети связи'
+    return ObserverConfig.NetworkDescrptions[networkType] || 'Нет описания'
   }
 }

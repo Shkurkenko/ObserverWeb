@@ -85,7 +85,7 @@ export function TabGroup<T = any>({
         console.log('tab id debug: ', tab)
 
         return (
-          <TabButton<T>
+          <TabButton
             key={tab.id}
             tabData={tab}
             isActive={isActive}

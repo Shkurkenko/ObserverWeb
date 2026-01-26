@@ -27,7 +27,7 @@ export interface INetworkTableProps {
 
   onStartScan?: () => void
 
-  handleStopScan?: () => void
+  onStopScan?: () => void
 }
 
 export const NetworkTable = ({
@@ -37,6 +37,7 @@ export const NetworkTable = ({
   onClearData,
   onExportData,
   onStartScan,
+  onStopScan,
 }: INetworkTableProps) => {
   const columnsConfig = ObserverConfig.ReoColumnModelsConfig[networkType] || []
   const networkDescriptionConfig = ObserverConfig.NetworkDescrptions[networkType] || 'Сети связи'
@@ -59,6 +60,11 @@ export const NetworkTable = ({
   const handleStartScan = () => {
     if (onStartScan) onStartScan()
     console.log('handle start scan network table')
+  }
+
+  const handleStopScan = () => {
+    if (onStopScan) onStopScan()
+    console.log('handle stop scan network table')
   }
 
   return (

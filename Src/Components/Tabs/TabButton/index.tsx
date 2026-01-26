@@ -1,33 +1,29 @@
-import { ComponentChild, FunctionalComponent } from 'preact'
+import { ComponentChild } from 'preact'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { Icon } from '../../Typography'
 import { Button, IButtonProps } from '../../Button'
+import { IconSize } from '../../../Shared/Interfaces/Typography.interface'
 import { cn } from '../../../Utils/Helpers'
 
-// Объявляем пропсы с обобщенным типом T
-export interface TabButtonProps extends Omit<
-  IButtonProps,
-  'children' | 'onClick' | 'variant' | 'size'
-> {
+export interface TabButtonProps extends Omit<IButtonProps, 'children' | 'onClick' | 'variant'> {
   tabData: ITab
   isActive: boolean
   onClick?: (e: MouseEvent, tab: ITab) => void
   variant?: 'default' | 'underline' | 'pills' | 'outline'
-  size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
   showCount?: boolean
   icon?: ComponentChild
-  iconSize?: 'xs' | 'sm' | 'md' | 'lg'
+  iconSize?: IconSize
   badge?: number | string
 }
 
 const variantClasses = {
   default: {
-    active: 'text-primary font-semibold',
+    active: 'text-on-surface font-semibold',
     inactive: 'text-on-surface-variant hover:text-on-surface',
   },
   underline: {
-    active: 'text-primary font-semibold border-b-2 border-primary',
+    active: 'text-on-surface font-semibold border-b-2 border-primary',
     inactive:
       'text-on-surface-variant border-b-2 border-transparent hover:text-on-surface hover:border-outline',
   },
@@ -61,10 +57,16 @@ const sizeClasses = {
     icon: 'lg' as const,
     badge: 'min-w-7 h-7 px-2.5 text-base',
   },
+  xl: {
+    padding: 'py-3.5 px-6',
+    text: 'text-lg',
+    icon: 'lg' as const,
+    badge: 'min-w-8 h-7 px-2.5 text-base',
+  },
 }
 
 // Используем функцию вместо FunctionalComponent
-export function TabButton<T>({
+export function TabButton({
   tabData,
   isActive,
   onClick,
@@ -105,7 +107,7 @@ export function TabButton<T>({
   // Дополнительные классы для разных вариантов
   if (variant === 'underline') {
     additionalClasses = cn(
-      'rounded-none border-b-2',
+      'rounded-none border-b-4',
       isActive ? 'border-primary text-primary' : 'border-transparent',
     )
   } else if (variant === 'pills' && !isActive) {

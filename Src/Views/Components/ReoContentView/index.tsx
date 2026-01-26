@@ -1,11 +1,6 @@
 import { useState, useEffect, useMemo } from 'preact/hooks'
-import { UnderlineTabs } from '../../../Components/Tabs/TabGroup'
 import { Container } from '../../../Components/Layouts/Container'
-import { Grid } from '../../../Components/Layouts/Grid'
 import { Card } from '../../../Components/Layouts/Card'
-import { Heading } from '../../../Components/Typography'
-import { Text } from '../../../Components/Typography'
-import { Caption } from '../../../Components/Typography'
 import { ScannerControl } from '../ScannerControl'
 import { ScanViewHeader } from '../ScanViewHeader'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
@@ -16,6 +11,8 @@ import { ScanMetrics } from '../ScanMetrics'
 import { NetworkTable } from '../NetworkTable'
 import { v4 as uuidv4 } from 'uuid'
 import { Footer, FooterItem } from '../../../Components/Footer'
+import { NetworkTabsView } from '../NetworkTabs'
+import { INetworkData } from '../NetworkTabs'
 
 export interface IReoContentViewProps {
   headerString: string
@@ -65,7 +62,7 @@ export function ReoContentView({
       const metaInfo = data?.metaInfo
 
       // Получаем тип сети или используем ID таба как fallback
-      const scanType = metaInfo?.scanType || tab.id
+      const scanType = metaInfo?.scanType || 'unknown scan type'
 
       // Проверяем, является ли scanType валидным типом сети
       const networkType = Object.values(ReoSpace.IScanTypes).includes(
@@ -86,6 +83,24 @@ export function ReoContentView({
       }
     })
   }, [model.tabsModel])
+
+  const networkTabsData: INetworkData[] = useMemo(
+    () =>
+      model.tabsModel.map((tab) => {
+        const scanType = tab.id
+        const rows = tab.data?.rows || []
+
+        return {
+          id: tab.id,
+          name: tab.label || scanType,
+          type: scanType,
+          icon: ObserverConfig.NetworkTypeIcons[scanType as ReoSpace.IScanTypes] || '📶',
+          signalCount: rows.length,
+          hasNewData: tab.data?.hasNewData || false,
+        }
+      }),
+    [model.tabsModel],
+  )
 
   // Находим активную вкладку
   const activeTabData = networkTabs?.find((tab) => tab.id === activeNetworkType) || networkTabs![0]
@@ -214,15 +229,27 @@ export function ReoContentView({
 
       <Divider />
 
-      {/* Табы типов сетей */}
-      <div className='mb-4'>
-        <UnderlineTabs
-          tabs={networkTabs}
-          activeTabId={activeNetworkType}
-          onTabClick={(tab) => setActiveNetworkType(tab.id as ReoSpace.IScanTypes)}
-          fullWidth
-        />
-      </div>
+      {/* Табы типов сетей
+      <UnderlineTabs
+        tabs={networkTabs}
+        activeTabId={activeNetworkType}
+        onTabClick={(tab) => setActiveNetworkType(tab.id as ReoSpace.IScanTypes)}
+        // className=''
+        fullWidth
+      /> */}
+
+      <NetworkTabsView
+        networks={networkTabsData}
+        activeTabId={activeNetworkType}
+        onTabClick={(network) => {
+          setActiveNetworkType(network.type as ReoSpace.IScanTypes)
+        }}
+        onTabClose={(networkId) => {
+          console.log('Closing tab:', networkId)
+        }}
+        status={isScanning ? 'scanning' : 'idle'}
+        className='mb-4'
+      />
 
       {/* Основной контент - таблица */}
       <div className='flex-1 overflow-auto'>
@@ -237,7 +264,6 @@ export function ReoContentView({
         />
       </div>
 
-      {/* Footer */}
       <Footer>
         <FooterItem label='Активный тип' icon={ObserverConfig.NetworkTypeIcons[activeNetworkType]}>
           {activeNetworkType}
