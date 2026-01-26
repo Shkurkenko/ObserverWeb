@@ -21,7 +21,7 @@ export namespace ObserverConfig {
     development: {
       host: 'localhost',
       port: 8888,
-      protocol: 'ws' as const,
+      protocol: 'ws' as const, // or 'wss'
       autoReconnect: true,
       reconnectInterval: 3000,
       maxReconnectAttempts: 5,
@@ -30,7 +30,7 @@ export namespace ObserverConfig {
     production: {
       host: '172.16.48.123',
       port: 8080,
-      protocol: 'ws' as const,
+      protocol: 'ws' as const, // or 'wss'
       autoReconnect: true,
       reconnectInterval: 10000,
       maxReconnectAttempts: 3,
@@ -141,6 +141,16 @@ export namespace ObserverConfig {
     [ReoSpace.IScanTypes.Unknown]: 'Неизвестное сканирование',
   }
 
+  export const NetworkDescrptions: Record<ReoSpace.IScanTypes, string> = {
+    [ReoSpace.IScanTypes.Gsm]: 'GSM сети 900/1800 MHz',
+    [ReoSpace.IScanTypes.Lte]: 'LTE сети (4G)',
+    [ReoSpace.IScanTypes.Umts]: 'UMTS сети (3G)',
+    [ReoSpace.IScanTypes.FiveG]: '5G сети',
+    [ReoSpace.IScanTypes.Wifi]: 'Wi-Fi сети 2.4/5 GHz',
+    [ReoSpace.IScanTypes.Bluetooth]: 'Bluetooth устройства',
+    [ReoSpace.IScanTypes.Unknown]: 'Неопознаный вид связи',
+  }
+
   export const NetworkTypeColors: Record<ReoSpace.IScanTypes, string> = {
     [ReoSpace.IScanTypes.Gsm]: 'rgb(59, 130, 246)', // Синий
     [ReoSpace.IScanTypes.Lte]: 'rgb(34, 197, 94)', // Зеленый
@@ -169,46 +179,6 @@ export namespace ObserverConfig {
     [ReoSpace.IScanTypes.Wifi]: { min: 2400, max: 5900 }, // WiFi 2.4GHz и 5GHz
     [ReoSpace.IScanTypes.FiveG]: { min: 600, max: 6000 }, // 5G диапазоны
     [ReoSpace.IScanTypes.Unknown]: { min: 0, max: 0 },
-  }
-
-  export const DefaultScanSettings: Record<ReoSpace.IScanTypes, any> = {
-    [ReoSpace.IScanTypes.Gsm]: {
-      band: 'GSM900',
-      scanDuration: 30,
-      priority: 'medium',
-      autoScan: true,
-    },
-    [ReoSpace.IScanTypes.Lte]: {
-      band: 'LTE1800',
-      scanDuration: 45,
-      priority: 'high',
-      autoScan: true,
-    },
-    [ReoSpace.IScanTypes.Umts]: {
-      band: 'UMTS2100',
-      scanDuration: 35,
-      priority: 'medium',
-      autoScan: false,
-    },
-    [ReoSpace.IScanTypes.Bluetooth]: {
-      scanDuration: 60,
-      discoverable: true,
-      filterByStrength: true,
-      minRssi: -80,
-    },
-    [ReoSpace.IScanTypes.Wifi]: {
-      scanDuration: 40,
-      bands: ['2.4GHz', '5GHz'],
-      showHidden: false,
-      minSignal: -70,
-    },
-    [ReoSpace.IScanTypes.FiveG]: {
-      band: 'n78',
-      scanDuration: 50,
-      priority: 'high',
-      autoScan: true,
-    },
-    [ReoSpace.IScanTypes.Unknown]: {},
   }
 
   export const FastAlerts: FastAlertsSpace.IStyleConfig = {

@@ -42,11 +42,15 @@ export function TabGroup<T = any>({
   ...flexProps
 }: ITabGroupProps) {
   const flexDirection = orientation === 'vertical' ? 'col' : 'row'
+
   const shouldStretch = fullWidth || orientation === 'vertical'
 
   const autoJustify = justify || (orientation === 'horizontal' ? 'start' : 'stretch')
+
   const autoAlign = align || (orientation === 'vertical' ? 'stretch' : 'center')
+
   const autoGap = gap || (variant === 'pills' ? 'sm' : 'md')
+
   const autoWrap = wrap || (orientation === 'horizontal' ? false : 'nowrap')
 
   const isTabActive = (tab: ITab) => {
@@ -78,7 +82,7 @@ export function TabGroup<T = any>({
       {tabs.map((tab) => {
         const isActive = isTabActive(tab)
 
-        console.log('tab id debug: ', tab.id)
+        console.log('tab id debug: ', tab)
 
         return (
           <TabButton<T>

@@ -2,17 +2,19 @@ import { FunctionalComponent } from 'preact'
 import { Box, IBoxProps } from '../Box'
 import { cn } from '../../../Utils/Helpers'
 
+export type AdaptiveGridOptions = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
+
+export type GridGapOptions = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
 export interface IGridProps extends Omit<IBoxProps, 'as'> {
-  // Базовые колонки
-  columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
+  columns?: AdaptiveGridOptions
 
-  // Адаптивные колонки
-  sm?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
-  md?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
-  lg?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
-  xl?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
+  sm?: AdaptiveGridOptions
+  md?: AdaptiveGridOptions
+  lg?: AdaptiveGridOptions
+  xl?: AdaptiveGridOptions
 
-  gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  gap?: GridGapOptions
 }
 
 const columnClasses = {
@@ -25,7 +27,7 @@ const columnClasses = {
   7: 'grid-cols-7',
   8: 'grid-cols-8',
   9: 'grid-cols-9',
-  10: 'grid-cols-10', // <-- Исправлено: было 'grid-cold-10'
+  10: 'grid-cols-10',
   11: 'grid-cols-11',
   12: 'grid-cols-12',
   none: '',
