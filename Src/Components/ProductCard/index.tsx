@@ -27,7 +27,7 @@ export const ProductCard = ({
 }: ProductCardProps) => (
   <Card
     variant='elevated'
-    className={`border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent ${className}`}
+    className={`border-2 border-primary/20 bg-linear-to-br from-primary/5 to-transparent ${className}`}
   >
     <Text bold className='text-on-surface mb-4'>
       {title}

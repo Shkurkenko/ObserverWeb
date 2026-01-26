@@ -16,12 +16,12 @@ import { ScanViewHeader } from '../ScanViewHeader'
 import { TableSearch } from '../../../Components/Table/TableSearch'
 import { TableBody } from '../../../Components/Table/TableBody'
 import { TableHeader } from '../../../Components/Table/TableHeader'
-// import { TableHelper } from '../../../Components/Table/TableHelper'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { Divider } from '../../../Components/Typography'
+import { IView } from '../../../Shared/Interfaces/Main.interface'
 
 export interface IReoTabData {
   metaInfo: {
@@ -38,48 +38,37 @@ export interface IReoTab extends ITab {
   data: IReoTabData
 }
 
-export interface ReoView {
-  viewId: string
+export interface IReoView extends IView {
   taskId: string
-  show: boolean
+
+  headerString: string
+
+  isScanning: boolean
+
   tabsModel: IReoTab[]
 
-  // Дополнительные метаданные (опционально)
-  metadata?: {
-    createdAt: Date
-    updatedAt: Date
-    createdBy?: string
-    description?: string
-    tags?: string[]
-  }
+  onStartScan?: () => void
 
-  // Настройки вьюшки (опционально)
-  settings?: {
-    autoRefresh?: boolean
-    refreshInterval?: number
-    showSpectrum?: boolean
-    showMap?: boolean
-    theme?: 'light' | 'dark' | 'auto'
-  }
+  onStopScan?: () => void
 
-  // Состояние фильтров (опционально)
-  filters?: {
-    signalStrength?: { min: number; max: number }
-    operators?: string[]
-    frequencyRange?: { min: number; max: number }
-    activeOnly?: boolean
-    sortBy?: 'signal' | 'frequency' | 'operator' | 'date'
-    sortOrder?: 'asc' | 'desc'
-  }
+  onClearData?: () => void
+
+  onExportData?: () => void
 }
 
 export interface IReoContentViewProps {
-  header: string
-  model: ReoView
+  headerString: string
+
+  model: IReoView
+
   isScanning: boolean
+
   onStartScan: () => void
+
   onStopScan: () => void
+
   onClearData: () => void
+
   onExportData: () => void
 }
 
@@ -106,7 +95,7 @@ const NETWORK_DESCRIPTIONS: Record<ReoSpace.IScanTypes, string> = {
 }
 
 export function ReoContentView({
-  header,
+  headerString,
   model,
   isScanning,
   onStartScan,
@@ -115,7 +104,7 @@ export function ReoContentView({
   onExportData,
 }: IReoContentViewProps) {
   const [activeNetworkType, setActiveNetworkType] = useState<ReoSpace.IScanTypes>(
-    (model.tabsModel[0]?.id as ReoSpace.IScanTypes) || ReoSpace.IScanTypes.Gsm,
+    model.tabsModel[0].data.metaInfo.scanType || ReoSpace.IScanTypes.Gsm,
   )
   const [isLoading, setIsLoading] = useState(false)
   const [stats, setStats] = useState({
@@ -129,7 +118,7 @@ export function ReoContentView({
 
   // Преобразуем вкладки модели для табов с проверкой данных
   const networkTabs = useMemo(() => {
-    return model.tabsModel.map((tab) => {
+    return model.tabsModel?.map((tab) => {
       // Безопасный доступ к данным
       const tabData = tab as any
       const data = tabData.data
@@ -159,7 +148,7 @@ export function ReoContentView({
   }, [model.tabsModel])
 
   // Находим активную вкладку
-  const activeTabData = networkTabs.find((tab) => tab.id === activeNetworkType) || networkTabs[0]
+  const activeTabData = networkTabs?.find((tab) => tab.id === activeNetworkType) || networkTabs![0]
 
   // Получаем колонки и данные для активного типа сети
   const currentColumns = ObserverConfig.ReoColumnModelsConfig[activeNetworkType] || []
@@ -380,7 +369,7 @@ export function ReoContentView({
       {/* Header с названием */}
       <div className='mb-6'>
         <ScanViewHeader
-          title={`Сканирование: ${header}`}
+          title={`Сканирование: ${headerString}`}
           description='Анализ радиоэфира в реальном времени'
           isLoading={isLoading}
           isScanning={isScanning}
@@ -470,7 +459,7 @@ export function ReoContentView({
           </div>
           <div className='space-y-1'>
             <Caption className='text-on-surface-variant'>Задача</Caption>
-            <Text className='font-medium text-on-surface truncate'>{header}</Text>
+            <Text className='font-medium text-on-surface truncate'>{headerString}</Text>
           </div>
           <div className='space-y-1'>
             <Caption className='text-on-surface-variant'>Обновлено</Caption>

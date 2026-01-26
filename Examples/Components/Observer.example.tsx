@@ -1,4 +1,3 @@
-// Boilerplates/RfScannerFinal.tsx
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import { UnderlineTabs } from '../../Src/Components/Tabs/TabGroup'
 import { Card } from '../../Src/Components/Layouts/Card'
@@ -16,7 +15,7 @@ import { Button } from '../../Src/Components/Button'
 import { Divider } from '../../Src/Components/Typography/Divider'
 import { Skeletoned } from '../../Src/Components/Skeletoned'
 import { SignalStrength } from '../../Src/Components/SignalStrength'
-import { ScanSession } from '../../Src/Views/Components/ScannerControl'
+import { IScanSession } from '../../Src/Views/Components/ScannerControl'
 import { ScannerControl } from '../../Src/Views/Components/ScannerControl'
 import { ScanViewHeader } from '../../Src/Views/Components/ScanViewHeader'
 
@@ -24,7 +23,7 @@ import { ScanViewHeader } from '../../Src/Views/Components/ScanViewHeader'
 // 1. ТИПЫ И КОНСТАНТЫ
 // ============================================================================
 
-type NetworkType = 'GSM' | 'LTE' | '5G' | 'WiFi' | 'Unknown' | 'CDMA' | 'WCDMA'
+type NetworkType = 'GSM' | 'LTE' | '5G' | 'WiFi' | 'Unknown' | 'CDMA' | 'WCDMA' // Вообще это определено в shared/ReoSpace но тут для наглядности
 type SignalStatus = 'excellent' | 'good' | 'fair' | 'poor' | 'none'
 type MetricStatus = 'normal' | 'warning' | 'critical'
 
@@ -385,7 +384,7 @@ export function RfScannerFinal() {
   const [networks, setNetworks] = useState<DetectedNetwork[]>([])
   const [activeTab, setActiveTab] = useState('dashboard')
 
-  const [scanSession, setScanSession] = useState<ScanSession>({
+  const [scanSession, setScanSession] = useState<IScanSession>({
     id: generateId('session'),
     startTime: new Date(),
     duration: 0,
@@ -541,7 +540,7 @@ export function RfScannerFinal() {
 
     if (isScanning) {
       interval = setInterval(() => {
-        setScanSession((prev) => ({
+        setScanSession((prev: IScanSession) => ({
           ...prev,
           duration: prev.duration + 1,
           isActive: true,
@@ -613,7 +612,10 @@ export function RfScannerFinal() {
           }
 
           setNetworks((prev) => [newNetwork, ...prev.slice(0, 49)]) // Максимум 50 сетей
-          setScanSession((prev) => ({ ...prev, networksFound: prev.networksFound + 1 }))
+          setScanSession((prev: IScanSession) => ({
+            ...prev,
+            networksFound: prev.networksFound + 1,
+          }))
         }
 
         // Обновляем метрики
@@ -634,7 +636,7 @@ export function RfScannerFinal() {
 
     setTimeout(() => {
       setIsScanning(true)
-      setScanSession((prev) => ({
+      setScanSession((prev: IScanSession) => ({
         ...prev,
         id: generateId('session'),
         startTime: new Date(),
@@ -648,7 +650,7 @@ export function RfScannerFinal() {
 
   const handleStopScan = () => {
     setIsScanning(false)
-    setScanSession((prev) => ({ ...prev, isActive: false }))
+    setScanSession((prev: IScanSession) => ({ ...prev, isActive: false }))
   }
 
   const handleClearData = () => {
@@ -656,7 +658,7 @@ export function RfScannerFinal() {
 
     setTimeout(() => {
       setNetworks([])
-      setScanSession((prev) => ({ ...prev, networksFound: 0 }))
+      setScanSession((prev: IScanSession) => ({ ...prev, networksFound: 0 }))
       updateMetrics([])
       setIsLoading(false)
     }, 600)

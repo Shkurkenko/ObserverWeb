@@ -1,18 +1,18 @@
 // src/Context/ReoScanViewContext.tsx
 import { createContext, ComponentChildren } from 'preact'
 import { useState, useCallback } from 'preact/hooks'
-import { ReoView } from '../Views/Components/ReoContentView'
+import { IReoView } from '../Views/Components/ReoContentView'
 import { TableSpace } from '../Shared/Interfaces/Table.interface'
 import { ReoSpace } from '../Shared/Interfaces/Reo.interface'
 
 export interface IScanViewContext {
-  scanViews: ReoView[]
+  scanViews: IReoView[]
 
   activeViewId: string | null
 
-  setScanViews: (views: ReoView[]) => void
+  setScanViews: (views: IReoView[]) => void
 
-  addView: (view: ReoView) => void
+  addView: (view: IReoView) => void
 
   deleteView: (id: string) => void
 
@@ -24,11 +24,11 @@ export interface IScanViewContext {
 
   setActiveView: (id: string | null) => void
 
-  getActiveView: () => ReoView | undefined
+  getActiveView: () => IReoView | undefined
 
-  getViewById: (id: string) => ReoView | undefined
+  getViewById: (id: string) => IReoView | undefined
 
-  updateViewData: (id: string, data: Partial<ReoView>) => void
+  updateViewData: (id: string, data: Partial<IReoView>) => void
 
   addRowToView?: (viewId: string, tabIndex: number, row: TableSpace.IRow) => void
 
@@ -54,13 +54,13 @@ export const ScanViewProvider = ({
   initialViews = [],
 }: {
   children: ComponentChildren
-  initialViews?: ReoView[]
+  initialViews?: IReoView[]
 }) => {
-  const [scanViews, setScanViews] = useState<ReoView[]>(initialViews)
+  const [scanViews, setScanViews] = useState<IReoView[]>(initialViews)
   const [activeViewId, setActiveViewId] = useState<string | null>(initialViews[0]?.viewId || null)
 
   // Базовые методы
-  const addView = useCallback((view: ReoView) => {
+  const addView = useCallback((view: IReoView) => {
     setScanViews((prev) => {
       if (prev.some((v) => v.viewId === view.viewId)) return prev
       const newViews = [...prev, { ...view, show: true }]
@@ -111,18 +111,18 @@ export const ScanViewProvider = ({
     [showView],
   )
 
-  const getActiveView = useCallback((): ReoView | undefined => {
+  const getActiveView = useCallback((): IReoView | undefined => {
     return scanViews.find((view) => view.viewId === activeViewId)
   }, [scanViews, activeViewId])
 
   const getViewById = useCallback(
-    (id: string): ReoView | undefined => {
+    (id: string): IReoView | undefined => {
       return scanViews.find((view) => view.viewId === id)
     },
     [scanViews],
   )
 
-  const updateViewData = useCallback((id: string, data: Partial<ReoView>) => {
+  const updateViewData = useCallback((id: string, data: Partial<IReoView>) => {
     setScanViews((prev) => prev.map((view) => (view.viewId === id ? { ...view, ...data } : view)))
   }, [])
 

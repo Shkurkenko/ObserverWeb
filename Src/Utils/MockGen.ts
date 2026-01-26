@@ -138,6 +138,8 @@ export namespace MockGenHelpers {
       tasks.push(newTask)
     }
 
+    console.log('mock tasks: ', tasks)
+
     return tasks
   }
 

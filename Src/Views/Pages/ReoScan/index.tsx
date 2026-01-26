@@ -6,6 +6,7 @@ import { MockGenHelpers } from '../../../Utils/MockGen'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
+import { v4 as uuidv4 } from 'uuid'
 
 export function ReoScan() {
   const { scanViews, activeViewId, addView, showView, updateViewData, getViewById } = useScanView()
@@ -26,42 +27,46 @@ export function ReoScan() {
   useEffect(() => {
     if (scanViews.length === 0 && tasks.length > 0) {
       tasks.forEach((task, taskIndex) => {
-        task.types.forEach((networkType, typeIndex) => {
-          const viewId = `${task.id}-${networkType}-${Date.now()}`
+        const currentHeaderString = `Сканирование ${taskIndex}`
+        const viewId = uuidv4()
 
-          // Генерация демо-данных для таблицы
+        const tabsModel = task.types.map((scanType) => {
           const columnsConfig =
-            ObserverConfig.ReoColumnModelsConfig[networkType as ReoSpace.IScanTypes]
+            ObserverConfig.ReoColumnModelsConfig[scanType as ReoSpace.IScanTypes]
+
           const columnsPattern = columnsConfig.map((col) => col.type)
-          const demoRows = MockGenHelpers.generateMockReoTableData(10, columnsPattern)
 
-          addView({
-            viewId,
-            taskId: task.id,
-            show: taskIndex === 0 && typeIndex === 0,
-            tabsModel: [
-              {
-                id: networkType,
-                label: networkType as string,
-                icon: ScanConfigHelpers.getIconForNetworkType(networkType),
-                badge: demoRows.length,
-                data: {
-                  metaInfo: {
-                    scanType: networkType,
-                    scanStatus: task.status,
-                    currentScanCycle: task.currentScanCycle,
-                  },
-                  rows: demoRows,
-                  hasNewData: false,
-                },
+          const demoRows = MockGenHelpers.generateMockReoTableData(100, columnsPattern)
+
+          return {
+            id: uuidv4(),
+            label: scanType as string,
+            icon: ScanConfigHelpers.getIconForNetworkType(scanType),
+            badge: demoRows.length,
+            data: {
+              metaInfo: {
+                scanType: scanType,
+                scanStatus: task.status,
+                currentScanCycle: task.currentScanCycle,
               },
-            ],
-          })
-
-          if (taskIndex === 0 && typeIndex === 0) {
-            showView(viewId)
+              rows: demoRows,
+              hasNewData: false,
+            },
           }
         })
+
+        addView({
+          viewId,
+          headerString: currentHeaderString,
+          taskId: task.id,
+          isScanning: false,
+          show: taskIndex === 0 && taskIndex === 0,
+          tabsModel: tabsModel,
+        })
+
+        if (taskIndex === 0 && taskIndex === 0) {
+          showView(viewId)
+        }
       })
     }
   }, [tasks])
@@ -183,7 +188,7 @@ export function ReoScan() {
       <div className='flex-1 overflow-auto'>
         {activeView ? (
           <ReoContentView
-            header={activeView.taskId}
+            headerString={activeView.headerString}
             model={activeView}
             isScanning={isScanning}
             onStartScan={handleStartScan}

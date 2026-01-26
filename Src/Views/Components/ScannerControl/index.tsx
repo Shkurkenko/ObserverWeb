@@ -8,7 +8,7 @@ import { Caption } from '../../../Components/Typography'
 import { Button } from '../../../Components/Button'
 import { formatDuration } from '../../../../Utils/Helpers'
 
-export interface ScanSession {
+export interface IScanSession {
   id: string
   startTime: Date
   duration: number
@@ -18,10 +18,10 @@ export interface ScanSession {
   scanMode: 'quick' | 'full' | 'continuous'
 }
 
-export interface ScannerControlProps {
+export interface IScannerControlProps {
   isScanning: boolean
   isLoading: boolean
-  session: ScanSession
+  session: IScanSession
   onStartScan: () => void
   onStopScan: () => void
   onClearData?: () => void
@@ -57,6 +57,41 @@ const ScannerControlSkeleton = () => (
   </Card>
 )
 
+export interface IScannerControlStatsProps {
+  isScanning: boolean
+  session: IScanSession
+}
+
+export const ScannerControlStats = ({ isScanning, session }: IScannerControlStatsProps) => {
+  return (
+    <Grid columns={3} gap='lg' className='mt-6'>
+      <div className='text-center p-2'>
+        <Text bold className='text-2xl text-primary font-mono'>
+          {formatDuration(session.duration)}
+        </Text>
+        <Caption className='text-on-surface-variant mt-1'>Длительность</Caption>
+      </div>
+
+      <div className='text-center p-2'>
+        <Text bold className='text-2xl text-secondary font-mono'>
+          {session.networksFound}
+        </Text>
+        <Caption className='text-on-surface-variant mt-1'>Обнаружено сетей</Caption>
+      </div>
+
+      <div className='text-center p-2'>
+        <div className='flex items-center justify-center gap-2'>
+          <Text bold className='text-2xl text-tertiary font-mono'>
+            {isScanning ? 'LIVE' : 'IDLE'}
+          </Text>
+          {isScanning && <span className='w-2 h-2 bg-tertiary rounded-full animate-pulse' />}
+        </div>
+        <Caption className='text-on-surface-variant mt-1'>Статус</Caption>
+      </div>
+    </Grid>
+  )
+}
+
 export const ScannerControl = ({
   isScanning,
   isLoading,
@@ -65,12 +100,12 @@ export const ScannerControl = ({
   onStopScan,
   onClearData,
   onExportData,
-}: ScannerControlProps) => {
+}: IScannerControlProps) => {
   return (
     <Skeletoned isLoading={isLoading} skeleton={<ScannerControlSkeleton />}>
       <Card className='border border-outline-variant/50 bg-surface-container'>
         <div className='p-2'>
-          <div className='flex items-center justify-between mb-6'>
+          <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
               <div
                 className={`relative p-3 rounded-xl ${isScanning ? 'bg-primary/10 animate-pulse' : 'bg-surface-container-high'}`}
@@ -135,33 +170,8 @@ export const ScannerControl = ({
             </div>
           </div>
 
-          <Divider />
-
-          <Grid columns={3} gap='lg' className='mt-6'>
-            <div className='text-center p-2'>
-              <Text bold className='text-2xl text-primary font-mono'>
-                {formatDuration(session.duration)}
-              </Text>
-              <Caption className='text-on-surface-variant mt-1'>Длительность</Caption>
-            </div>
-
-            <div className='text-center p-2'>
-              <Text bold className='text-2xl text-secondary font-mono'>
-                {session.networksFound}
-              </Text>
-              <Caption className='text-on-surface-variant mt-1'>Обнаружено сетей</Caption>
-            </div>
-
-            <div className='text-center p-2'>
-              <div className='flex items-center justify-center gap-2'>
-                <Text bold className='text-2xl text-tertiary font-mono'>
-                  {isScanning ? 'LIVE' : 'IDLE'}
-                </Text>
-                {isScanning && <span className='w-2 h-2 bg-tertiary rounded-full animate-pulse' />}
-              </div>
-              <Caption className='text-on-surface-variant mt-1'>Статус</Caption>
-            </div>
-          </Grid>
+          {/* <Divider />
+          <ScannerControlStats isScanning={isScanning} session={session} /> */}
         </div>
       </Card>
     </Skeletoned>

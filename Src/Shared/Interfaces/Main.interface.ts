@@ -34,6 +34,36 @@ export interface ITab {
 
 export enum IMenubarSetup {
   Notifications = 'Notifications',
-
   TaskManager = 'TaskManager',
+}
+
+export interface IView {
+  viewId: string
+  show: boolean
+
+  // Дополнительные метаданные (опционально)
+  metadata?: {
+    createdAt: Date
+    updatedAt: Date
+    createdBy?: string
+    description?: string
+    tags?: string[]
+  }
+
+  // Настройки вьюшки (опционально)
+  settings?: {
+    autoRefresh?: boolean
+    refreshInterval?: number
+    showSpectrum?: boolean
+  }
+
+  // Состояние фильтров (опционально)
+  filters?: {
+    signalStrength?: { min: number; max: number }
+    operators?: string[]
+    frequencyRange?: { min: number; max: number }
+    activeOnly?: boolean
+    sortBy?: 'signal' | 'frequency' | 'operator' | 'date'
+    sortOrder?: 'asc' | 'desc'
+  }
 }
