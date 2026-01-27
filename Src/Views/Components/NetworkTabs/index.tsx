@@ -1,62 +1,49 @@
 import { useMemo } from 'preact/hooks'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
-import { Icon } from '../../../Components/Typography'
 import { Flex } from '../../../Components/Layouts/Flex'
+import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { cn } from '../../../Utils/Helpers'
+import { CloseButton } from '../../../Components/CloseButton'
+import { ShinyLight } from '../../../Components/ShinyLight'
+import { Surface } from '../../../Components/Layouts/Surface'
 
 // Базовый тип данных для табы сети
 export interface NetworkTabData {
   id: string
+
   label: string
+
   networkType: string
+
   networkIcon: string
-  status: 'scanning' | 'idle' | 'error' | 'paused' | 'complete'
+
+  status: ReoSpace.IScanStatusTypes
+
   signalCount: number
+
   disabled?: boolean
+
   loading?: boolean
 }
 
 // Основной интерфейс для компонента NetworkTab
-export interface INetworkTabProps extends Omit<ITab, 'id' | 'label'> {
-  id: string
-  label: string
+export interface INetworkTabProps extends ITab {
   networkType: string
-  networkIcon: string
-  status: 'scanning' | 'idle' | 'error' | 'paused' | 'complete'
-  signalCount: number
-  onClose?: (id: string) => void
-  onTabClick?: (tab: NetworkTabData) => void
-  isActive?: boolean
-  showCloseButton?: boolean
-}
 
-// Цвета статусов
-const statusColors = {
-  scanning: {
-    bg: '#8FD5AF', // primary
-    glow: '#8FD5AF',
-    text: '#003823', // onPrimary
-  },
-  idle: {
-    bg: '#B4CCBC', // secondary
-    glow: '#B4CCBC',
-    text: '#203529', // onSecondary
-  },
-  error: {
-    bg: '#FFB4AB', // error
-    glow: '#FFB4AB',
-    text: '#690005', // onError
-  },
-  paused: {
-    bg: '#D0E8D7', // onSecondaryContainer
-    glow: '#B4CCBC',
-    text: '#203529',
-  },
-  complete: {
-    bg: '#005235', // primaryContainer
-    glow: '#8FD5AF',
-    text: '#ABF2CA', // onPrimaryContainer
-  },
+  networkIcon: string
+
+  status: ReoSpace.IScanStatusTypes
+
+  signalCount: number
+
+  onClose?: (id: string) => void
+
+  onTabClick?: (tab: NetworkTabData) => void
+
+  active?: boolean
+
+  showCloseButton?: boolean
 }
 
 export function NetworkTab({
@@ -64,16 +51,16 @@ export function NetworkTab({
   label,
   networkType,
   networkIcon,
-  status = 'idle',
+  status = ReoSpace.IScanStatusTypes.Idle,
   signalCount = 0,
   onClose,
   onTabClick,
-  isActive = false,
+  active = false,
   showCloseButton = true,
   disabled = false,
   loading = false,
 }: INetworkTabProps) {
-  const statusConfig = statusColors[status]
+  const statusConfig = ObserverConfig.ScanStatusColors[status]
 
   const handleClick = (e: MouseEvent) => {
     if (disabled || loading) return
@@ -97,20 +84,22 @@ export function NetworkTab({
     onClose?.(id)
   }
 
+  const surfaceVariant = active ? '1' : '0'
+
   return (
-    <div
+    <Surface
       role='tab'
-      aria-selected={isActive}
-      aria-disabled={disabled}
+      aria-selected={active}
+      aria-disabled={disabled || loading}
+      interactive={!disabled && !loading}
+      variant={active ? 'surface' : 'surface-container'}
+      elevation={active ? '1' : '0'}
+      border={active ? 'none' : 'default'}
+      rounded='none'
       className={cn(
-        'group relative flex items-center gap-2 px-8 py-4 cursor-pointer',
-        'border border-outline/50',
-        'transition-all duration-200',
-        isActive
-          ? 'bg-surface border-b-0 text-on-surface'
-          : 'bg-surface-container hover:bg-surface-container-high text-on-surface-variant',
-        disabled && 'opacity-50 cursor-not-allowed',
-        isActive && 'border-primary/30',
+        'group relative px-6 py-3',
+        'border-b-0',
+        active && 'border-t-2 border-t-primary',
       )}
       onClick={handleClick}
     >
@@ -123,7 +112,7 @@ export function NetworkTab({
         <span
           className={cn(
             'px-1 py-1 rounded',
-            isActive ? 'bg-primary/10' : 'bg-surface-container-high',
+            active ? 'bg-primary/10' : 'bg-surface-container-high',
             'text-sm',
           )}
         >
@@ -132,50 +121,24 @@ export function NetworkTab({
         {/* <span className='text-on-surface-variant/70'>{status}</span> */}
       </Flex>
 
-      {/* Индикатор статуса */}
-      <div className='relative'>
-        <div
-          className={cn(
-            'w-2 h-2 rounded-full',
-            'transition-all duration-300',
-            status === 'scanning' && 'animate-pulse',
-          )}
-          style={{
-            backgroundColor: statusConfig.bg,
-            boxShadow: `0 0 8px ${statusConfig.glow}`,
-          }}
-        />
-        {status === 'scanning' && (
-          <div
-            className='absolute inset-0 w-3 h-3 rounded-full animate-ping opacity-75'
-            style={{ backgroundColor: statusConfig.glow }}
-          />
-        )}
-      </div>
+      {/* Индикатор статуса сканирования */}
+      <ShinyLight
+        size='md'
+        isShining={status === ReoSpace.IScanStatusTypes.Running}
+        color={statusConfig.bg}
+        glowColor={statusConfig.glow}
+      />
 
-      {/* Кнопка закрытия */}
-      {showCloseButton && !disabled && (
-        <button
-          onClick={handleClose}
-          className={cn(
-            'opacity-0 group-hover:opacity-100 transition-opacity',
-            'ml-2 p-1 rounded hover:bg-outline-variant/20',
-            'text-on-surface-variant hover:text-on-surface',
-          )}
-          aria-label={`Закрыть ${label}`}
-        >
-          <Icon size='sm'>✕</Icon>
-        </button>
-      )}
+      {showCloseButton && !disabled && <CloseButton onClose={handleClose} />}
 
       {/* Активная полоска снизу */}
-      {isActive && (
+      {active && (
         <div
           className='absolute -bottom-px left-0 right-0 h-1'
           style={{ backgroundColor: statusConfig.glow }}
         />
       )}
-    </div>
+    </Surface>
   )
 }
 
@@ -228,7 +191,7 @@ export interface UseNetworkTabsOptions {
   onTabClose?: (networkId: string) => void
   activeTabId?: string
   showCloseButtons?: boolean
-  status?: 'scanning' | 'idle' | 'error' | 'paused' | 'complete'
+  status?: ReoSpace.IScanStatusTypes
 }
 
 export const useNetworkTabs = (networks: INetworkData[], options?: UseNetworkTabsOptions) => {
@@ -277,7 +240,7 @@ export interface NetworkTabsViewProps {
   onTabClick?: (network: INetworkData) => void
   onTabClose?: (networkId: string) => void
   className?: string
-  status?: 'scanning' | 'idle' | 'error' | 'paused' | 'complete'
+  status?: ReoSpace.IScanStatusTypes
 }
 
 export function NetworkTabsView({
@@ -286,7 +249,7 @@ export function NetworkTabsView({
   onTabClick,
   onTabClose,
   className,
-  status = 'idle',
+  status = ReoSpace.IScanStatusTypes.Idle,
 }: NetworkTabsViewProps) {
   const { tabs, handleTabClick } = useNetworkTabs(networks, {
     onTabClick,

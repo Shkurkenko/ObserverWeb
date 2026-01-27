@@ -6,7 +6,6 @@ import { ScanViewHeader } from '../ScanViewHeader'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
-import { Divider } from '../../../Components/Typography'
 import { ScanMetrics } from '../ScanMetrics'
 import { NetworkTable } from '../NetworkTable'
 import { v4 as uuidv4 } from 'uuid'
@@ -227,17 +226,6 @@ export function ReoContentView({
 
       <ScanMetrics metrics={metrics} />
 
-      <Divider />
-
-      {/* Табы типов сетей
-      <UnderlineTabs
-        tabs={networkTabs}
-        activeTabId={activeNetworkType}
-        onTabClick={(tab) => setActiveNetworkType(tab.id as ReoSpace.IScanTypes)}
-        // className=''
-        fullWidth
-      /> */}
-
       <NetworkTabsView
         networks={networkTabsData}
         activeTabId={activeNetworkType}
@@ -247,7 +235,7 @@ export function ReoContentView({
         onTabClose={(networkId) => {
           console.log('Closing tab:', networkId)
         }}
-        status={isScanning ? 'scanning' : 'idle'}
+        status={isScanning ? ReoSpace.IScanStatusTypes.Running : ReoSpace.IScanStatusTypes.Idle}
         className='mb-4'
       />
 

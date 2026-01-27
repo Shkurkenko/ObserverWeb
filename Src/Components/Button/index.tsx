@@ -35,10 +35,15 @@ export interface IButtonProps {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-on-primary hover:bg-primary-dark active:bg-primary-dark/90',
+
   secondary: 'bg-secondary text-on-secondary hover:bg-secondary-dark active:bg-secondary-dark/90',
+
   tertiary: 'bg-tertiary text-on-tertiary hover:bg-tertiary-dark active:bg-tertiary-dark/90',
+
   outline: 'border border-outline text-on-surface hover:bg-surface-container-high',
+
   text: 'text-primary hover:bg-primary/10',
+
   danger: 'bg-error text-on-error hover:bg-error-dark active:bg-error-dark/90',
 }
 

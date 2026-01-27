@@ -181,6 +181,38 @@ export namespace ObserverConfig {
     [ReoSpace.IScanTypes.Unknown]: { min: 0, max: 0 },
   }
 
+  export type ScanStatusColorsType = Record<
+    ReoSpace.IScanStatusTypes,
+    { bg: string; glow: string; text: string }
+  >
+  export const ScanStatusColors: ScanStatusColorsType = {
+    [ReoSpace.IScanStatusTypes.Idle]: {
+      bg: '#B4CCBC', // secondary
+      glow: '#B4CCBC',
+      text: '#203529', // onSecondary
+    },
+    [ReoSpace.IScanStatusTypes.Running]: {
+      bg: '#8FD5AF', // primary
+      glow: '#8FD5AF',
+      text: '#003823', // onPrimary
+    },
+    [ReoSpace.IScanStatusTypes.Failed]: {
+      bg: '#FFB4AB', // error
+      glow: '#FFB4AB',
+      text: '#690005', // onError
+    },
+    [ReoSpace.IScanStatusTypes.Finished]: {
+      bg: '#005235', // primaryContainer
+      glow: '#8FD5AF',
+      text: '#ABF2CA', // onPrimaryContainer
+    },
+    [ReoSpace.IScanStatusTypes.Pending]: {
+      bg: '#D0E8D7', // onSecondaryContainer
+      glow: '#B4CCBC',
+      text: '#203529',
+    },
+  }
+
   export const FastAlerts: FastAlertsSpace.IStyleConfig = {
     general: {
       transition: 0.3,

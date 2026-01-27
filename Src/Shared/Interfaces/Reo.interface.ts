@@ -61,6 +61,8 @@ export namespace ReoSpace {
     Pending = 'pending',
 
     Failed = 'failed',
+
+    Idle = 'idle'
   }
 
   export enum ISignalLevels {

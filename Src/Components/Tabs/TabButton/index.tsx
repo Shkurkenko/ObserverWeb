@@ -168,13 +168,13 @@ export function TabButton({
 
 // Обновляем пресеты
 export const TabButtonPresets = {
-  Pill: <T,>(props: Omit<TabButtonProps, 'variant'>) => <TabButton<T> variant='pills' {...props} />,
+  Pill: (props: Omit<TabButtonProps, 'variant'>) => <TabButton variant='pills' {...props} />,
 
-  UnderlineSmall: <T,>(props: Omit<TabButtonProps, 'variant' | 'size'>) => (
-    <TabButton<T> variant='underline' size='sm' {...props} />
+  UnderlineSmall: (props: Omit<TabButtonProps, 'variant' | 'size'>) => (
+    <TabButton variant='underline' size='sm' {...props} />
   ),
 
-  OutlineLarge: <T,>(props: Omit<TabButtonProps, 'variant' | 'size'>) => (
-    <TabButton<T> variant='outline' size='lg' {...props} />
+  OutlineLarge: (props: Omit<TabButtonProps, 'variant' | 'size'>) => (
+    <TabButton variant='outline' size='lg' {...props} />
   ),
 }
