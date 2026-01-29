@@ -7,43 +7,43 @@ import { ReoSpace } from '../Shared/Interfaces/Reo.interface'
 export interface IScanViewContext {
   scanViews: ReoSpace.IReoView[]
 
-  activeViewId: string | null
+  activeScanViewId: string | null
 
   setScanViews: (views: ReoSpace.IReoView[]) => void
 
-  addView: (view: ReoSpace.IReoView) => void
+  addReoScanView: (view: ReoSpace.IReoView) => void
 
-  deleteView: (id: string) => void
+  addTabToScanView?: (viewId: string, tabData: any) => void
 
-  toggleView: (id: string) => void
+  deleteScanView: (id: string) => void
 
-  showView: (id: string) => void
+  toggleScanView: (id: string) => void
 
-  hideView: (id: string) => void
+  showScanView: (id: string) => void
 
-  setActiveView: (id: string | null) => void
+  hideScanView: (id: string) => void
 
-  getActiveView: () => ReoSpace.IReoView | undefined
+  setActiveScanView: (id: string | null) => void
 
-  getViewById: (id: string) => ReoSpace.IReoView | undefined
+  getActiveScanView: () => ReoSpace.IReoView | undefined
 
-  updateViewData: (id: string, data: Partial<ReoSpace.IReoView>) => void
+  getScanViewById: (id: string) => ReoSpace.IReoView | undefined
 
-  addRowToView?: (viewId: string, tabIndex: number, row: TableSpace.IRow) => void
+  addRowToScanView?: (viewId: string, tabIndex: number, row: TableSpace.IRow) => void
 
-  updateViewTabData?: (viewId: string, tabId: string, rows: TableSpace.IRow[]) => void
+  clearScanViewData?: (viewId: string, tabId?: string) => void
 
-  clearViewData?: (viewId: string, tabId?: string) => void
+  updateScanViewTabData?: (viewId: string, tabId: string, rows: TableSpace.IRow[]) => void
 
-  updateViewScanStatus?: (viewId: string, status: ReoSpace.IScanStatusTypes) => void
+  updateScanViewData: (id: string, data: Partial<ReoSpace.IReoView>) => void
 
-  updateViewScanCycle?: (viewId: string, cycle: number) => void
+  updateScanViewStatus?: (viewId: string, status: ReoSpace.IScanStatusTypes) => void
 
-  addTabToView?: (viewId: string, tabData: any) => void
+  updateScanViewCycle?: (viewId: string) => void
 
-  removeTabFromView?: (viewId: string, tabId: string) => void
+  removeTabFromScanView?: (viewId: string, tabId: string) => void
 
-  setActiveTab?: (viewId: string, tabId: string) => void
+  setActiveScanTab?: (viewId: string, tabId: string) => void
 }
 
 export const ScanViewContext = createContext<IScanViewContext | null>(null)
@@ -56,82 +56,83 @@ export const ScanViewProvider = ({
   initialViews?: ReoSpace.IReoView[]
 }) => {
   const [scanViews, setScanViews] = useState<ReoSpace.IReoView[]>(initialViews)
-  const [activeViewId, setActiveViewId] = useState<string | null>(initialViews[0]?.viewId || null)
+  const [activeScanViewId, setActiveScanViewId] = useState<string | null>(
+    initialViews[0]?.viewId || null,
+  )
 
   // Базовые методы
-  const addView = useCallback((view: ReoSpace.IReoView) => {
+  const addReoScanView = useCallback((view: ReoSpace.IReoView) => {
     setScanViews((prev) => {
       if (prev.some((v) => v.viewId === view.viewId)) return prev
       const newViews = [...prev, { ...view, show: true }]
-      setActiveViewId(view.viewId)
+      setActiveScanViewId(view.viewId)
       return newViews
     })
   }, [])
 
-  const deleteView = useCallback(
+  const deleteScanView = useCallback(
     (id: string) => {
       setScanViews((prev) => {
         const newViews = prev.filter((view) => view.viewId !== id)
-        if (activeViewId === id && newViews.length > 0) {
-          setActiveViewId(newViews[0].viewId)
+        if (activeScanViewId === id && newViews.length > 0) {
+          setActiveScanViewId(newViews[0].viewId)
         } else if (newViews.length === 0) {
-          setActiveViewId(null)
+          setActiveScanViewId(null)
         }
         return newViews
       })
     },
-    [activeViewId],
+    [activeScanViewId],
   )
 
-  const toggleView = useCallback((id: string) => {
+  const toggleScanView = useCallback((id: string) => {
     setScanViews((prev) =>
       prev.map((view) => (view.viewId === id ? { ...view, show: !view.show } : view)),
     )
   }, [])
 
-  const showView = useCallback((id: string) => {
+  const showScanView = useCallback((id: string) => {
     setScanViews((prev) =>
       prev.map((view) => (view.viewId === id ? { ...view, show: true } : view)),
     )
-    setActiveViewId(id)
+    setActiveScanViewId(id)
   }, [])
 
-  const hideView = useCallback((id: string) => {
+  const hideScanView = useCallback((id: string) => {
     setScanViews((prev) =>
       prev.map((view) => (view.viewId === id ? { ...view, show: false } : view)),
     )
   }, [])
 
-  const setActiveView = useCallback(
+  const setActiveScanView = useCallback(
     (id: string | null) => {
-      setActiveViewId(id)
-      if (id) showView(id)
+      setActiveScanViewId(id)
+      if (id) showScanView(id)
     },
-    [showView],
+    [showScanView],
   )
 
-  const getActiveView = useCallback((): ReoSpace.IReoView | undefined => {
-    return scanViews.find((view) => view.viewId === activeViewId)
-  }, [scanViews, activeViewId])
+  const getActiveScanView = useCallback((): ReoSpace.IReoView | undefined => {
+    return scanViews.find((view) => view.viewId === activeScanViewId)
+  }, [scanViews, activeScanViewId])
 
-  const getViewById = useCallback(
+  const getScanViewById = useCallback(
     (id: string): ReoSpace.IReoView | undefined => {
       return scanViews.find((view) => view.viewId === id)
     },
     [scanViews],
   )
 
-  const updateViewData = useCallback((id: string, data: Partial<ReoSpace.IReoView>) => {
+  const updateScanViewData = useCallback((id: string, data: Partial<ReoSpace.IReoView>) => {
     setScanViews((prev) => prev.map((view) => (view.viewId === id ? { ...view, ...data } : view)))
   }, [])
 
-  // Расширенные методы (опционально)
-  const addRowToView = useCallback((viewId: string, tabIndex: number, row: TableSpace.IRow) => {
+  const addRowToScanView = useCallback((viewId: string, tabIndex: number, row: TableSpace.IRow) => {
     console.log('addRowToView called', { viewId, tabIndex, row })
     // Реализация по желанию
   }, [])
 
-  const updateViewTabData = useCallback(
+  const updateScanViewTabData = useCallback(
     (viewId: string, tabId: string, rows: TableSpace.IRow[]) => {
       console.log('updateViewTabData called', { viewId, tabId, rows })
       // Реализация по желанию
@@ -139,27 +140,34 @@ export const ScanViewProvider = ({
     [],
   )
 
-  const clearViewData = useCallback((viewId: string, tabId?: string) => {
+  const clearScanViewData = useCallback((viewId: string, tabId?: string) => {
     console.log('clearViewData called', { viewId, tabId })
     // Реализация по желанию
   }, [])
 
-  const updateViewScanStatus = useCallback((viewId: string, status: ReoSpace.IScanStatusTypes) => {
-    console.log('updateViewScanStatus called', { viewId, status })
-    // Реализация по желанию
-  }, [])
+  const updateScanViewScanStatus = useCallback(
+    (viewId: string) => {
+      console.log('updateViewScanStatus called', { viewId, status })
+      // Реализация по желанию
+    },
+    [],
+  )
 
-  const updateViewScanCycle = useCallback((viewId: string, cycle: number) => {
+  const updateScanViewScanCycle = useCallback((viewId: string, cycle: number) => {
     console.log('updateViewScanCycle called', { viewId, cycle })
     // Реализация по желанию
   }, [])
 
-  const addTabToView = useCallback((viewId: string, tabData: any) => {
+  const addTabToScanView = useCallback((viewId: string, tabData: any) => {
     console.log('addTabToView called', { viewId, tabData })
     // Реализация по желанию
   }, [])
 
-  const removeTabFromView = useCallback((viewId: string, tabId: string) => {
+  const updateScanViewStatus = useCallback((viewId: string, cycle: number) => {
+    console.log('updateScanViewStatus called')
+  }, [])
+
+  const removeTabFromScanView = useCallback((viewId: string, tabId: string) => {
     console.log('removeTabFromView called', { viewId, tabId })
     // Реализация по желанию
   }, [])
@@ -173,26 +181,25 @@ export const ScanViewProvider = ({
     <ScanViewContext.Provider
       value={{
         scanViews,
-        activeViewId,
+        activeScanViewId,
         setScanViews,
-        addView,
-        deleteView,
-        toggleView,
-        showView,
-        hideView,
-        setActiveView,
-        getActiveView,
-        getViewById,
-        updateViewData,
-        // Добавляем методы (опционально)
-        addRowToView,
-        updateViewTabData,
-        clearViewData,
-        updateViewScanStatus,
-        updateViewScanCycle,
-        addTabToView,
-        removeTabFromView,
-        setActiveTab,
+        addReoScanView,
+        deleteScanView,
+        toggleScanView,
+        showScanView,
+        hideScanView,
+        setActiveScanView,
+        getActiveScanView,
+        getScanViewById,
+        updateScanViewData,
+        addRowToScanView,
+        updateScanViewTabData,
+        clearScanViewData,
+        // updateScanViewStatus,
+        // updateScanViewScanCycle,
+        addTabToScanView,
+        removeTabFromScanView,
+        // setActiveTab,
       }}
     >
       {children}

@@ -1,8 +1,14 @@
+import { cn } from '../../../Utils/Helpers'
+
 import './style.sass'
 
-export function TableSearch() {
+export interface ITableSearchProps {
+  className: string
+}
+
+export function TableSearch({ className }: ITableSearchProps) {
   return (
-    <div className='reo-scan-search'>
+    <div className={cn('reo-scan-search', className)}>
       <div class='w-full min-w-50'>
         <div class='table-search-component flex items-center relative'>
           <div className='table-search-input-container w-full flex items-center'>

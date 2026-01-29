@@ -1,23 +1,18 @@
-import { ComponentChildren, FunctionalComponent } from 'preact'
-import { cn } from '../../../Utils/Helpers'
+import { FunctionalComponent } from 'preact'
 import { Box, IBoxProps } from '../Box'
+import { cn } from '../../../Utils/Helpers'
 
 export interface IFlexProps extends IBoxProps {
   /** Направление flex контейнера */
   direction?: 'row' | 'col' | 'row-reverse' | 'col-reverse'
-
   /** Выравнивание по главной оси */
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'stretch'
-
   /** Выравнивание по поперечной оси */
   align?: 'start' | 'center' | 'end' | 'baseline' | 'stretch'
-
   /** Расстояние между элементами */
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-
   /** Перенос элементов на новую строку */
   wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse'
-
   /** Инлайн flex */
   inline?: boolean
 }
@@ -88,12 +83,13 @@ const wrapClasses = {
 
 export const Flex: FunctionalComponent<IFlexProps> = ({
   children,
+  as = 'div',
   direction = 'row',
   justify = 'start',
   align = 'stretch',
   gap = 'md',
   wrap = false,
-  inline = false,
+  inline = true,
   className,
   ...props
 }) => {

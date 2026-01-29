@@ -8,6 +8,7 @@ import { ScanConfigHelpers } from '../../../Utils/ScanConfigHelper'
 import { SearchInput } from '../SearchInput'
 import { useState, useMemo } from 'preact/hooks'
 
+
 import './style.sass'
 
 export function TaskSidebar() {
@@ -45,7 +46,7 @@ export function TaskSidebar() {
         show: index === 0, // Показываем только первый тип сети
         tabsModel: [
           {
-            id: networkType,
+            id: ,
             label: networkType as string,
             icon: ScanConfigHelpers.getIconForNetworkType(networkType),
             badge: 0,

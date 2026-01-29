@@ -3,6 +3,35 @@ import { ITab } from './Main.interface'
 import { IView } from './Main.interface'
 
 export namespace ReoSpace {
+
+  export interface IReoTableMetaInfo {
+    scanType: IScanTypes
+
+    scanStatus?: IScanStatusTypes
+
+    currentScanCycle?: number
+  }
+
+  export interface INetworkData {
+    id: string
+
+    index: number
+
+    name: string
+
+    type: string
+
+    icon: string
+
+    signalCount: number
+
+    hasNewData?: boolean
+
+    lastUpdate?: Date
+
+    description?: string
+  }
+
   export interface IScanTask {
     id: string
 
@@ -17,6 +46,12 @@ export namespace ReoSpace {
     createdAt: string // new Date().toISOString()
 
     duration: number
+  }
+
+  export enum IScanMode {
+    Fast = 'fast',
+
+    Slow = 'slow', // Eng reo more data
   }
 
   export enum IRoles {
@@ -62,7 +97,7 @@ export namespace ReoSpace {
 
     Failed = 'failed',
 
-    Idle = 'idle'
+    Idle = 'idle',
   }
 
   export enum ISignalLevels {

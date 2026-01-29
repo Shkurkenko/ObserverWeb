@@ -7,25 +7,43 @@ import { Text } from '../../../Components/Typography'
 import { Caption } from '../../../Components/Typography'
 import { Button } from '../../../Components/Button'
 import { formatDuration } from '../../../../Utils/Helpers'
+import { cn } from '../../../Utils/Helpers'
+
+export enum IScanMode {
+  Fast = 'fast',
+  Slow = 'slow',
+}
 
 export interface IScanSession {
   id: string
+
   startTime: Date
+
   duration: number
+
   networksFound: number
-  frequencyRange: { min: number; max: number }
+
   isActive: boolean
-  scanMode: 'quick' | 'full' | 'continuous'
+
+  scanMode: IScanMode
 }
 
 export interface IScannerControlProps {
   isScanning: boolean
+
   isLoading: boolean
+
   session: IScanSession
+
   onStartScan: () => void
+
   onStopScan: () => void
+
   onClearData?: () => void
+
   onExportData?: () => void
+
+  className?: string
 }
 
 const ScannerControlSkeleton = () => (
@@ -100,10 +118,11 @@ export const ScannerControl = ({
   onStopScan,
   onClearData,
   onExportData,
+  className = '',
 }: IScannerControlProps) => {
   return (
     <Skeletoned isLoading={isLoading} skeleton={<ScannerControlSkeleton />}>
-      <Card className='border border-outline-variant/50 bg-surface-container'>
+      <Card className={cn('border border-outline-variant/50 bg-surface-container', className)}>
         <div className='p-2'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -127,7 +146,7 @@ export const ScannerControl = ({
                 </Text>
                 <Caption className='text-on-surface-variant mt-1'>
                   {isScanning
-                    ? `Режим: ${session.scanMode} • Диапазон: ${session.frequencyRange.min}-${session.frequencyRange.max} MHz`
+                    ? `Режим: ${session.scanMode}`
                     : 'Нажмите "Запуск" для начала сканирования'}
                 </Caption>
               </div>
@@ -169,9 +188,6 @@ export const ScannerControl = ({
               </Button>
             </div>
           </div>
-
-          {/* <Divider />
-          <ScannerControlStats isScanning={isScanning} session={session} /> */}
         </div>
       </Card>
     </Skeletoned>

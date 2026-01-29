@@ -8,6 +8,7 @@ import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { v4 as uuidv4 } from 'uuid'
 import { EmptyReoView } from '../../Components/EmptyReoView'
+import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 
 export function ReoScan() {
   const { scanViews, activeViewId, addView, showView, updateViewData, getViewById } = useScanView()
@@ -44,6 +45,7 @@ export function ReoScan() {
             label: scanType as string,
             icon: ScanConfigHelpers.getIconForNetworkType(scanType),
             badge: demoRows.length,
+            // Инициализациия данных таблицы
             data: {
               metaInfo: {
                 scanType: scanType,
@@ -52,7 +54,7 @@ export function ReoScan() {
               },
               rows: demoRows,
               hasNewData: false,
-            },
+            } as TableSpace.ITableData<ReoSpace.IReoTableMetaInfo>,
           }
         })
 

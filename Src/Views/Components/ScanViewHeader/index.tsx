@@ -4,12 +4,18 @@ import { Caption } from '../../../Components/Typography'
 import { Heading } from '../../../Components/Typography'
 import { Badge } from '../../../Components/Badge'
 import { Divider } from '../../../Components/Typography'
+import { cn } from '../../../Utils/Helpers'
 
 export interface IScanProps {
   title: string
+
   description: string
+
   isScanning: boolean
+
   isLoading: boolean
+
+  className?: string
 }
 
 export const HeaderSkeleton = () => (
@@ -25,11 +31,17 @@ export const HeaderSkeleton = () => (
   </div>
 )
 
-export const ScanViewHeader = ({ title, isScanning, isLoading, description }: IScanProps) => {
+export const ScanViewHeader = ({
+  title,
+  isScanning,
+  isLoading,
+  description,
+  className = '',
+}: IScanProps) => {
   return (
     <div>
       <Skeletoned isLoading={isLoading} skeleton={<HeaderSkeleton />}>
-        <div className='flex items-center justify-between mb-6'>
+        <div className={cn('flex items-center justify-between', className)}>
           <div className='flex items-center gap-4'>
             <div className='p-3 rounded-xl from-primary/10 to-primary/5 border border-primary/20'>
               <Icon size='2xl' className='text-primary'>
@@ -38,10 +50,8 @@ export const ScanViewHeader = ({ title, isScanning, isLoading, description }: IS
             </div>
 
             <div>
-              <Heading level={1} className='text-3xl font-bold text-on-surface tracking-tight'>
-                {title}
-              </Heading>
-              <Caption className='text-on-surface-variant mt-1'>{description}</Caption>
+              <Heading level={1}>{title}</Heading>
+              <Caption className='text-on-surface-variant'>{description}</Caption>
             </div>
           </div>
 

@@ -2,22 +2,19 @@ import TableProvider from '../../../Components/Table/Context/TableContext'
 import { Card } from '../../../Components/Layouts/Card'
 import { Flex } from '../../../Components/Layouts/Flex'
 import { Heading } from '../../../Components/Typography'
-import { Caption } from '../../../Components/Typography'
-import { Badge } from '../../../Components/Badge'
 import { Button } from '../../../Components/Button'
 import { Icon } from '../../../Components/Typography'
 import { TableSearch } from '../../../Components/Table/TableSearch'
 import { TableHeader } from '../../../Components/Table/TableHeader'
 import { TableBody } from '../../../Components/Table/TableBody'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { Text } from '../../../Components/Typography'
 
 export interface INetworkTableProps {
   isScanning: boolean
 
-  networkType: ReoSpace.IScanTypes
+  networkType: ReoSpace.IScanTypes | undefined
 
   data: any
 
@@ -39,8 +36,8 @@ export const NetworkTable = ({
   onStartScan,
   onStopScan,
 }: INetworkTableProps) => {
-  const columnsConfig = ObserverConfig.ReoColumnModelsConfig[networkType] || []
-  const networkDescriptionConfig = ObserverConfig.NetworkDescrptions[networkType] || 'Сети связи'
+  const columnsConfig = ObserverConfig.ReoColumnModelsConfig[networkType!] || []
+  const networkDescriptionConfig = ObserverConfig.NetworkDescrptions[networkType!] || 'Сети связи'
 
   const frequencyRange = {
     min: networkType === ReoSpace.IScanTypes.Wifi ? 2400 : 800,
@@ -69,62 +66,13 @@ export const NetworkTable = ({
 
   return (
     <div className='space-y-6'>
-      {/* Информация о текущем типе сети */}
-      <Card className='border border-outline-variant/50 bg-surface-container p-4'>
-        <Flex justify='between' align='center'>
-          <div>
-            <div className='flex items-center gap-3 mb-2'>
-              <div className='text-2xl'>{ObserverConfig.NetworkTypeIcons[networkType]}</div>
-              <div>
-                <Heading level={4} className='text-on-surface'>
-                  {networkType} сети
-                </Heading>
-                <Caption className='text-on-surface-variant'>
-                  {networkDescriptionConfig} • {frequencyRange.min}-{frequencyRange.max} MHz
-                </Caption>
-              </div>
-            </div>
-            <div className='flex items-center gap-4'>
-              <Badge variant={data.rows.length > 0 ? 'success' : 'outline'}>
-                {data.rows.length} сетей
-              </Badge>
-              {/* <Caption className='text-on-surface-variant/70'>
-                Обновлено:{' '}
-                {stats.lastUpdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </Caption> */}
-            </div>
-          </div>
-
-          <Flex gap='md'>
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={handleClearData}
-              disabled={!data.rows.length}
-            >
-              <Icon size='sm'>🗑️</Icon>
-              Очистить
-            </Button>
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={handleExportData}
-              disabled={!data.rows.length}
-            >
-              <Icon size='sm'>📥</Icon>
-              Экспорт
-            </Button>
-          </Flex>
-        </Flex>
-      </Card>
-
       {/* Таблица сетей */}
       <Card className='border border-outline-variant/50 bg-surface-container overflow-hidden'>
         {data.rows.length === 0 ? (
           <div className='p-12 text-center'>
             <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-container-high'>
               <Icon size='2xl' className='text-on-surface-variant'>
-                {ObserverConfig.NetworkTypeIcons[networkType]}
+                {ObserverConfig.NetworkTypeIcons[networkType!]}
               </Icon>
             </div>
             <Heading level={4} className='text-on-surface mb-2'>
@@ -150,7 +98,7 @@ export const NetworkTable = ({
             <div className='p-4 border-b border-outline-variant/50'>
               <Flex justify='between' align='center' gap='md'>
                 <div className='flex-1'>
-                  <TableSearch />
+                  <TableSearch className='' />
                 </div>
                 <Button variant='outline' size='sm'>
                   <Icon size='sm'>🔧</Icon>
