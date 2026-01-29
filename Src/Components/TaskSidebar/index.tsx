@@ -7,7 +7,7 @@ import { useScanView } from '../../Hooks/UseScanView'
 import { ScanConfigHelpers } from '../../../Utils/ScanConfigHelper'
 import { SearchInput } from '../SearchInput'
 import { useState, useMemo } from 'preact/hooks'
-
+import { v4 as uuidv4 } from 'uuid'
 
 import './style.sass'
 
@@ -46,7 +46,7 @@ export function TaskSidebar() {
         show: index === 0, // Показываем только первый тип сети
         tabsModel: [
           {
-            id: ,
+            id: uuidv4(),
             label: networkType as string,
             icon: ScanConfigHelpers.getIconForNetworkType(networkType),
             badge: 0,

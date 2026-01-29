@@ -19,7 +19,7 @@ import { TextInput } from '../../Src/Components/Form/TextInput'
 // Интерфейсы для данных
 interface NetworkSignal {
   id: string
-  type: 'GSM' | 'LTE' | 'UMTS' | 'WIFI' | 'BLUETOOTH' | 'UNKNOWN'
+  type: 'GSM' | 'LTE' | 'UMTS' | 'WIFI' | 'BLUETOOTH' | '5G' | 'UNKNOWN'
   name: string
   frequency: number
   channel: number
