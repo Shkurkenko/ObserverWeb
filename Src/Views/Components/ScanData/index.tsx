@@ -4,6 +4,8 @@ import { NetworkTabsView } from '../NetworkTabs/NetworkTabsView'
 import { NetworkTable } from '../NetworkTable'
 import { ScanMetrics } from '../ScanMetrics'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { useEffect } from 'preact/hooks'
+import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 
 export interface IScanDataProps {
   isScanning: boolean
@@ -14,17 +16,40 @@ export interface IScanDataProps {
 
   networkTabsData: ReoSpace.INetworkData[]
 
+  currentRows: any
+
   className?: string
+}
+
+// Форматирование длительности
+const formatDuration = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const secs = seconds % 60
+
+  if (hours > 0) {
+    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+  return `${minutes}:${secs.toString().padStart(2, '0')}`
 }
 
 export const ScanData = ({
   networkTabsData,
   currentData,
   networkType,
+  currentRows,
   isScanning = false,
   className = '',
 }: IScanDataProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0)
+  const [stats, setStats] = useState({
+    totalNetworks: 0,
+    activeNetworks: 0,
+    avgSignal: '-75',
+    noiseFloor: '-95',
+    scanDuration: 0,
+    lastUpdate: new Date(),
+  })
 
   const handleClearData = () => {
     console.log('Handle clear data from ScanData called')
@@ -41,6 +66,40 @@ export const ScanData = ({
   const handleStopScan = () => {
     console.log('Handle stop scan from ScanData called')
   }
+
+  // Обновление статистики
+  useEffect(() => {
+    if (currentRows.length > 0) {
+      // Подсчет активных сетей (сигнал лучше -95 dBm)
+      const activeCount = currentRows.filter((row: TableSpace.IRow) => {
+        const signalCell = row.columns.find((col: any) => col.type === 'Signal')
+        if (!signalCell) return false
+        const signalValue = (signalCell.data as any)?.value
+        return signalValue && signalValue > -95
+      }).length
+
+      // Расчет средней силы сигнала
+      const signals = currentRows
+        .map((row: TableSpace.IRow) => {
+          const signalCell = row.columns.find((col: any) => col.type === 'Signal')
+          return signalCell ? (signalCell.data as any)?.value : null
+        })
+        .filter((val: number | null) => val !== null)
+
+      const avgSignal =
+        signals.length > 0
+          ? Math.round(signals.reduce((a: number, b: number) => a + b, 0) / signals.length)
+          : -95
+
+      setStats((prev) => ({
+        ...prev,
+        totalNetworks: currentRows.length,
+        activeNetworks: activeCount,
+        avgSignal: `${avgSignal} dBm`,
+        lastUpdate: new Date(),
+      }))
+    }
+  }, [currentRows])
 
   // Метрики для панели статистики
   const metrics = [

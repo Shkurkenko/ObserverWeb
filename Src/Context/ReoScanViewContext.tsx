@@ -1,4 +1,3 @@
-// src/Context/ReoScanViewContext.tsx
 import { createContext, ComponentChildren } from 'preact'
 import { useState, useCallback } from 'preact/hooks'
 import { TableSpace } from '../Shared/Interfaces/Table.interface'
@@ -128,52 +127,45 @@ export const ScanViewProvider = ({
   }, [])
 
   const addRowToScanView = useCallback((viewId: string, tabIndex: number, row: TableSpace.IRow) => {
-    console.log('addRowToView called', { viewId, tabIndex, row })
+    console.log('addRowToScanView called', { viewId, tabIndex, row })
     // Реализация по желанию
   }, [])
 
   const updateScanViewTabData = useCallback(
     (viewId: string, tabId: string, rows: TableSpace.IRow[]) => {
-      console.log('updateViewTabData called', { viewId, tabId, rows })
+      console.log('updateScanViewTabData called', { viewId, tabId, rows })
       // Реализация по желанию
     },
     [],
   )
 
   const clearScanViewData = useCallback((viewId: string, tabId?: string) => {
-    console.log('clearViewData called', { viewId, tabId })
+    console.log('clearScanViewData called', { viewId, tabId })
     // Реализация по желанию
   }, [])
 
-  const updateScanViewScanStatus = useCallback(
-    (viewId: string) => {
-      console.log('updateViewScanStatus called', { viewId, status })
-      // Реализация по желанию
-    },
-    [],
-  )
+  const updateScanViewStatus = useCallback((viewId: string, status: ReoSpace.IScanStatusTypes) => {
+    console.log('updateScanViewStatus called', { viewId, status })
+    // Реализация по желанию
+  }, [])
 
-  const updateScanViewScanCycle = useCallback((viewId: string, cycle: number) => {
-    console.log('updateViewScanCycle called', { viewId, cycle })
+  const updateScanViewCycle = useCallback((viewId: string) => {
+    console.log('updateScanViewCycle called', { viewId })
     // Реализация по желанию
   }, [])
 
   const addTabToScanView = useCallback((viewId: string, tabData: any) => {
-    console.log('addTabToView called', { viewId, tabData })
+    console.log('addTabToScanView called', { viewId, tabData })
     // Реализация по желанию
-  }, [])
-
-  const updateScanViewStatus = useCallback((viewId: string, cycle: number) => {
-    console.log('updateScanViewStatus called')
   }, [])
 
   const removeTabFromScanView = useCallback((viewId: string, tabId: string) => {
-    console.log('removeTabFromView called', { viewId, tabId })
+    console.log('removeTabFromScanView called', { viewId, tabId })
     // Реализация по желанию
   }, [])
 
-  const setActiveTab = useCallback((viewId: string, tabId: string) => {
-    console.log('setActiveTab called', { viewId, tabId })
+  const setActiveScanTab = useCallback((viewId: string, tabId: string) => {
+    console.log('setActiveScanTab called', { viewId, tabId })
     // Реализация по желанию
   }, [])
 
@@ -195,11 +187,11 @@ export const ScanViewProvider = ({
         addRowToScanView,
         updateScanViewTabData,
         clearScanViewData,
-        // updateScanViewStatus,
-        // updateScanViewScanCycle,
+        updateScanViewStatus,
+        updateScanViewCycle,
         addTabToScanView,
         removeTabFromScanView,
-        // setActiveTab,
+        setActiveScanTab,
       }}
     >
       {children}

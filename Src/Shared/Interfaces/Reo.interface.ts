@@ -3,7 +3,6 @@ import { ITab } from './Main.interface'
 import { IView } from './Main.interface'
 
 export namespace ReoSpace {
-
   export interface IReoTableMetaInfo {
     scanType: IScanTypes
 
@@ -119,13 +118,7 @@ export namespace ReoSpace {
   }
 
   export interface IReoTabData {
-    metaInfo: {
-      scanType: ReoSpace.IScanTypes
-
-      scanStatus: ReoSpace.IScanStatusTypes
-
-      currentScanCycle: number
-    }
+    metaInfo: IReoTableMetaInfo
 
     rows: TableSpace.IRow[]
 

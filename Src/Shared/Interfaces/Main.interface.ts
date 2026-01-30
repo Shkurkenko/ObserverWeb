@@ -19,6 +19,8 @@ export interface IIconProps {
 export interface ITab {
   id: string
 
+  index: number
+
   label: string
 
   icon?: ComponentChildren | string

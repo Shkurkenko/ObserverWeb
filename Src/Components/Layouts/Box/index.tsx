@@ -1,6 +1,7 @@
 import { ComponentChildren, FunctionalComponent, createElement } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 
+// Простой интерфейс Box
 export interface IBoxProps {
   /** HTML элемент для рендера (по умолчанию 'div') */
   as?: keyof preact.JSX.IntrinsicElements | FunctionalComponent<any>

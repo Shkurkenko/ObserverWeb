@@ -13,7 +13,7 @@ import './style.sass'
 
 export function TaskSidebar() {
   const { tasks } = useTasks()
-  const { addView, showView } = useScanView()
+  const { addScanView, showScanView } = useScanView()
   const [searchQuery, setSearchQuery] = useState('')
 
   // Фильтрация задач по поиску
@@ -39,7 +39,7 @@ export function TaskSidebar() {
       )
 
       // Создаем вьюшку с данными
-      addView({
+      addScanView({
         viewId: viewConfig.viewId,
         taskId: task.id,
         headerString: task.name,
@@ -47,6 +47,7 @@ export function TaskSidebar() {
         tabsModel: [
           {
             id: uuidv4(),
+            index,
             label: networkType as string,
             icon: ScanConfigHelpers.getIconForNetworkType(networkType),
             badge: 0,
@@ -66,7 +67,7 @@ export function TaskSidebar() {
 
     // Показываем первую вьюшку
     if (task.types.length > 0) {
-      showView(`${task.id}-${task.types[0]}-0`)
+      showScanView(`${task.id}-${task.types[0]}-0`)
     }
   }
 

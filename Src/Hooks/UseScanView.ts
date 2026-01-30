@@ -1,4 +1,3 @@
-// src/Hooks/useScanView.ts
 import { useContext } from 'preact/hooks'
 import { ScanViewContext } from '../Context/ReoScanViewContext'
 
@@ -11,9 +10,9 @@ export const useScanView = () => {
 
   const {
     scanViews,
-    activeViewId,
+    activeScanViewId,
     setScanViews,
-    addScanView,
+    addReoScanView,
     deleteScanView,
     toggleScanView,
     showScanView,
@@ -22,36 +21,36 @@ export const useScanView = () => {
     getActiveScanView,
     getScanViewById,
     updateScanViewData,
-    addRowToScanViewView,
+    addRowToScanView,
     updateScanViewTabData,
     clearScanViewData,
     updateScanViewStatus,
     updateScanViewCycle,
     addTabToScanView,
     removeTabFromScanView,
-    setActiveTab,
+    setActiveScanTab,
   } = context
 
   return {
     scanViews,
-    activeViewId,
+    activeScanViewId,
     setScanViews,
-    addView,
-    deleteView,
-    toggleView,
-    showView,
-    hideView,
-    setActiveView,
-    getActiveView,
-    getViewById,
-    updateViewData,
-    addRowToView,
-    updateViewTabData,
-    clearViewData,
-    updateViewScanStatus,
-    updateViewScanCycle,
-    addTabToView,
-    removeTabFromView,
-    setActiveTab,
+    addScanView: addReoScanView,
+    deleteScanView,
+    toggleScanView,
+    showScanView,
+    hideScanView,
+    setActiveScanView,
+    getActiveScanView,
+    getScanViewById,
+    updateScanViewData,
+    addRowToScanView,
+    updateScanViewTabData,
+    clearScanViewData,
+    updateScanViewStatus,
+    updateScanViewCycle,
+    addTabToScanView,
+    removeTabFromScanView,
+    setActiveScanTab,
   }
 }

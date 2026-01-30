@@ -14,7 +14,7 @@ import { Text } from '../../../Components/Typography'
 export interface INetworkTableProps {
   isScanning: boolean
 
-  networkType: ReoSpace.IScanTypes | undefined
+  networkType: ReoSpace.IScanTypes
 
   data: any
 

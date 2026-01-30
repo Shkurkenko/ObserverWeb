@@ -11,7 +11,14 @@ import { EmptyReoView } from '../../Components/EmptyReoView'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 
 export function ReoScan() {
-  const { scanViews, activeViewId, addView, showView, updateViewData, getViewById } = useScanView()
+  const {
+    scanViews,
+    activeScanViewId,
+    addScanView,
+    showScanView,
+    updateScanViewData,
+    getScanViewById,
+  } = useScanView()
   const { tasks } = useTasks()
   const [isScanning, setIsScanning] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -32,7 +39,7 @@ export function ReoScan() {
         const currentHeaderString = `Сканирование ${taskIndex}`
         const viewId = uuidv4()
 
-        const tabsModel = task.types.map((scanType) => {
+        const tabsModel = task.types.map((scanType, index) => {
           const columnsConfig =
             ObserverConfig.ReoColumnModelsConfig[scanType as ReoSpace.IScanTypes]
 
@@ -42,10 +49,10 @@ export function ReoScan() {
 
           return {
             id: uuidv4(),
+            index,
             label: scanType as string,
             icon: ScanConfigHelpers.getIconForNetworkType(scanType),
             badge: demoRows.length,
-            // Инициализациия данных таблицы
             data: {
               metaInfo: {
                 scanType: scanType,
@@ -58,7 +65,7 @@ export function ReoScan() {
           }
         })
 
-        addView({
+        addScanView({
           viewId,
           headerString: currentHeaderString,
           taskId: task.id,
@@ -68,7 +75,7 @@ export function ReoScan() {
         })
 
         if (taskIndex === 0 && taskIndex === 0) {
-          showView(viewId)
+          showScanView(viewId)
         }
       })
     }
@@ -89,7 +96,7 @@ export function ReoScan() {
     return () => clearInterval(interval)
   }, [isScanning])
 
-  const activeView = getViewById(activeViewId || '')
+  const activeView = getScanViewById(activeScanViewId || '')
 
   const handleStartScan = () => {
     setIsLoading(true)
@@ -106,8 +113,8 @@ export function ReoScan() {
     })
 
     // Обновляем статус вьюшки
-    if (activeViewId && activeView) {
-      updateViewData(activeViewId, {
+    if (activeScanViewId && activeView) {
+      updateScanViewData(activeScanViewId, {
         ...activeView,
         tabsModel: activeView.tabsModel.map((tab) => ({
           ...tab,
@@ -132,8 +139,8 @@ export function ReoScan() {
     setIsScanning(false)
     setSessionData((prev) => ({ ...prev, isActive: false }))
 
-    if (activeViewId && activeView) {
-      updateViewData(activeViewId, {
+    if (activeScanViewId && activeView) {
+      updateScanViewData(activeScanViewId, {
         ...activeView,
         tabsModel: activeView.tabsModel.map((tab) => ({
           ...tab,
@@ -154,8 +161,8 @@ export function ReoScan() {
   const handleClearData = () => {
     setIsLoading(true)
 
-    if (activeViewId && activeView) {
-      updateViewData(activeViewId, {
+    if (activeScanViewId && activeView) {
+      updateScanViewData(activeScanViewId, {
         ...activeView,
         tabsModel: activeView.tabsModel.map((tab) => ({
           ...tab,
