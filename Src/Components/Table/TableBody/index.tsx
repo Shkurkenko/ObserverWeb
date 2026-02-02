@@ -47,7 +47,7 @@ export const TableBody = ({ rows, overscanCount = 12, itemHeight = 60 }: ITableB
     <div ref={ref} className='table-body w-full h-full'>
       <Skeletoned
         isLoading={isLoading}
-        minDelay={100500}
+        minDelay={3000}
         skeleton={
           <SkeletonTableBody
             rows={visibleRowsCount}

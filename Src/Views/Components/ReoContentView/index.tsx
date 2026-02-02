@@ -33,11 +33,20 @@ export function ReoContentView({
   onClearData,
   onExportData,
 }: IReoContentViewProps) {
+  const [activeTabUuid, setActiveTabUuid] = useState<string>('')
   const [activeNetworkType, setActiveNetworkType] = useState<ReoSpace.IScanTypes>(
     model.tabsModel[0].data.metaInfo.scanType || ReoSpace.IScanTypes.Gsm,
   )
-  const [activeNetworkId, setActiveNetworkId] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
+
+  const [stats, setStats] = useState({
+    totalNetworks: 0,
+    activeNetworks: 0,
+    avgSignal: '-75',
+    noiseFloor: '-95',
+    scanDuration: 0,
+    lastUpdate: new Date(),
+  })
 
   // Преобразуем вкладки модели для табов с проверкой данных
   const networkTabs = useMemo(() => {
@@ -77,7 +86,7 @@ export function ReoContentView({
           id: tab.id,
           index: tab.index,
           name: tab.label || scanType,
-          type: scanType,
+          type: scanType as ReoSpace.IScanTypes,
           icon: ObserverConfig.NetworkTypeIcons[scanType as ReoSpace.IScanTypes] || '📶',
           signalCount: rows.length,
           hasNewData: tab.data?.hasNewData || false,
@@ -86,7 +95,7 @@ export function ReoContentView({
     [model.tabsModel],
   )
 
-  const activeTabData = networkTabs?.find((tab) => tab.id === activeNetworkType) || networkTabs![0]
+  const activeTabData = networkTabs?.find((tab) => tab.id === activeTabUuid) || networkTabs![0]
   const currentColumns = ObserverConfig.ReoColumnModelsConfig[activeNetworkType] || []
   const currentRows = activeTabData?.data?.rows || []
   const currentData = activeTabData?.data
@@ -125,6 +134,9 @@ export function ReoContentView({
         isScanning={isScanning}
         currentData={currentData}
         networkTabsData={networkTabsData}
+        currentRows={currentRows}
+        stats={stats}
+        setStats={setStats}
       />
 
       <Footer>

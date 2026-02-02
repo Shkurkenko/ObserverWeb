@@ -34,7 +34,7 @@ export function NetworkTabsView({
   return (
     <NetworkTabGroup
       tabs={tabs}
-      activeIndex={0}
+      activeIndex={activeIndex}
       onTabClick={handleTabClick}
       onTabClose={onTabClose}
       className={className}

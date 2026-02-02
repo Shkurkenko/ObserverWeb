@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { useEffect, useState } from 'preact/hooks'
 import { useScanView } from '../../../Hooks/UseScanView'
 import { useTasks } from '../../../Components/TaskSidebar/Hooks/UseTasks'
@@ -6,7 +7,6 @@ import { MockGenHelpers } from '../../../Utils/MockGen'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
-import { v4 as uuidv4 } from 'uuid'
 import { EmptyReoView } from '../../Components/EmptyReoView'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 

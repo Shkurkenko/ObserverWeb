@@ -18,7 +18,7 @@ export namespace ReoSpace {
 
     name: string
 
-    type: string
+    type: IScanTypes
 
     icon: string
 

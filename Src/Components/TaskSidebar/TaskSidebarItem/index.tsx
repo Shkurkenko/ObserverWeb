@@ -11,10 +11,10 @@ interface TaskSidebarItem {
 }
 
 export function TaskSidebarItem({ task }: TaskSidebarItem) {
-  const { showView } = useScanView()
+  const { showScanView } = useScanView()
 
   const loadTaskContent = useCallback(() => {
-    showView(task.id)
+    showScanView(task.id)
   }, [])
 
   const [datePart, timePart] = task?.createdAt?.split('T')

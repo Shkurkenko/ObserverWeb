@@ -12,11 +12,13 @@ export interface IScanDataProps {
 
   currentData: any
 
-  networkType: ReoSpace.IScanTypes
-
   networkTabsData: ReoSpace.INetworkData[]
 
   currentRows: any
+
+  stats: any
+
+  setStats: (prev: any) => void
 
   className?: string
 }
@@ -36,20 +38,13 @@ const formatDuration = (seconds: number) => {
 export const ScanData = ({
   networkTabsData,
   currentData,
-  networkType,
   currentRows,
+  stats,
+  setStats,
   isScanning = false,
   className = '',
 }: IScanDataProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0)
-  const [stats, setStats] = useState({
-    totalNetworks: 0,
-    activeNetworks: 0,
-    avgSignal: '-75',
-    noiseFloor: '-95',
-    scanDuration: 0,
-    lastUpdate: new Date(),
-  })
 
   const handleClearData = () => {
     console.log('Handle clear data from ScanData called')
@@ -91,7 +86,7 @@ export const ScanData = ({
           ? Math.round(signals.reduce((a: number, b: number) => a + b, 0) / signals.length)
           : -95
 
-      setStats((prev) => ({
+      setStats((prev: any) => ({
         ...prev,
         totalNetworks: currentRows.length,
         activeNetworks: activeCount,
@@ -137,15 +132,18 @@ export const ScanData = ({
     },
   ]
 
+  const networkType = networkTabsData[activeIndex].type as ReoSpace.IScanTypes
+
   return (
     <Flex className={className}>
       <Flex inline={false} direction='col' className='flex-1'>
-        <div className='overflow-x-auto'>
+        <div className='overflow-x-auto flex'>
           <NetworkTabsView
             networks={networkTabsData}
             activeIndex={activeIndex}
             onTabClick={(network) => {
               setActiveIndex(network.index)
+              console.log(currentData)
             }}
             onTabClose={(networkId) => {
               console.log('Closing tab:', networkId)
