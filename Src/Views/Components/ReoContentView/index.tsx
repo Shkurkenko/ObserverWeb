@@ -147,8 +147,11 @@ export function ReoContentView({
         setStats={setStats}
       />
 
-      <Footer>
-        <FooterItem label='Активный тип' icon={ObserverConfig.NetworkTypeIcons[activeTabScanType]}>
+      <Footer className='flex-1'>
+        <FooterItem 
+          label='Активный тип'
+          icon={ObserverConfig.NetworkTypeIcons[activeTabScanType]}
+        >
           {/* 
             Тот тип который в данный момент сканируется 
             предусмотреть что может быть несколько типов 

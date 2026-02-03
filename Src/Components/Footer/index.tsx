@@ -2,6 +2,7 @@ import { AdaptiveGridOptions, Grid, GridGapOptions } from '../Layouts/Grid'
 import { Caption } from '../Typography'
 import { Text } from '../Typography'
 import { ComponentChildren } from 'preact'
+import { Box } from '../Layouts/Box'
 import { cn } from '../../Utils/Helpers'
 
 export interface FooterProps {
@@ -22,9 +23,9 @@ export const Footer = ({
   showBorder = true,
 }: FooterProps) => {
   return (
-    <div
+    <Box
       className={cn(
-        'mt-6 pt-4',
+        'mt-6 p-4',
         showBorder && 'border-t border-outline-variant/30',
         variant === 'compact' && 'mt-4 pt-3',
         variant === 'minimal' && 'mt-2 pt-2',
@@ -33,29 +34,8 @@ export const Footer = ({
     >
       <Grid columns={columns} lg={4} gap={gap}>
         {children}
-        {/* <div className='space-y-1'>
-          <Caption className='text-on-surface-variant'>Активный тип</Caption>
-          <Text className='font-medium text-on-surface flex items-center gap-2'>
-            <span>{ObserverConfig.NetworkTypeIcons[activeNetworkType]}</span>
-            {activeNetworkType}
-          </Text>
-        </div>
-        <div className='space-y-1'>
-          <Caption className='text-on-surface-variant'>Задача</Caption>
-          <Text className='font-medium text-on-surface truncate'>{headerString}</Text>
-        </div>
-        <div className='space-y-1'>
-          <Caption className='text-on-surface-variant'>Обновлено</Caption>
-          <Text className='font-medium text-on-surface'>
-            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </Text>
-        </div>
-        <div className='space-y-1'>
-          <Caption className='text-on-surface-variant'>Версия</Caption>
-          <Text className='font-mono font-medium text-on-surface'>v2.4.1</Text>
-        </div> */}
       </Grid>
-    </div>
+    </Box>
   )
 }
 
@@ -71,12 +51,12 @@ export const FooterItem = ({
   icon?: string
 }) => {
   return (
-    <div className={cn('space-y-1', className)}>
+    <Box className={cn(className, 'space-y-1')}>
       {label && <Caption className='text-onsurface-variant'>{label}</Caption>}
       <Text className='font-medium text-on-surface flex items-center gap-2'>
         {icon && <span>{icon}</span>}
         {children}
       </Text>
-    </div>
+    </Box>
   )
 }

@@ -1,11 +1,9 @@
-import { useCallback, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import { useMemo } from 'preact/hooks'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { NetworkTabData } from './NetworkTab'
 
 export interface UseNetworkTabsOptions {
-  activeIndexOption?: number
-
   onTabClick?: (network: ReoSpace.INetworkData) => void
 
   onTabClose?: (networkId: string) => void
@@ -22,12 +20,9 @@ export const useNetworkTabs = (
   const {
     onTabClick,
     onTabClose,
-    activeIndexOption = 0,
     showCloseButtons = true,
     status = 'idle' as ReoSpace.IScanStatusTypes,
   } = options || {}
-
-  const [activeIndex, setActiveIndex] = useState<number>(activeIndexOption)
 
   const networkTabs = useMemo(
     () =>

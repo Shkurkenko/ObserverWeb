@@ -32,7 +32,7 @@ export const NetworkTabGroup = ({
           {...tab}
           active={tab.index === activeIndex}
           onTabClick={onTabClick}
-          onClose={onTabClose}
+          onTabClose={onTabClose}
         />
       ))}
     </div>

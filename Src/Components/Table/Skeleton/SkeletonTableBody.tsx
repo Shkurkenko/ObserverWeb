@@ -1,24 +1,33 @@
+import { Box } from '../../Layouts/Box'
+import { Flex } from '../../Layouts/Flex'
+import { cn } from '../../../Utils/Helpers'
+
 interface SkeletonTableBodyProps {
   rows?: number
   columns?: number
   rowHeight?: number
+  className?: string
 }
 
 export const SkeletonTableBody = ({
   rows = 10,
   columns = 6,
   rowHeight = 60,
+  className = '',
 }: SkeletonTableBodyProps) => (
-  <>
+  <Box className={cn(className, 'table-body-skeleton w-full h-full')}>
     {[...Array(rows)].map((_, i) => (
-      <div
+      <Flex
         key={i}
-        className='observer-table-body-row w-full flex items-center px-6 border-b border-outline-variant'
+        direction='col'
+        align='center'
+        justify='center'
+        className='w-full px-6 border-b border-outline-variant'
         style={{ height: rowHeight }}
       >
-        <div className='w-full flex gap-6'>
+        <Flex gap='lg' className='w-full'>
           {[...Array(columns)].map((_, c) => (
-            <div
+            <Box
               key={c}
               className='h-4 bg-surface-container-high rounded animate-pulse'
               style={{
@@ -27,8 +36,8 @@ export const SkeletonTableBody = ({
               }}
             />
           ))}
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     ))}
-  </>
+  </Box>
 )

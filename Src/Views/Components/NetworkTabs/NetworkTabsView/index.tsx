@@ -27,7 +27,6 @@ export function NetworkTabsView({
   const { tabs, handleTabClick } = useNetworkTabs(networks, {
     onTabClick,
     onTabClose,
-    activeIndex,
     status,
   })
 

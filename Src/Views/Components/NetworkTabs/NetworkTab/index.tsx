@@ -1,3 +1,4 @@
+import { useState } from 'preact/hooks'
 import { ReoSpace } from '../../../../Shared/Interfaces/Reo.interface'
 import { ITab } from '../../../../Shared/Interfaces/Main.interface'
 import { ObserverConfig } from '../../../../../Config/ObserverConfig'
@@ -5,6 +6,8 @@ import { Surface } from '../../../../Components/Layouts/Surface'
 import { Flex } from '../../../../Components/Layouts/Flex'
 import { ShinyLight } from '../../../../Components/ShinyLight'
 import { CloseButton } from '../../../../Components/CloseButton'
+import { Box } from '../../../../Components/Layouts/Box'
+import { Text } from '../../../../Components/Typography'
 import { cn } from '../../../../Utils/Helpers'
 
 export interface NetworkTabData {
@@ -36,13 +39,15 @@ export interface INetworkTabProps extends ITab {
 
   signalCount: number
 
-  onClose?: (id: string) => void
+  onTabClose?: (id: string) => void
 
   onTabClick?: (tab: NetworkTabData) => void
 
   active?: boolean
 
   showCloseButton?: boolean
+
+  isUnderlined?: boolean
 
   className?: string
 }
@@ -52,17 +57,23 @@ export function NetworkTab({
   label,
   networkType,
   networkIcon,
+  onTabClick,
+  onTabClose,
   status = ReoSpace.IScanStatusTypes.Idle,
   signalCount = 0,
-  onClose,
-  onTabClick,
   active = false,
   showCloseButton = true,
   disabled = false,
   loading = false,
+  isUnderlined = false,
   className = '',
 }: INetworkTabProps) {
+  const [isHovered, setIsHovered] = useState<Boolean>(false)
+
   const statusConfig = ObserverConfig.ScanStatusColors[status]
+
+  const handleMouseEnter = () => setIsHovered(true)
+  const handleMouseLeave = () => setIsHovered(false)
 
   const handleClick = (e: MouseEvent) => {
     if (disabled || loading) return
@@ -83,10 +94,8 @@ export function NetworkTab({
 
   const handleClose = (e: MouseEvent) => {
     e.stopPropagation()
-    onClose?.(id)
+    onTabClose?.(id)
   }
-
-  const surfaceVariant = active ? '1' : '0'
 
   return (
     <Surface
@@ -98,45 +107,62 @@ export function NetworkTab({
       elevation={active ? '1' : '0'}
       border={active ? 'none' : 'default'}
       rounded='none'
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={cn(
         className,
-        'group relative px-6 py-3',
-        'border-b-0',
+        'group relative px-6 py-3 min-w-10 overflow-hidden select-none',
+        'border-b-0 transition-all duration-200',
         active && 'border-t-2 border-t-primary',
+        !disabled && !loading && 'hover:bg-surface-container-high',
       )}
       onClick={handleClick}
     >
       {/* Контент табы */}
-      <Flex align='center'>
+      <Flex align='center' className='min-w-0'>
         {/* Иконка сети */}
-        <div className='text-lg'>{networkIcon}</div>
-        <span className='font-medium truncate'>{label}</span>
-        <span
+        <Box className='text-lg shrink-0 mr-2'>{networkIcon}</Box>
+
+        {/* Лейбл табы */}
+        <Text variant='body1' className='font-medium truncate min-w-0 flex-1'>
+          {label}
+        </Text>
+
+        {/* Кол-во строк в таблице / кол-во сигналов */}
+        <Text
+          variant='body1'
           className={cn(
             'px-1 py-1 rounded',
-            active ? 'bg-primary/10' : 'bg-surface-container-high',
-            'text-sm',
+            active ? 'bg-primary/10' : 'bg-surface-container-highest',
+            'text-sm mr-4 min-w-8 text-center',
           )}
         >
           {signalCount}
-        </span>
-        {/* <span className='text-on-surface-variant/70'>{status}</span> */}
+        </Text>
       </Flex>
 
       {/* Индикатор статуса сканирования */}
-      <ShinyLight
-        size='md'
-        isShining={status === ReoSpace.IScanStatusTypes.Running}
-        color={statusConfig.bg}
-        glowColor={statusConfig.glow}
-        className='ml-2 mr-2'
-      />
-
-      {showCloseButton && !disabled && <CloseButton onClose={handleClose} />}
+      <Box>
+        {!isHovered && (
+          <ShinyLight
+            size='sm'
+            isShining={status === ReoSpace.IScanStatusTypes.Running}
+            color={statusConfig.bg}
+            glowColor={statusConfig.glow}
+            className='ml-3 shrink-0 mr-3 absolute right-1 top-1/2 -translate-y-1/2'
+          />
+        )}
+        {showCloseButton && !disabled && isHovered && (
+          <CloseButton
+            onClose={handleClose}
+            className='absolute right-2 top-1/2 -translate-y-1/2'
+          />
+        )}
+      </Box>
 
       {/* Активная полоска снизу */}
-      {active && (
-        <div
+      {active && isUnderlined && (
+        <Box
           className='absolute -bottom-px left-0 right-0 h-1'
           style={{ backgroundColor: statusConfig.glow }}
         />

@@ -1,15 +1,30 @@
+import { Flex } from '../../Layouts/Flex'
+import { Box } from '../../Layouts/Box'
+import { cn } from '../../../Utils/Helpers'
+
 interface SkeletonTableHeaderProps {
   columns?: number
   rowHeight?: number
+  className?: string
 }
 
-export const SkeletonTableHeader = ({ columns = 6, rowHeight = 60 }: SkeletonTableHeaderProps) => (
+export const SkeletonTableHeader = ({
+  className,
+  columns = 6,
+  rowHeight = 60,
+}: SkeletonTableHeaderProps) => (
   <>
-    <div
-      className={`w-full absolute inset-0 pointer-events-none bg-surface-container flex items-center justify-center pl-7 gap-6 h-[${rowHeight}px]`}
+    <Flex
+      gap='md'
+      justify='center'
+      align='center'
+      className={cn(
+        className,
+        `absolute inset-0 pointer-events-none bg-surface-container pl-7 h-[${rowHeight}px]`,
+      )}
     >
       {[...Array(columns)].map((_, i) => (
-        <div
+        <Box
           key={i}
           className='h-4 bg-surface-container-high rounded animate-pulse'
           style={{
@@ -18,6 +33,6 @@ export const SkeletonTableHeader = ({ columns = 6, rowHeight = 60 }: SkeletonTab
           }}
         />
       ))}
-    </div>
+    </Flex>
   </>
 )

@@ -3,6 +3,8 @@ import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { SkeletonTableBody } from '../Skeleton/SkeletonTableBody'
 import { useContainerSize } from '../../../Hooks/UseContainerSize'
 import { Skeletoned } from '../../Skeletoned'
+import { Box } from '../../Layouts/Box'
+import { CSSProperties } from 'preact'
 import VirtualList from 'react-tiny-virtual-list'
 
 import './style.sass'
@@ -32,19 +34,13 @@ export const TableBody = ({ rows, overscanCount = 12, itemHeight = 60 }: ITableB
       itemSize={itemHeight}
       overscanCount={overscanCount}
       renderItem={({ index, style }) => (
-        <div
-          key={index}
-          style={style as React.CSSProperties}
-          className='observer-table-body-row w-full flex items-center border-b border-outline-variant'
-        >
-          <TableRow rowData={rows[index]} />
-        </div>
+        <TableRow rowData={rows[index]} style={style as CSSProperties} />
       )}
     />
   )
 
   return (
-    <div ref={ref} className='table-body w-full h-full'>
+    <Box ref={ref} className='table-body w-full h-full'>
       <Skeletoned
         isLoading={isLoading}
         minDelay={3000}
@@ -58,6 +54,6 @@ export const TableBody = ({ rows, overscanCount = 12, itemHeight = 60 }: ITableB
       >
         {tableContent}
       </Skeletoned>
-    </div>
+    </Box>
   )
 }

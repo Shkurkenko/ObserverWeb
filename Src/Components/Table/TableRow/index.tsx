@@ -6,8 +6,11 @@ import { ColumnEnum } from '../Columns/ColumnEnum'
 import { ColumnText } from '../Columns/ColumnText/ColumnText'
 import { ColumnCountry } from '../Columns/ColumnCountry'
 import { ColumnCheckbox } from '../Columns/ColumnCheckbox'
+import { Box } from '../../Layouts/Box'
+import { cn } from '../../../Utils/Helpers'
 
 import './style.sass'
+import { CSSProperties } from 'preact'
 
 export function ColumnMatcher({
   columnData,
@@ -63,14 +66,22 @@ export function ColumnMatcher({
 
 export interface ITableRowProps {
   rowData: TableSpace.IRow
+  style?: CSSProperties
+  className?: string
 }
 
-export function TableRow({ rowData }: ITableRowProps) {
+export const TableRow = ({ rowData, style, className = '' }: ITableRowProps) => {
   return (
-    <>
+    <Box
+      style={style}
+      className={cn(
+        className,
+        'observer-table-body-row w-full flex items-center border-b border-surface-container',
+      )}
+    >
       {rowData.columns.map((column: TableSpace.ICell<unknown>, counter: number) => (
         <ColumnMatcher columnData={column} key={counter} />
       ))}
-    </>
+    </Box>
   )
 }
