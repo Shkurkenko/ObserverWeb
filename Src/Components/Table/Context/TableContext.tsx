@@ -17,8 +17,6 @@ export interface ITableContext {
 
   currentSelectedCell: { rowIndex: number; colIndex: number }
 
-  // setHeaderRefs: (refs: MutableRef<HTMLDivElement | null>) => void
-
   setRows: (rows: TableSpace.IRow[]) => void
 
   setTableInfo: (tableInfo: unknown) => void
@@ -26,8 +24,6 @@ export interface ITableContext {
   isRowValid: (row: TableSpace.IRow) => boolean
 
   setColumns: (columns: TableSpace.IColumn[]) => void
-
-  setDefaultHeaders: () => void
 
   addRow: (row: TableSpace.IRow) => void
 
@@ -97,25 +93,6 @@ export const TableProvider = ({
     MockGenHelpers.processRowAddition(interval, count, addRow)
   }, [])
 
-  const setDefaultHeaders = useCallback(() => {
-    // Note: Think about this
-    // const initialHeaders: TableSpace.IHeader[] =
-    //   data.length > 0
-    //     ? data[0].columns.reduce<TableSpace.IHeader[]>((acc, cell) => {
-    //         if (cell.type !== TableSpace.IColumnTypes.Enum) {
-    //           // cast via unknown first to satisfy TypeScript's recommendation about potentially incompatible unions
-    //           acc.push({
-    //             label: 'sjkdf',
-    //             type: cell.type,
-    //             role: cell.role,
-    //           } as unknown as TableSpace.IHeader)
-    //         }
-    //         return acc
-    //       }, [])
-    //     : []
-    // setHeaders(initialHeaders)
-  }, [data])
-
   const isRowValid = useCallback((row: TableSpace.IRow): boolean => {
     const columnsCountEqual = columnsModel.length === row.columns.length
     const columnsTypesEqual = row.columns.every((column, index) => {
@@ -166,7 +143,6 @@ export const TableProvider = ({
         clearRows,
         selectColumn,
         selectRow,
-        setDefaultHeaders,
         mockAddRows,
         selectCell,
       }}

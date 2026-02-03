@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
+import { Flex } from '../../../Layouts/Flex'
 import { cn } from '../../../../Utils/Helpers'
 
 import './style.sass'
 
 export interface IColumnHeaderProps {
   header: TableSpace.IColumn
+  className?: string
 }
 
 const arrowAngleClassStates = {
@@ -14,7 +16,7 @@ const arrowAngleClassStates = {
   hidden: 'hidden',
 }
 
-export function ColumnHeader({ header }: IColumnHeaderProps) {
+export function ColumnHeader({ header, className = '' }: IColumnHeaderProps) {
   const headerRef = useRef<HTMLDivElement | null>(null)
   const [currentState, setCurrentState] = useState(0)
 
@@ -40,11 +42,12 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
   }
 
   return (
-    <div
+    <Flex
       className={cn(
+        className,
         `table-header-column h-full`,
         `bg-surface-container-high`,
-        `hover:bg-surface-container-highest select-none flex`,
+        `hover:bg-surface-container-highest select-none`,
       )}
       ref={headerRef}
       style={{
@@ -54,7 +57,7 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
         handleColumnHeaderClick()
       }}
     >
-      <div className='header-cell-content w-full flex items-center justify-around'>
+      <Flex align='center' justify='around' className='header-cell-content w-full'>
         <b className='truncate'>{header.label}</b>
         <div className={`header-cell-icon ${getRotationAngle()}`}>
           <svg
@@ -74,7 +77,7 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
             />
           </svg>
         </div>
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }

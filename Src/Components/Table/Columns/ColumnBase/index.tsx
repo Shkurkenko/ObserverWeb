@@ -1,16 +1,25 @@
 import { ComponentChildren } from 'preact'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
 import { useTable } from '../../Hooks/UseTable'
+import { Box } from '../../../Layouts/Box'
+import { cn } from '../../../../Utils/Helpers'
 
 import './style.sass'
 
 interface IColumnBaseProps {
   position: TableSpace.IPoint
+
   children?: ComponentChildren
+
   hovered?: boolean
+
   selected?: boolean
+
   handleHoverEnter?: Function
+
   handleHoverLeave?: Function
+
+  className?: string
 }
 
 export function ColumnBase({
@@ -20,6 +29,7 @@ export function ColumnBase({
   selected,
   handleHoverEnter,
   handleHoverLeave,
+  className = '',
 }: IColumnBaseProps) {
   const { columns } = useTable()
 
@@ -41,15 +51,15 @@ export function ColumnBase({
   }
 
   return (
-    <div
+    <Box
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         ...getColumnWidth(),
       }}
-      className={`table-basecol`}
+      className={cn(className, `table-basecol`)}
     >
       {children}
-    </div>
+    </Box>
   )
 }

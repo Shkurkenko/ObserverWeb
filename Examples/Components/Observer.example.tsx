@@ -18,6 +18,7 @@ import { SignalStrength } from '../../Src/Components/SignalStrength'
 import { IScanSession } from '../../Src/Views/Components/ScannerControl'
 import { ScannerControl } from '../../Src/Views/Components/ScannerControl'
 import { ScanViewHeader } from '../../Src/Views/Components/ScanViewHeader'
+import {v4 as uuidv4} from 'uuid'
 
 // ============================================================================
 // 1. ТИПЫ И КОНСТАНТЫ
@@ -385,13 +386,11 @@ export function RfScannerFinal() {
   const [activeTab, setActiveTab] = useState('dashboard')
 
   const [scanSession, setScanSession] = useState<IScanSession>({
-    id: generateId('session'),
-    startTime: new Date(),
+    id: uuidv4(),
+    startTime: Date.now(),
     duration: 0,
     networksFound: 0,
-    frequencyRange: { min: 2400, max: 6000 },
     isActive: false,
-    scanMode: 'continuous',
   })
 
   const [metrics, setMetrics] = useState<ScannerMetric[]>([
@@ -634,18 +633,19 @@ export function RfScannerFinal() {
   const handleStartScan = () => {
     setIsLoading(true)
 
-    setTimeout(() => {
-      setIsScanning(true)
-      setScanSession((prev: IScanSession) => ({
-        ...prev,
-        id: generateId('session'),
-        startTime: new Date(),
-        duration: 0,
-        isActive: true,
-        scanMode: 'continuous',
-      }))
-      setIsLoading(false)
-    }, 800)
+    console.log('start scan')
+    // setTimeout(() => {
+    //   setIsScanning(true)
+    //   setScanSession((prev: IScanSession) => ({
+    //     ...prev,
+    //     id: generateId('session'),
+    //     startTime: new Date(),
+    //     duration: 0,
+    //     isActive: true,
+    //     scanMode: 'continuous',
+    //   }))
+    //   setIsLoading(false)
+    // }, 800)
   }
 
   const handleStopScan = () => {

@@ -9,7 +9,6 @@ export function useTable(): ITableContext {
   }
 
   const {
-    setHeaderRefs,
     setRows,
     tableInfo,
     rows,
@@ -27,12 +26,10 @@ export function useTable(): ITableContext {
     selectCell,
     selectRow,
     renderEmpty,
-    setDefaultHeaders,
     mockAddRows,
   } = context
 
   return {
-    setHeaderRefs,
     setRows,
     tableInfo,
     rows,
@@ -50,7 +47,6 @@ export function useTable(): ITableContext {
     selectRow,
     selectCell,
     renderEmpty,
-    setDefaultHeaders,
     mockAddRows,
   }
 }

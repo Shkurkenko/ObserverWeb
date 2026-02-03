@@ -1,24 +1,28 @@
+import { Box } from '../../../Layouts/Box'
+import { Flex } from '../../../Layouts/Flex'
+import { Text } from '../../../Typography'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
+import { cn } from '../../../../Utils/Helpers'
 
 import './style.sass'
 
 export interface IColumnOperatorProps {
-  iconPath?: string
   data: TableSpace.IOperatorCellData
+  className?: string
 }
 
 const operatorTestCircles: Record<string, JSX.Element> = {
-  mts: <div className={'operator-circle mts-operator-circle'}></div>,
-  tele2: <div className={'operator-circle tele2-operator-circle'}></div>,
-  beeline: <div className={'operator-circle beeline-operator-circle'}></div>,
-  megafone: <div className={'operator-circle megafone-operator-circle'}></div>,
-  default: <div className={'operator-circle'}></div>,
+  mts: <Box className={'operator-circle mts-operator-circle'}></Box>,
+  tele2: <Box className={'operator-circle tele2-operator-circle'}></Box>,
+  beeline: <Box className={'operator-circle beeline-operator-circle'}></Box>,
+  megafone: <Box className={'operator-circle megafone-operator-circle'}></Box>,
+  default: <Box className={'operator-circle'}></Box>,
 }
 
-export const ColumnOperator = ({ iconPath, data }: IColumnOperatorProps) => {
+export const ColumnOperator = ({ data, className = '' }: IColumnOperatorProps) => {
   return (
-    <div className='operator-column-container flex items-center'>
-      <div className='w-full h-full column-operator'>{data.name}</div>
+    <Flex align='center' className={cn(className, 'operator-column-container')}>
+      <Text variant='body1' className='w-full h-full column-operator'>{data.name}</Text>
       <div className='operator-icon mr-2 ml-2'>
         {
           operatorTestCircles[
@@ -28,6 +32,6 @@ export const ColumnOperator = ({ iconPath, data }: IColumnOperatorProps) => {
           ]
         }
       </div>
-    </div>
+    </Flex>
   )
 }
