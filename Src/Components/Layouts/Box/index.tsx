@@ -1,4 +1,5 @@
 import { ComponentChildren, FunctionalComponent, createElement } from 'preact'
+import { forwardRef } from 'preact/compat'
 import { cn } from '../../../Utils/Helpers'
 
 // Простой интерфейс Box
@@ -26,23 +27,29 @@ export interface IBoxProps {
 }
 
 // Используем createElement напрямую
-export const Box: FunctionalComponent<IBoxProps> = ({
-  children,
-  as: Component = 'div',
-  className,
-  hidden,
-  style,
-  'data-testid': dataTestId,
-  ...props
-}) => {
-  return createElement(
-    Component,
+export const Box = forwardRef<preact.JSX.IntrinsicElements | FunctionalComponent<any>, IBoxProps>(
+  (
     {
-      className: cn(className, hidden && 'hidden'),
+      children,
+      as: Component = 'div',
+      className,
+      hidden,
       style,
       'data-testid': dataTestId,
-      ...props,
+      ...props
     },
-    children,
-  )
-}
+    ref,
+  ) => {
+    return createElement(
+      Component,
+      {
+        ref,
+        className: cn(className, hidden && 'hidden'),
+        style,
+        'data-testid': dataTestId,
+        ...props,
+      },
+      children,
+    )
+  },
+)
