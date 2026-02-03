@@ -7,6 +7,7 @@ import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { Footer, FooterItem } from '../../../Components/Footer'
 import { v4 as uuidv4 } from 'uuid'
 import { ScanData } from '../ScanData'
+import { Flex } from '../../../Components/Layouts/Flex'
 
 export interface IReoContentViewProps {
   headerString: string
@@ -33,11 +34,11 @@ export function ReoContentView({
   onClearData,
   onExportData,
 }: IReoContentViewProps) {
-  const [activeTabUuid, setActiveTabUuid] = useState<string>('')
-  const [activeNetworkType, setActiveNetworkType] = useState<ReoSpace.IScanTypes>(
-    model.tabsModel[0].data.metaInfo.scanType || ReoSpace.IScanTypes.Gsm,
+  const [activeNetworkType, setActiveNetworkType] = useState<ReoSpace.IScanTypes[]>(
+    model.tabsModel.map((tab) => tab.data.metaInfo.scanType),
   )
   const [isLoading, setIsLoading] = useState(false)
+  const [activeIndex, setActiveIndex] = useState<number>(0)
 
   const [stats, setStats] = useState({
     totalNetworks: 0,
@@ -50,12 +51,12 @@ export function ReoContentView({
 
   // Преобразуем вкладки модели для табов с проверкой данных
   const networkTabs = useMemo(() => {
-    return model.tabsModel?.map((tab) => {
-      const tabData = tab as any
+    return model.tabsModel?.map((tab, index) => {
+      const tabData = tab as ReoSpace.IReoTab
       const data = tabData.data
       const metaInfo = data?.metaInfo
 
-      const scanType = metaInfo?.scanType || 'unknown scan type'
+      const scanType = metaInfo?.scanType || 'unknown'
 
       const networkType = Object.values(ReoSpace.IScanTypes).includes(
         scanType as ReoSpace.IScanTypes,
@@ -67,6 +68,7 @@ export function ReoContentView({
 
       return {
         id: uuidv4(),
+        index,
         label: tab.label || networkType,
         icon: ObserverConfig.NetworkTypeIcons[networkType] || '📶',
         badge: rows.length,
@@ -79,7 +81,7 @@ export function ReoContentView({
   const networkTabsData: ReoSpace.INetworkData[] = useMemo(
     () =>
       model.tabsModel.map((tab) => {
-        const scanType = tab.id
+        const scanType = tab.data.metaInfo.scanType
         const rows = tab.data?.rows || []
 
         return {
@@ -95,10 +97,10 @@ export function ReoContentView({
     [model.tabsModel],
   )
 
-  const activeTabData = networkTabs?.find((tab) => tab.id === activeTabUuid) || networkTabs![0]
-  const currentColumns = ObserverConfig.ReoColumnModelsConfig[activeNetworkType] || []
+  const activeTabData = networkTabs[activeIndex]
   const currentRows = activeTabData?.data?.rows || []
   const currentData = activeTabData?.data
+  const activeTabScanType = activeTabData?.data?.metaInfo.scanType
 
   return (
     <Container size='full' padding='lg' className='h-full flex flex-col bg-surface'>
@@ -130,8 +132,14 @@ export function ReoContentView({
         className='mb-4 mt-4'
       />
 
+      {/* 
+        Логически бесполезный компонент вынес просто 
+        чтобы сделать меньше простыню 
+      */}
       <ScanData
         isScanning={isScanning}
+        activeIndex={activeIndex}
+        setActiveIndex={setActiveIndex}
         currentData={currentData}
         networkTabsData={networkTabsData}
         currentRows={currentRows}
@@ -140,8 +148,15 @@ export function ReoContentView({
       />
 
       <Footer>
-        <FooterItem label='Активный тип' icon={ObserverConfig.NetworkTypeIcons[activeNetworkType]}>
-          {activeNetworkType}
+        <FooterItem label='Активный тип' icon={ObserverConfig.NetworkTypeIcons[activeTabScanType]}>
+          {/* 
+            Тот тип который в данный момент сканируется 
+            предусмотреть что может быть несколько типов 
+            Пока типа все активны но это пока...
+          */}
+          {activeNetworkType.map((scanType) => (
+            <Flex>{scanType}</Flex>
+          ))}
         </FooterItem>
 
         <FooterItem label='Задача'>{headerString}</FooterItem>

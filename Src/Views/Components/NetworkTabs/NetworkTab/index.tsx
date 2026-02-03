@@ -43,6 +43,8 @@ export interface INetworkTabProps extends ITab {
   active?: boolean
 
   showCloseButton?: boolean
+
+  className?: string
 }
 
 export function NetworkTab({
@@ -58,6 +60,7 @@ export function NetworkTab({
   showCloseButton = true,
   disabled = false,
   loading = false,
+  className = '',
 }: INetworkTabProps) {
   const statusConfig = ObserverConfig.ScanStatusColors[status]
 
@@ -96,6 +99,7 @@ export function NetworkTab({
       border={active ? 'none' : 'default'}
       rounded='none'
       className={cn(
+        className,
         'group relative px-6 py-3',
         'border-b-0',
         active && 'border-t-2 border-t-primary',
@@ -125,7 +129,7 @@ export function NetworkTab({
         isShining={status === ReoSpace.IScanStatusTypes.Running}
         color={statusConfig.bg}
         glowColor={statusConfig.glow}
-        className='ml-5 mr-2'
+        className='ml-2 mr-2'
       />
 
       {showCloseButton && !disabled && <CloseButton onClose={handleClose} />}

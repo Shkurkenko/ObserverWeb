@@ -1,11 +1,11 @@
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
-import { ColumnHeader } from '../Columns/ColumnHeader'
 import { useContainerSize } from '../../../Hooks/UseContainerSize'
 import { SkeletonTableHeader } from '../Skeleton/SkeletonTableHeader'
 import { Skeletoned } from '../../Skeletoned'
 
 import './style.sass'
 import { TableHeaderRow } from '../TableHeaderRow'
+import { useEffect } from 'preact/hooks'
 
 interface ITableHeaderProps {
   headerColumns: TableSpace.IColumn[]
@@ -25,7 +25,7 @@ export const TableHeader = ({ headerColumns }: ITableHeaderProps) => {
   return (
     <Skeletoned
       isLoading={isLoading}
-      minDelay={100500}
+      minDelay={2000}
       skeleton={<SkeletonTableHeader columns={5} />}
     >
       <TableHeaderRow ref={ref} columns={headerColumns} />

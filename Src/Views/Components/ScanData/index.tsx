@@ -20,6 +20,10 @@ export interface IScanDataProps {
 
   setStats: (prev: any) => void
 
+  activeIndex: number
+
+  setActiveIndex: (prev: number) => void
+
   className?: string
 }
 
@@ -41,11 +45,11 @@ export const ScanData = ({
   currentRows,
   stats,
   setStats,
+  setActiveIndex,
+  activeIndex = 0,
   isScanning = false,
   className = '',
 }: IScanDataProps) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0)
-
   const handleClearData = () => {
     console.log('Handle clear data from ScanData called')
   }
@@ -143,7 +147,6 @@ export const ScanData = ({
             activeIndex={activeIndex}
             onTabClick={(network) => {
               setActiveIndex(network.index)
-              console.log(currentData)
             }}
             onTabClose={(networkId) => {
               console.log('Closing tab:', networkId)

@@ -56,8 +56,6 @@ export const useNetworkTabs = (
 
   return {
     tabs: networkTabs,
-    activeIndex,
     handleTabClick,
-    setActiveIndex,
   }
 }

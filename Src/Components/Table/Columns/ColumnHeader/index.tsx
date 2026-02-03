@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
+import { cn } from '../../../../Utils/Helpers'
 
 import './style.sass'
 
@@ -40,7 +41,11 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
 
   return (
     <div
-      className={`table-header-column h-full hover:bg-surface-container-highest select-none flex`}
+      className={cn(
+        `table-header-column h-full`,
+        `bg-surface-container-high`,
+        `hover:bg-surface-container-highest select-none flex`,
+      )}
       ref={headerRef}
       style={{
         ...getColumnWidth(),
@@ -50,7 +55,7 @@ export function ColumnHeader({ header }: IColumnHeaderProps) {
       }}
     >
       <div className='header-cell-content w-full flex items-center justify-around'>
-        <b>{header.label}</b>
+        <b className='truncate'>{header.label}</b>
         <div className={`header-cell-icon ${getRotationAngle()}`}>
           <svg
             class='w-4 h-4 text-on-background ml-5'
