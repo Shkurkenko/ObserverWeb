@@ -1,6 +1,6 @@
-import { FunctionalComponent } from 'preact'
 import { Box, IBoxProps } from '../Box'
 import { cn } from '../../../Utils/Helpers'
+import { forwardRef } from 'preact/compat'
 
 export interface IFlexProps extends IBoxProps {
   /** Направление flex контейнера */
@@ -81,41 +81,47 @@ const wrapClasses = {
   'wrap-reverse': 'flex-wrap-reverse',
 }
 
-export const Flex: FunctionalComponent<IFlexProps> = ({
-  children,
-  as = 'div',
-  direction = 'row',
-  justify = 'start',
-  align = 'stretch',
-  gap = 'md',
-  wrap = false,
-  inline = true,
-  className,
-  ...props
-}) => {
-  const wrapClass =
-    typeof wrap === 'boolean'
-      ? wrapClasses[wrap.toString() as keyof typeof wrapClasses]
-      : wrapClasses[wrap]
+export const Flex = forwardRef<HTMLDivElement, IFlexProps>(
+  (
+    {
+      children,
+      as = 'div',
+      direction = 'row',
+      justify = 'start',
+      align = 'stretch',
+      gap = 'md',
+      wrap = false,
+      inline = true,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const wrapClass =
+      typeof wrap === 'boolean'
+        ? wrapClasses[wrap.toString() as keyof typeof wrapClasses]
+        : wrapClasses[wrap]
 
-  return (
-    <Box
-      as='div'
-      className={cn(
-        inline ? 'inline-flex' : 'flex',
-        directionClasses[direction],
-        justifyClasses[justify], // ← Добавлено
-        alignClasses[align],
-        gapClasses[gap],
-        wrapClass,
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </Box>
-  )
-}
+    return (
+      <Box
+        as='div'
+        ref={ref}
+        className={cn(
+          inline ? 'inline-flex' : 'flex',
+          directionClasses[direction],
+          justifyClasses[justify], // ← Добавлено
+          alignClasses[align],
+          gapClasses[gap],
+          wrapClass,
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </Box>
+    )
+  },
+)
 
 // Дополнительные пресеты для удобства
 export const FlexPresets = {

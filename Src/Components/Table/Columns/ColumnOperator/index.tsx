@@ -22,8 +22,10 @@ const operatorTestCircles: Record<string, JSX.Element> = {
 export const ColumnOperator = ({ data, className = '' }: IColumnOperatorProps) => {
   return (
     <Flex align='center' className={cn(className, 'operator-column-container')}>
-      <Text variant='body1' className='w-full h-full column-operator'>{data.name}</Text>
-      <div className='operator-icon mr-2 ml-2'>
+      <Text variant='body1' className='w-full h-full column-operator'>
+        {data.name}
+      </Text>
+      <Box className='operator-icon mr-2 ml-2'>
         {
           operatorTestCircles[
             data.name && data.name.toLocaleLowerCase() in operatorTestCircles
@@ -31,7 +33,7 @@ export const ColumnOperator = ({ data, className = '' }: IColumnOperatorProps) =
               : 'default'
           ]
         }
-      </div>
+      </Box>
     </Flex>
   )
 }
