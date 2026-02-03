@@ -14,6 +14,7 @@ export const TableHeaderRow = forwardRef<HTMLDivElement, ITableHeaderRowProps>(
       <Flex
         ref={ref}
         align='center'
+        gap='none'
         className={cn(
           `transition-opacity duration-600 ease-out sticky`,
           `top-0 z-10 shadow-lg table-header w-full`,

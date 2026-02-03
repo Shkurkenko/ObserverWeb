@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useRef, useState } from 'preact/hooks'
 import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
 import { Flex } from '../../../Layouts/Flex'
 import { cn } from '../../../../Utils/Helpers'
@@ -17,7 +17,7 @@ const arrowAngleClassStates = {
 }
 
 export function ColumnHeader({ header, className = '' }: IColumnHeaderProps) {
-  const headerRef = useRef<HTMLDivElement | null>(null)
+  const headerRef = useRef<null>(null)
   const [currentState, setCurrentState] = useState(0)
 
   const handleColumnHeaderClick = useCallback(() => {

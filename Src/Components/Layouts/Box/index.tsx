@@ -1,45 +1,47 @@
-import { ComponentChildren, FunctionalComponent, createElement } from 'preact'
+import { ComponentChildren, FunctionalComponent, createElement, JSX } from 'preact'
 import { forwardRef } from 'preact/compat'
 import { cn } from '../../../Utils/Helpers'
 
-// Простой интерфейс Box
-export interface IBoxProps {
-  /** HTML элемент для рендера (по умолчанию 'div') */
-  as?: keyof preact.JSX.IntrinsicElements | FunctionalComponent<any>
-
-  /** Дочерние элементы */
+// Generic интерфейс для Box
+export interface IBoxProps<
+  T extends keyof JSX.IntrinsicElements | FunctionalComponent<any> = 'div',
+> {
+  as?: T
   children?: ComponentChildren
-
-  /** CSS классы */
   className?: string
-
-  /** Встроенные стили */
-  style?: preact.JSX.CSSProperties
-
-  /** Скрыть элемент */
+  style?: JSX.CSSProperties
   hidden?: boolean
-
-  /** ID для тестирования */
   'data-testid'?: string
-
-  /** Любые другие HTML атрибуты */
   [key: string]: any
 }
 
-// Используем createElement напрямую
-export const Box = forwardRef<preact.JSX.IntrinsicElements | FunctionalComponent<any>, IBoxProps>(
-  (
-    {
+// Тип для ref на основе элемента
+type ElementType<T> = T extends keyof JSX.IntrinsicElements
+  ? JSX.IntrinsicElements[T] extends JSX.HTMLAttributes<infer E>
+    ? E
+    : HTMLElement
+  : T extends FunctionalComponent<infer P>
+    ? P extends { ref?: infer R }
+      ? R
+      : any
+    : any
+
+// Универсальный Box с generic
+export const Box = forwardRef(
+  <T extends keyof JSX.IntrinsicElements | FunctionalComponent<any> = 'div'>(
+    props: IBoxProps<T>,
+    ref: ElementType<T>,
+  ) => {
+    const {
       children,
       as: Component = 'div',
       className,
       hidden,
       style,
       'data-testid': dataTestId,
-      ...props
-    },
-    ref,
-  ) => {
+      ...restProps
+    } = props
+
     return createElement(
       Component,
       {
@@ -47,9 +49,11 @@ export const Box = forwardRef<preact.JSX.IntrinsicElements | FunctionalComponent
         className: cn(className, hidden && 'hidden'),
         style,
         'data-testid': dataTestId,
-        ...props,
-      },
+        ...restProps,
+      } as any,
       children,
     )
   },
-)
+) as <T extends keyof JSX.IntrinsicElements | FunctionalComponent<any> = 'div'>(
+  props: IBoxProps<T>,
+) => JSX.Element
