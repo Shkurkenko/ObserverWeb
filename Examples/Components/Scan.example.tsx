@@ -1080,7 +1080,7 @@ export function RadioScanner() {
       <UnderlineTabs
         tabs={scannerTabs}
         activeTabId={activeTab}
-        onTabClick={(tab) => setActiveTab(tab.id)}
+        onTabClick={(tab: any) => setActiveTab(tab.id)}
         fullWidth
         className='mb-6'
       />
