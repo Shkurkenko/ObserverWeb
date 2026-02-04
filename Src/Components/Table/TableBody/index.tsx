@@ -11,7 +11,9 @@ import './style.sass'
 
 interface ITableBodyProps {
   rows: TableSpace.IRow[]
+
   itemHeight?: number
+
   overscanCount?: number
 }
 
