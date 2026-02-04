@@ -1,47 +1,36 @@
-import { FunctionalComponent } from 'preact'
-import { Container, IContainerProps, ContainerPadding } from '../Container'
+import { ComponentChildren } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 
-export interface ISectionProps extends IContainerProps {
-  /** Sectioin title */
+interface SectionProps {
   title?: string
-
-  /** Section description */
   description?: string
-
-  /** Action in heading (button etc...) */
-  actions?: preact.ComponentChildren
-
-  /** Heading variant visual */
+  actions?: ComponentChildren
   titleVariant?: 'h1' | 'h2' | 'h3' | 'h4'
-
-  /** Show divider after heading */
   divider?: boolean
-
-  /** Плотность контента */
   density?: 'compact' | 'comfortable' | 'spacious'
+  className?: string
+  children?: ComponentChildren
 }
 
-const densityToPadding: Record<'compact' | 'comfortable' | 'spacious', ContainerPadding> = {
-  compact: 'sm',
-  comfortable: 'md',
-  spacious: 'lg',
-}
-
-export const Section: FunctionalComponent<ISectionProps> = ({
+export const Section = ({
   title,
   description,
   actions,
   titleVariant = 'h2',
   divider = false,
   density = 'comfortable',
+  className,
   children,
-  ...containerProps
-}) => {
+}: SectionProps) => {
   const TitleTag = titleVariant
 
   return (
-    <Container as='section' {...containerProps}>
+    <section
+      className={cn(
+        'w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10',
+        className,
+      )}
+    >
       {(title || description || actions) && (
         <div className='mb-8'>
           <div className='flex items-start justify-between gap-4'>
@@ -78,6 +67,6 @@ export const Section: FunctionalComponent<ISectionProps> = ({
       >
         {children}
       </div>
-    </Container>
+    </section>
   )
 }

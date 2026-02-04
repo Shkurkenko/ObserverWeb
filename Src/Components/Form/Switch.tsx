@@ -1,7 +1,6 @@
-// src/Components/Form/Switch.tsx
-import { FunctionalComponent } from 'preact'
 import { Label } from '../Typography'
 import { cn } from '../../Utils/Helpers'
+
 import './Form.sass'
 
 export interface ISwitchProps {
@@ -16,7 +15,7 @@ export interface ISwitchProps {
   description?: string
 }
 
-export const Switch: FunctionalComponent<ISwitchProps> = ({
+export const Switch = ({
   label,
   checked,
   onChange,
@@ -26,8 +25,14 @@ export const Switch: FunctionalComponent<ISwitchProps> = ({
   id,
   name,
   description,
-}) => {
-  const switchId = id || `switch-${name || Math.random().toString(36).substr(2, 9)}`
+}: ISwitchProps) => {
+  const switchId = id || `switch-${name || Math.random().toString(36).substring(2, 9)}`
+
+  const handleClick = () => {
+    if (!disabled) {
+      onChange(!checked)
+    }
+  }
 
   return (
     <div className={cn('form-field switch-field', className)}>
@@ -38,21 +43,24 @@ export const Switch: FunctionalComponent<ISwitchProps> = ({
           role='switch'
           aria-checked={checked}
           disabled={disabled}
-          onClick={() => onChange(!checked)}
+          onClick={handleClick}
           className={cn('switch', checked && 'checked', disabled && 'disabled')}
-          aria-label={label}
+          aria-label={label || 'Переключатель'}
+          tabIndex={disabled ? -1 : 0}
         >
           <span className='switch-thumb' />
         </button>
 
-        <div className='switch-label-container'>
-          {label && (
-            <Label htmlFor={switchId} required={required}>
-              {label}
-            </Label>
-          )}
-          {description && <div className='switch-description'>{description}</div>}
-        </div>
+        {(label || description) && (
+          <div className='switch-label-container'>
+            {label && (
+              <Label htmlFor={switchId} required={required}>
+                {label}
+              </Label>
+            )}
+            {description && <div className='switch-description'>{description}</div>}
+          </div>
+        )}
       </div>
     </div>
   )

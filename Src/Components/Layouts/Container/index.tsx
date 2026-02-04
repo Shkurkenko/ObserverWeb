@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 import { Box, IBoxProps } from '../Box'
 
@@ -59,7 +58,7 @@ const getPaddingClasses = (padding: ContainerPadding): string => {
   return paddingMap[padding === true ? 'md' : padding]
 }
 
-export const Container: FunctionalComponent<IContainerProps> = ({
+export const Container = ({
   children,
   size = 'fluid',
   padding = 'md',
@@ -67,7 +66,7 @@ export const Container: FunctionalComponent<IContainerProps> = ({
   fullHeight = false,
   className,
   ...props
-}) => {
+}: IContainerProps) => {
   return (
     <Box
       as='div'

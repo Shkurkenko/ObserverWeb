@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { cn } from '../../Utils/Helpers'
 
 export interface IDividerProps {
@@ -11,7 +10,7 @@ export interface IDividerProps {
   labelPosition?: 'left' | 'center' | 'right'
 }
 
-export const Divider: FunctionalComponent<IDividerProps> = ({
+export const Divider = ({
   className,
   vertical = false,
   thickness = 'medium',
@@ -20,7 +19,7 @@ export const Divider: FunctionalComponent<IDividerProps> = ({
   label,
   labelPosition = 'center',
   ...props
-}) => {
+}: IDividerProps) => {
   const thicknessClasses = {
     thin: vertical ? 'w-px' : 'h-px',
     medium: vertical ? 'w-[2px]' : 'h-[2px]',

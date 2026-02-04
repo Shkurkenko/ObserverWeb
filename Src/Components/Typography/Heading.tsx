@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { HeadingLevel, IBaseTypographyProps } from '../../Shared/Interfaces/Typography.interface'
 import { cn } from '../../Utils/Helpers'
 
@@ -25,14 +24,14 @@ const colorClasses = {
   disabled: 'text-gray-400 dark:text-gray-500',
 }
 
-export const Heading: FunctionalComponent<IHeadingProps> = ({
+export const Heading = ({
   level = 1,
   as: Component = `h${level}` as `h${HeadingLevel}`,
   className,
   children,
   color = 'primary',
   ...props
-}) => {
+}: IHeadingProps) => {
   const classes = cn(headingClasses[level], colorClasses[color], 'font-heading', className)
   return (
     <Component className={classes} {...props}>

@@ -1,8 +1,7 @@
-import { ComponentChildren, FunctionalComponent } from 'preact'
 import { Box, IBoxProps } from '../Box'
 import { cn } from '../../../Utils/Helpers'
 
-export interface StackProps extends Omit<IBoxProps, 'as'> {
+export interface IStackProps extends Omit<IBoxProps, 'as'> {
   direction?: 'vertical' | 'horizontal'
   spacing?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   align?: 'start' | 'center' | 'end' | 'stretch'
@@ -33,14 +32,14 @@ const alignClasses = {
   stretch: 'items-stretch',
 }
 
-export const Stack: FunctionalComponent<StackProps> = ({
+export const Stack = ({
   children,
   direction = 'vertical',
   spacing = 'md',
   align = 'stretch',
   className,
   ...props
-}) => {
+}: IStackProps) => {
   const isHorizontal = direction === 'horizontal'
 
   return (

@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { Box, IBoxProps } from '../Box'
 import { cn } from '../../../Utils/Helpers'
 
@@ -105,7 +104,7 @@ const gapClasses = {
   xl: 'gap-8',
 }
 
-export const Grid: FunctionalComponent<IGridProps> = ({
+export const Grid = ({
   children,
   columns = 1,
   sm,
@@ -115,7 +114,7 @@ export const Grid: FunctionalComponent<IGridProps> = ({
   gap = 'md',
   className,
   ...props
-}) => {
+}: IGridProps) => {
   const classes = cn(
     'grid',
     columnClasses[columns],

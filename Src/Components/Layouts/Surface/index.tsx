@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { Box, IBoxProps } from '../Box'
 import { cn } from '../../../Utils/Helpers'
 
@@ -117,7 +116,7 @@ const borderClasses: Record<SurfaceBorderOptions, string> = {
   outline: 'border border-outline-variant',
 }
 
-export const Surface: FunctionalComponent<ISurfaceProps> = ({
+export const Surface = ({
   children,
   variant = 'surface-container',
   elevation = '0',
@@ -131,7 +130,7 @@ export const Surface: FunctionalComponent<ISurfaceProps> = ({
   selected = false,
   className,
   ...props
-}) => {
+}: ISurfaceProps) => {
   const stateClasses = cn(
     interactive && [
       'transition-all duration-200',

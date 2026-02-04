@@ -20,7 +20,7 @@ export interface ITextInputProps {
   autoComplete?: string
 }
 
-export const TextInput: FunctionalComponent<ITextInputProps> = ({
+export const TextInput = ({
   label,
   placeholder,
   value,
@@ -34,7 +34,7 @@ export const TextInput: FunctionalComponent<ITextInputProps> = ({
   id,
   name,
   autoComplete,
-}) => {
+}: ITextInputProps) => {
   const inputId = id || `input-${name || Math.random().toString(36).substr(2, 9)}`
 
   return (

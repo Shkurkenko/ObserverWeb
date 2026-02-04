@@ -1,5 +1,3 @@
-// src/Components/Form/Select.tsx
-import { FunctionalComponent } from 'preact'
 import { Label } from '../Typography'
 import { cn } from '../../Utils/Helpers'
 
@@ -27,7 +25,7 @@ export interface ISelectProps {
   ariaLabel?: string
 }
 
-export const Select: FunctionalComponent<ISelectProps> = ({
+export const Select = ({
   label,
   value,
   onChange,
@@ -41,7 +39,7 @@ export const Select: FunctionalComponent<ISelectProps> = ({
   name,
   placeholder = 'Выберите опцию',
   ariaLabel,
-}) => {
+}: ISelectProps) => {
   const selectId = id || `select-${name || Math.random().toString(36).substr(2, 9)}`
 
   // Формируем aria-label автоматически если не передан
@@ -55,9 +53,8 @@ export const Select: FunctionalComponent<ISelectProps> = ({
     <div className={cn('form-field', className)}>
       {label && (
         <Label
-          for={selectId} // Используем 'for' вместо 'htmlFor' для Preact
+          htmlFor={selectId} // Используем 'for' вместо 'htmlFor' для Preact
           required={required}
-          id={`${selectId}-label`}
         >
           {label}
         </Label>

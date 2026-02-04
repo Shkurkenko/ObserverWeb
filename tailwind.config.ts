@@ -6,6 +6,8 @@ const config: Config = {
     './public/*.html',
     './index.html',
     './Src/**/*.{ts, tsx, html, css}',
+    './.storybook/**/*.{js,ts,jsx,tsx}',
+    './storybook-static/**/*.{js,ts,jsx,tsx}',
     './Autogen/**/*.{ts, tsx, css}',
     './Config/**/*.{ts, tsx, css}',
   ],

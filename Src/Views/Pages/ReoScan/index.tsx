@@ -193,7 +193,7 @@ export function ReoScan() {
   }
 
   return (
-    <div className='h-full w-full flex bg-surface'>
+    <div className='h-full w-full flex'>
       {/* Основной контент */}
       <div className='flex-1'>
         {activeView ? (

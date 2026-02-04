@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { IBaseTypographyProps } from '../../Shared/Interfaces/Typography.interface'
 import { cn } from '../../Utils/Helpers'
 
@@ -8,7 +7,7 @@ interface ILabelProps extends IBaseTypographyProps {
   size?: 'sm' | 'md' | 'lg'
 }
 
-export const Label: FunctionalComponent<ILabelProps> = ({
+export const Label = ({
   className,
   children,
   color = 'primary',
@@ -16,7 +15,7 @@ export const Label: FunctionalComponent<ILabelProps> = ({
   required = false,
   size = 'md',
   ...props
-}) => {
+}: ILabelProps) => {
   const sizeClasses = {
     sm: 'text-xs',
     md: 'text-sm',

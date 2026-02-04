@@ -1,4 +1,4 @@
-import { ComponentChildren, FunctionalComponent } from 'preact'
+import { ComponentChildren } from 'preact'
 import { Surface, ISurfaceProps } from '../Surface'
 import { cn } from '../../../Utils/Helpers'
 
@@ -20,7 +20,7 @@ export interface ICardProps extends Omit<ISurfaceProps, 'variant' | 'elevation' 
   compact?: boolean
 }
 
-export const Card: FunctionalComponent<ICardProps> = ({
+export const Card = ({
   children,
   title,
   subtitle,
@@ -33,7 +33,7 @@ export const Card: FunctionalComponent<ICardProps> = ({
   className,
   outlined,
   ...props
-}) => {
+}: ICardProps) => {
   // Стили в зависимости от варианта
   const variantConfig = {
     default: {

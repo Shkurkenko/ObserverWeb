@@ -1,5 +1,4 @@
 import { isValidElement, cloneElement } from 'preact'
-import { FunctionalComponent } from 'preact'
 import { IconSize } from '../../Shared/Interfaces/Typography.interface'
 import { cn } from '../../Utils/Helpers'
 
@@ -36,7 +35,7 @@ const sizeClasses: Record<IconSize, string> = {
   '2xl': 'w-10 h-10',
 }
 
-export const Icon: FunctionalComponent<IIconProps> = ({
+export const Icon = ({
   className,
   size = 'md',
   color = 'currentColor',
@@ -49,7 +48,7 @@ export const Icon: FunctionalComponent<IIconProps> = ({
   hasNewData = false,
   active = false,
   ...props
-}) => {
+}: IIconProps) => {
   const classes = cn(
     'inline-flex items-center justify-center',
     'fill-current',

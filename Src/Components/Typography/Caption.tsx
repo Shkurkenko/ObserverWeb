@@ -1,4 +1,3 @@
-import { FunctionalComponent } from 'preact'
 import { CaptionVariant, IBaseTypographyProps } from '../../Shared/Interfaces/Typography.interface'
 import { cn } from '../../Utils/Helpers'
 
@@ -7,14 +6,14 @@ export interface ICaptionProps extends IBaseTypographyProps {
   as?: 'span' | 'div' | 'p'
 }
 
-export const Caption: FunctionalComponent<ICaptionProps> = ({
+export const Caption = ({
   variant = 'medium',
   as: Component = 'span',
   className,
   children,
   color = 'secondary',
   ...props
-}) => {
+}: ICaptionProps) => {
   const variantClasses = {
     small: 'text-xs',
     medium: 'text-sm',

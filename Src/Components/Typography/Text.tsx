@@ -1,4 +1,3 @@
-import { FunctionComponent } from 'preact'
 import { cn } from '../../Utils/Helpers'
 import { TextVariant, IBaseTypographyProps } from '../../Shared/Interfaces/Typography.interface'
 
@@ -29,7 +28,7 @@ const colorClasses: Record<NonNullable<IBaseTypographyProps['color']>, string> =
   disabled: 'text-gray-400 dark:text-gray-500 cursor-not-allowed',
 }
 
-export const Text: FunctionComponent<ITextProps> = ({
+export const Text = ({
   variant = 'body1',
   as: Component = 'p',
   className,
@@ -41,7 +40,7 @@ export const Text: FunctionComponent<ITextProps> = ({
   truncate = false,
   align = 'left',
   ...props
-}) => {
+}: ITextProps) => {
   const classes = cn(
     variantClasses[variant],
     colorClasses[color],
