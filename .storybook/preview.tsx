@@ -1,13 +1,18 @@
-import 'tailwindcss'
-import '../Autogen/Themes/ForensicThemes/TailwindAutogen'
-import '../Autogen/Themes/ForensicThemes/TailwindColors'
-import '../Autogen/Themes/ForensicThemes/Theme.registry'
-import '../Autogen/Themes/ForensicThemes/Theme.types'
-import '../Src/style.sass'
-
+import { ThemeDecorator } from './ThemeDecorator'
 import type { Preview } from '@storybook/preact-vite'
 
+import '../Src/style.sass'
+
 const preview: Preview = {
+  decorators: [
+    (Story: any) => {
+      return (
+        <ThemeDecorator>
+          <Story />
+        </ThemeDecorator>
+      )
+    },
+  ],
   parameters: {
     controls: {
       matchers: {

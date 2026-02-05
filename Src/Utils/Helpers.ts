@@ -1,7 +1,45 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { ObserverConfig } from '../../Config/ObserverConfig'
 
 export type DynamicCallback = (...args: any[]) => void
+
+export async function initializeDefaultTheme() {
+  const defaultTheme: ObserverConfig.Theme = 'ForensicBlue'
+  const defaultVariant: ObserverConfig.Variant = 'light'
+
+  const loadDefaultTheme = async () => {
+    try {
+      const mod = await ObserverConfig.Themes[defaultTheme][defaultVariant]()
+      const css = (mod as { default: string }).default
+
+      const style = document.createElement('style')
+      style.id = 'dynamic-theme-initial'
+      style.textContent = css
+        .replace('.dark', ':root')
+        .replace('.dark-hc', ':root')
+        .replace('.dark-mc', ':root')
+        .replace('.light', ':root')
+        .replace('.light-hc', ':root')
+        .replace('.light-mc', ':root')
+        .replace('-high-contrast', '')
+        .replace('-mid-contrast', '')
+
+      document.head.appendChild(style)
+
+      document.documentElement.classList.add(
+        `theme-${defaultTheme.toLowerCase().replace(/([a-z])([A-Z])/g, '$1-$2')}`,
+        defaultVariant.includes('dark') ? 'dark' : 'light',
+      )
+
+      console.log('Default theme loaded')
+    } catch (error) {
+      console.error('Failed to load default theme: ', error)
+    }
+  }
+
+  await loadDefaultTheme()
+}
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

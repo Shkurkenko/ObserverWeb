@@ -22,13 +22,13 @@ import { TypographyTester } from './Views/Pages/TypographyTester'
 import { TabsExamplePage } from './Views/Pages/TabsExamplePage'
 import { ForensicTester } from './Views/Pages/ForensicTester'
 import { TcpScanTester } from './Views/Pages/TcpScanTeseter'
-
-// Создаем компонент для главной страницы
-// import { RfScannerFinal } from './Boilerplates/RfScannerFinal'
+import { UseInitTheme } from './Hooks/UseInitTheme'
 
 import './style.sass'
 
 export function App() {
+  UseInitTheme()
+
   return (
     <ThemeProvider>
       <TasksProvider>

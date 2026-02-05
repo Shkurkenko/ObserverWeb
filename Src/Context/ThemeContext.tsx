@@ -3,40 +3,10 @@ import { createContext } from 'preact'
 import { ComponentChildren } from 'preact'
 import { ThemeName } from '../../Autogen/Themes/ForensicThemes/Theme.registry'
 import { toKebabCase } from '../../Utils/Helpers'
+import { ObserverConfig } from '../../Config/ObserverConfig'
 
-const themes = {
-  ForensicGreen: {
-    light: async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicGreen/css/light.css?raw'),
-    'light-hc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicGreen/css/dark-high-contrast.css?raw'),
-    'light-mc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicGreen/css/light-mid-contrast.css?raw'),
-    dark: async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicGreen/css/dark.css?raw'),
-    'dark-hc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicGreen/css/dark-high-contrast.css?raw'),
-    'dark-mc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicGreen/css/dark-mid-contrast.css?raw'),
-  },
-  ForensicBlue: {
-    light: async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicBlue/css/light.css?raw'),
-    'light-hc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicBlue/css/dark-high-contrast.css?raw'),
-    'light-mc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicBlue/css/light-mid-contrast.css?raw'),
-    dark: async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicBlue/css/dark.css?raw'),
-    'dark-hc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicBlue/css/dark-high-contrast.css?raw'),
-    'dark-mc': async () =>
-      await import('../../Config/Themes/ForensicThemes/WEB/ForensicBlue/css/dark-mid-contrast.css?raw'),
-  },
-} as const
-
-export type Theme = keyof typeof themes
-export type Variant = keyof (typeof themes)[Theme]
+export type Theme = keyof typeof ObserverConfig.Themes
+export type Variant = keyof (typeof ObserverConfig.Themes)[Theme]
 
 interface IThemeContext {
   theme: Theme
@@ -82,7 +52,7 @@ export const ThemeProvider = ({ children, ...props }: IThemeProvider) => {
       const prev = document.getElementById('dynamic-theme')
       if (prev) prev.remove()
 
-      const mod = await themes[theme][variant]()
+      const mod = await ObserverConfig.Themes[theme][variant]()
       const css = (mod as { default: string }).default
 
       const style = document.createElement('style')
@@ -99,7 +69,7 @@ export const ThemeProvider = ({ children, ...props }: IThemeProvider) => {
     apply()
   }, [theme, variant])
 
-  const variants = Object.keys(themes[theme]) as Variant[]
+  const variants = Object.keys(ObserverConfig.Themes[theme]) as Variant[]
 
   return (
     <ThemeContext.Provider value={{ theme, variant, variants, setThemeVariant }}>

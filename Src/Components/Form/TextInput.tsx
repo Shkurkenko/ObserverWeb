@@ -8,7 +8,7 @@ export interface ITextInputProps {
   label?: string
   placeholder?: string
   value: string
-  onChange: (event: { currentTarget: HTMLInputElement }) => void
+  onChange?: (event: { currentTarget: HTMLInputElement }) => void
   error?: string
   helperText?: string
   disabled?: boolean
@@ -50,7 +50,7 @@ export const TextInput = ({
           id={inputId}
           type={type}
           value={value}
-          onChange={(e) => onChange({ currentTarget: e.target as HTMLInputElement })}
+          onChange={(e) => onChange && onChange({ currentTarget: e.target as HTMLInputElement })}
           placeholder={placeholder}
           disabled={disabled}
           required={required}
