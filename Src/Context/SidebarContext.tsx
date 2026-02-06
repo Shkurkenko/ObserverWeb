@@ -12,6 +12,7 @@ interface ISidebarContext {
 
   hideSidebar: () => void
 }
+
 interface ISidebarProviderProps {
   children: ComponentChildren
 }

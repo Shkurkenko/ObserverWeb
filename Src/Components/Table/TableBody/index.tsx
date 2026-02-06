@@ -17,7 +17,7 @@ interface ITableBodyProps {
   overscanCount?: number
 }
 
-export const TableBody = ({ rows, overscanCount = 12, itemHeight = 60 }: ITableBodyProps) => {
+export const TableBody = ({ rows, overscanCount = 30, itemHeight = 60 }: ITableBodyProps) => {
   const { ref, size, containerWidth, containerHeight } = useContainerSize<HTMLDivElement>()
 
   const isLoading = rows.length === 0 || containerHeight === 0

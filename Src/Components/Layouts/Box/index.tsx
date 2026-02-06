@@ -1,5 +1,6 @@
 import { ComponentChildren, FunctionalComponent, createElement, JSX } from 'preact'
 import { forwardRef } from 'preact/compat'
+import { CSSProperties, HTMLAttributes } from 'preact'
 import { cn } from '../../../Utils/Helpers'
 
 // Generic интерфейс для Box
@@ -9,7 +10,7 @@ export interface IBoxProps<
   as?: T
   children?: ComponentChildren
   className?: string
-  style?: JSX.CSSProperties
+  style?: CSSProperties
   hidden?: boolean
   'data-testid'?: string
   [key: string]: any
@@ -17,7 +18,7 @@ export interface IBoxProps<
 
 // Тип для ref на основе элемента
 type ElementType<T> = T extends keyof JSX.IntrinsicElements
-  ? JSX.IntrinsicElements[T] extends JSX.HTMLAttributes<infer E>
+  ? JSX.IntrinsicElements[T] extends HTMLAttributes<infer E>
     ? E
     : HTMLElement
   : T extends FunctionalComponent<infer P>

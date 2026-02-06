@@ -1,4 +1,4 @@
-import { ComponentChild, ComponentChildren, FunctionalComponent } from 'preact'
+import { ComponentChildren } from 'preact'
 import { cn } from '../../Utils/Helpers'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | 'text' | 'danger'
@@ -28,6 +28,8 @@ export interface IButtonProps {
 
   onClick?: (event: MouseEvent) => void
 
+  onKeyDown?: (event: KeyboardEvent) => void
+
   className?: string
 
   'aria-label'?: string
@@ -53,7 +55,7 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'px-6 py-3 text-lg',
 }
 
-export const Button: FunctionalComponent<IButtonProps> = ({
+export const Button = ({
   children,
   variant = 'primary',
   size = 'md',
@@ -64,13 +66,20 @@ export const Button: FunctionalComponent<IButtonProps> = ({
   rightIcon,
   type = 'button',
   onClick,
+  onKeyDown,
   className,
   'aria-label': ariaLabel,
   ...props
-}) => {
+}: IButtonProps) => {
   const handleClick = (event: MouseEvent) => {
     if (!disabled && !loading && onClick) {
       onClick(event)
+    }
+  }
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!disabled && !loading && onKeyDown) {
+      onKeyDown(event)
     }
   }
 
@@ -82,6 +91,7 @@ export const Button: FunctionalComponent<IButtonProps> = ({
       aria-label={ariaLabel}
       aria-busy={loading}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       className={cn(
         'cursor-pointer',
         'inline-flex items-center justify-center',

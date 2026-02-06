@@ -6,7 +6,7 @@ export type DynamicCallback = (...args: any[]) => void
 
 export async function initializeDefaultTheme() {
   const defaultTheme: ObserverConfig.Theme = 'ForensicBlue'
-  const defaultVariant: ObserverConfig.Variant = 'light'
+  const defaultVariant: ObserverConfig.Variant = 'dark'
 
   const loadDefaultTheme = async () => {
     try {
