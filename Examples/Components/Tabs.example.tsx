@@ -677,7 +677,7 @@ export function TabsTest() {
           </div>
 
           <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
-            <Card className='border border-outline-variant/50 p-6'>
+            {/* <Card className='border border-outline-variant/50 p-6'>
               <Heading level={4} className='mb-4 text-lg font-semibold text-on-surface'>
                 Размеры
               </Heading>
@@ -716,9 +716,9 @@ export function TabsTest() {
                   />
                 </div>
               </div>
-            </Card>
+            </Card> */}
 
-            <Card className='border border-outline-variant/50 p-6'>
+            {/* <Card className='border border-outline-variant/50 p-6'>
               <Heading level={4} className='mb-4 text-lg font-semibold text-on-surface'>
                 Ориентация
               </Heading>
@@ -745,7 +745,7 @@ export function TabsTest() {
                   />
                 </div>
               </div>
-            </Card>
+            </Card> */}
           </div>
         </section>
 

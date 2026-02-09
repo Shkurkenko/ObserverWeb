@@ -1,4 +1,4 @@
-import { TableSpace } from "../Src/Shared/Interfaces/Table.interface"
+import { TableSpace } from '../Src/Shared/Interfaces/Table.interface'
 
 export const MockOperators: TableSpace.IOperatorCellData[] = [
   { name: 'MTS', code: 1, position: { rowIndex: 0, colIndex: 0 } },

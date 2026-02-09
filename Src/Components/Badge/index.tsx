@@ -18,31 +18,53 @@ export type BadgeSize = 'xs' | 'sm' | 'md' | 'lg'
 
 export interface IBadgeProps {
   children: ComponentChildren
+
   variant?: BadgeVariant
+
   size?: BadgeSize
+
   rounded?: 'full' | 'md' | 'sm'
+
   className?: string
+
   icon?: ComponentChildren
+
   iconPosition?: 'left' | 'right'
+
   dot?: boolean
+
   dotColor?: string
+
   max?: number
+
   value?: number
+
   dismissible?: boolean
+
   onDismiss?: () => void
+
   'aria-label'?: string
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
   default: 'bg-surface-container-high text-on-surface-variant',
+
   primary: 'bg-primary text-on-primary',
+
   secondary: 'bg-secondary text-on-secondary',
+
   tertiary: 'bg-tertiary text-on-tertiary',
+
   success: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100',
+
   warning: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100',
+
   error: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100',
+
   info: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100',
+
   outline: 'border border-outline text-on-surface-variant bg-transparent',
+
   ghost: 'bg-surface-dim text-on-surface-variant',
 }
 

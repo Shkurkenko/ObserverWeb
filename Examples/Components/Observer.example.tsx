@@ -18,7 +18,7 @@ import { SignalStrength } from '../../Src/Components/SignalStrength'
 import { IScanSession } from '../../Src/Views/Components/ScannerControl'
 import { ScannerControl } from '../../Src/Views/Components/ScannerControl'
 import { ScanViewHeader } from '../../Src/Views/Components/ScanViewHeader'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 // ============================================================================
 // 1. ТИПЫ И КОНСТАНТЫ

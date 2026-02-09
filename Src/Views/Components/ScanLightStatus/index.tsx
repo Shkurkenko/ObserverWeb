@@ -14,6 +14,7 @@ export function ScanLightStatus({ statusType }: IScanLightStatusProps) {
       [ReoSpace.IScanStatusTypes.Pending]: '#FFEE58', // Some sort of yellow
       [ReoSpace.IScanStatusTypes.Failed]: '#FF5722', // Some sort of red
       [ReoSpace.IScanStatusTypes.Finished]: 'grey',
+      [ReoSpace.IScanStatusTypes.Idle]: 'grey',
     }
 
     return defaultStatusColors[statusType] || 'pink'

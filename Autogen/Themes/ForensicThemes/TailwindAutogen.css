@@ -2,7 +2,7 @@
  Автоматически сгенерировано — НЕ РЕДАКТИРОВАТЬ ВРУЧНУЮ!
  Запуск: npm run generate:themes
 */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-background: var(--md-sys-color-background);
@@ -18,23 +18,17 @@
   --color-on-primary: var(--md-sys-color-on-primary);
   --color-on-primary-container: var(--md-sys-color-on-primary-container);
   --color-on-primary-fixed: var(--md-sys-color-on-primary-fixed);
-  --color-on-primary-fixed-variant: var(
-    --md-sys-color-on-primary-fixed-variant
-  );
+  --color-on-primary-fixed-variant: var(--md-sys-color-on-primary-fixed-variant);
   --color-on-secondary: var(--md-sys-color-on-secondary);
   --color-on-secondary-container: var(--md-sys-color-on-secondary-container);
   --color-on-secondary-fixed: var(--md-sys-color-on-secondary-fixed);
-  --color-on-secondary-fixed-variant: var(
-    --md-sys-color-on-secondary-fixed-variant
-  );
+  --color-on-secondary-fixed-variant: var(--md-sys-color-on-secondary-fixed-variant);
   --color-on-surface: var(--md-sys-color-on-surface);
   --color-on-surface-variant: var(--md-sys-color-on-surface-variant);
   --color-on-tertiary: var(--md-sys-color-on-tertiary);
   --color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
   --color-on-tertiary-fixed: var(--md-sys-color-on-tertiary-fixed);
-  --color-on-tertiary-fixed-variant: var(
-    --md-sys-color-on-tertiary-fixed-variant
-  );
+  --color-on-tertiary-fixed-variant: var(--md-sys-color-on-tertiary-fixed-variant);
   --color-outline: var(--md-sys-color-outline);
   --color-outline-variant: var(--md-sys-color-outline-variant);
   --color-primary: var(--md-sys-color-primary);
@@ -51,13 +45,9 @@
   --color-surface-bright: var(--md-sys-color-surface-bright);
   --color-surface-container: var(--md-sys-color-surface-container);
   --color-surface-container-high: var(--md-sys-color-surface-container-high);
-  --color-surface-container-highest: var(
-    --md-sys-color-surface-container-highest
-  );
+  --color-surface-container-highest: var(--md-sys-color-surface-container-highest);
   --color-surface-container-low: var(--md-sys-color-surface-container-low);
-  --color-surface-container-lowest: var(
-    --md-sys-color-surface-container-lowest
-  );
+  --color-surface-container-lowest: var(--md-sys-color-surface-container-lowest);
   --color-surface-dim: var(--md-sys-color-surface-dim);
   --color-surface-tint: var(--md-sys-color-surface-tint);
   --color-surface-variant: var(--md-sys-color-surface-variant);

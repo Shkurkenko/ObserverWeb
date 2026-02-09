@@ -10,6 +10,7 @@ import { Button } from '../../../Components/Button'
 import { Icon } from '../../../Components/Typography'
 import { Box } from '../../../Components/Layouts/Box'
 import { Divider } from '../../../Components/Typography'
+import { formatDuration } from '../../../../Utils/Helpers'
 
 import { cn } from '../../../Utils/Helpers'
 
@@ -31,18 +32,6 @@ export interface IScanDataProps {
   setActiveIndex: (prev: number) => void
 
   className?: string
-}
-
-// Форматирование длительности
-const formatDuration = (seconds: number) => {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const secs = seconds % 60
-
-  if (hours > 0) {
-    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-  }
-  return `${minutes}:${secs.toString().padStart(2, '0')}`
 }
 
 export const ScanData = ({

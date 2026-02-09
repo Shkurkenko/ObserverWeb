@@ -3,12 +3,13 @@ import { useContainerSize } from '../../../Hooks/UseContainerSize'
 import { SkeletonTableHeader } from '../Skeleton/SkeletonTableHeader'
 import { Skeletoned } from '../../Skeletoned'
 
-import './style.sass'
 import { TableHeaderRow } from '../TableHeaderRow'
-import { useEffect } from 'preact/hooks'
+
+import './style.sass'
 
 interface ITableHeaderProps {
   headerColumns: TableSpace.IColumn[]
+  className?: string
 }
 
 export enum ColumnHeaderSorters {
@@ -17,7 +18,7 @@ export enum ColumnHeaderSorters {
   Regular,
 }
 
-export const TableHeader = ({ headerColumns }: ITableHeaderProps) => {
+export const TableHeader = ({ headerColumns, className = '' }: ITableHeaderProps) => {
   const { ref, size } = useContainerSize()
 
   const isLoading = headerColumns.length === 0 || size.height === 0
@@ -28,7 +29,7 @@ export const TableHeader = ({ headerColumns }: ITableHeaderProps) => {
       minDelay={2000}
       skeleton={<SkeletonTableHeader columns={5} />}
     >
-      <TableHeaderRow ref={ref} columns={headerColumns} />
+      <TableHeaderRow ref={ref} columns={headerColumns} className='' />
     </Skeletoned>
   )
 }
