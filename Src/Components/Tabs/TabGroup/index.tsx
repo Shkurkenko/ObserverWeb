@@ -74,7 +74,7 @@ export function TabGroup<T = any>({
       wrap={autoWrap}
       className={cn(
         orientation === 'horizontal' && variant === 'underline',
-        variant === 'pills' && 'rounded-lg p-1 bg-surface-container',
+        variant === 'pills' && 'rounded-lg p-1 ',
         className,
       )}
       {...flexProps}
@@ -94,6 +94,7 @@ export function TabGroup<T = any>({
             size={size}
             fullWidth={shouldStretch}
             showCount={showCounts}
+            className='bg-surface-container'
           />
         )
       })}

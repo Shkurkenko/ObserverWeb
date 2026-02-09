@@ -85,7 +85,7 @@ export const Card = ({
       outlined={outlined !== undefined ? outlined : config.outlined}
       className={cn(
         'overflow-hidden transition-all duration-200',
-        'hover:shadow-md dark:hover:shadow-md-dark hover:-translate-y-0.5',
+        'hover:shadow-md dark:hover:shadow-md-dark',
         accentStyles[accent],
         className,
       )}

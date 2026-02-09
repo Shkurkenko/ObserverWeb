@@ -107,6 +107,7 @@ export const SettingsExample: Story = {
               </label>
               <input
                 type='text'
+                placeholder='name'
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent'
                 defaultValue='alex_johnson'
               />
@@ -115,6 +116,7 @@ export const SettingsExample: Story = {
               <label className='block text-sm font-medium text-gray-700 mb-1'>Email</label>
               <input
                 type='email'
+                placeholder='email'
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent'
                 defaultValue='alex@example.com'
               />
@@ -212,9 +214,7 @@ export const APIReference: Story = {
               <tbody className='divide-y divide-surface-container-high'>
                 <tr>
                   <td className='px-4 py-3 text-sm font-mono text-primary-700'>items</td>
-                  <td className='px-4 py-3 text-sm text-on-surface'>
-                    IAccordionItemData[]
-                  </td>
+                  <td className='px-4 py-3 text-sm text-on-surface'>IAccordionItemData[]</td>
                   <td className='px-4 py-3 text-sm text-gray-700'>—</td>
                   <td className='px-4 py-3 text-sm text-gray-700'>Массив элементов аккордеона</td>
                 </tr>
@@ -336,55 +336,55 @@ export const ProductSpecs: Story = {
   ],
 }
 
-// Пример 5: Playground для разработчиков
-export const Playground: Story = {
-  name: '🎮 Playground (для разработки)',
-  args: {
-    items: ACCORDION_TEST_DATA.slice(0, 3),
-    allowMultiple: false,
-    className: '',
-  },
-  argTypes: {
-    'items[0].title': { control: 'text' },
-    'items[0].content': { control: 'text' },
-    'items[0].disabled': { control: 'boolean' },
-    'items[1].title': { control: 'text' },
-    'items[1].content': { control: 'text' },
-  },
-  decorators: [
-    (Story, context) => (
-      <div className='space-y-8'>
-        <div className='bg-white rounded-xl shadow-lg p-6'>
-          <div className='mb-6'>
-            <h3 className='text-xl font-bold text-gray-900 mb-2'>Accordion Playground</h3>
-            <p className='text-gray-600'>
-              Используйте панель Controls справа для изменения свойств в реальном времени
-            </p>
-          </div>
-          <Story />
-        </div>
+// // Пример 5: Playground для разработчиков
+// export const Playground: Story = {
+//   name: '🎮 Playground (для разработки)',
+//   args: {
+//     items: ACCORDION_TEST_DATA.slice(0, 3),
+//     allowMultiple: false,
+//     className: '',
+//   },
+//   argTypes: {
+//     'items[0].title': { control: 'text' },
+//     'items[0].content': { control: 'text' },
+//     'items[0].disabled': { control: 'boolean' },
+//     'items[1].title': { control: 'text' },
+//     'items[1].content': { control: 'text' },
+//   },
+//   decorators: [
+//     (Story, context) => (
+//       <div className='space-y-8'>
+//         <div className='bg-white rounded-xl shadow-lg p-6'>
+//           <div className='mb-6'>
+//             <h3 className='text-xl font-bold text-gray-900 mb-2'>Accordion Playground</h3>
+//             <p className='text-gray-600'>
+//               Используйте панель Controls справа для изменения свойств в реальном времени
+//             </p>
+//           </div>
+//           <Story />
+//         </div>
 
-        {/* Панель информации */}
-        <div className='bg-blue-50 rounded-lg p-4 border border-blue-200'>
-          <div className='flex items-start gap-3'>
-            <div className='text-blue-500 mt-0.5'>💡</div>
-            <div>
-              <h4 className='font-medium text-blue-900 mb-1'>Информация о состоянии</h4>
-              <ul className='text-sm text-blue-700 space-y-1'>
-                <li>• allowMultiple: {context.args.allowMultiple ? 'true' : 'false'}</li>
-                <li>• Количество элементов: {context.args.items?.length || 0}</li>
-                <li>
-                  • Отключенных элементов:{' '}
-                  {context.args.items?.filter((item) => item.disabled).length || 0}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-  ],
-}
+//         {/* Панель информации */}
+//         <div className='bg-blue-50 rounded-lg p-4 border border-blue-200'>
+//           <div className='flex items-start gap-3'>
+//             <div className='text-blue-500 mt-0.5'>💡</div>
+//             <div>
+//               <h4 className='font-medium text-blue-900 mb-1'>Информация о состоянии</h4>
+//               <ul className='text-sm text-blue-700 space-y-1'>
+//                 <li>• allowMultiple: {context.args.allowMultiple ? 'true' : 'false'}</li>
+//                 <li>• Количество элементов: {context.args.items?.length || 0}</li>
+//                 <li>
+//                   • Отключенных элементов:{' '}
+//                   {context.args.items?.filter((item) => item.disabled).length || 0}
+//                 </li>
+//               </ul>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     ),
+//   ],
+// }
 
 // Пример 6: Темная тема
 export const DarkTheme: Story = {

@@ -8,6 +8,8 @@ import { Footer, FooterItem } from '../../../Components/Footer'
 import { v4 as uuidv4 } from 'uuid'
 import { ScanData } from '../ScanData'
 import { Flex } from '../../../Components/Layouts/Flex'
+import { Divider } from '../../../Components/Typography'
+import { Text } from '../../../Components/Typography'
 
 export interface IReoContentViewProps {
   headerString: string
@@ -49,7 +51,6 @@ export function ReoContentView({
     lastUpdate: new Date(),
   })
 
-  // Преобразуем вкладки модели для табов с проверкой данных
   const networkTabs = useMemo(() => {
     return model.tabsModel?.map((tab, index) => {
       const tabData = tab as ReoSpace.IReoTab
@@ -103,17 +104,15 @@ export function ReoContentView({
   const activeTabScanType = activeTabData?.data?.metaInfo.scanType
 
   return (
-    <Container size='full' padding='lg' className='h-full flex flex-col bg-surface'>
-      {/* Header с названием */}
+    <Container size='full' padding='lg' className='h-full flex flex-col overflow-hidden'>
       <ScanViewHeader
-        title={`Сканирование: ${headerString}`}
+        title={`${headerString}`}
         description='Анализ радиоэфира в реальном времени'
         isLoading={isLoading}
         isScanning={isScanning}
         className='mb-5'
       />
 
-      {/* Панель управления сканированием */}
       <ScannerControl
         isScanning={isScanning}
         isLoading={isLoading}
@@ -132,10 +131,8 @@ export function ReoContentView({
         className='mb-4 mt-4'
       />
 
-      {/* 
-        Логически бесполезный компонент вынес просто 
-        чтобы сделать меньше простыню 
-      */}
+      <Divider color='border-outline-variant/30' className='mb-4' />
+
       <ScanData
         isScanning={isScanning}
         activeIndex={activeIndex}
@@ -148,15 +145,7 @@ export function ReoContentView({
       />
 
       <Footer className='flex-1'>
-        <FooterItem 
-          label='Активный тип'
-          icon={ObserverConfig.NetworkTypeIcons[activeTabScanType]}
-        >
-          {/* 
-            Тот тип который в данный момент сканируется 
-            предусмотреть что может быть несколько типов 
-            Пока типа все активны но это пока...
-          */}
+        <FooterItem label='Активный тип' icon={ObserverConfig.NetworkTypeIcons[activeTabScanType]}>
           {activeNetworkType.map((scanType) => (
             <Flex>{scanType}</Flex>
           ))}
@@ -164,10 +153,10 @@ export function ReoContentView({
 
         <FooterItem label='Задача'>{headerString}</FooterItem>
         <FooterItem label='Обновлено'>
-          {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          <Text>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
         </FooterItem>
         <FooterItem label='Версия'>
-          <span className='font-mono'>v2.0.0 beta</span>
+          <Text className='font-mono'>v2.0.0 beta</Text>
         </FooterItem>
       </Footer>
     </Container>

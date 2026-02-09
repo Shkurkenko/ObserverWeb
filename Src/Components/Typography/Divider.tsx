@@ -11,13 +11,13 @@ export interface IDividerProps {
 }
 
 export const Divider = ({
-  className,
   vertical = false,
   thickness = 'medium',
   color = 'border-gray-200 dark:border-gray-700',
   dashed = false,
   label,
   labelPosition = 'center',
+  className,
   ...props
 }: IDividerProps) => {
   const thicknessClasses = {

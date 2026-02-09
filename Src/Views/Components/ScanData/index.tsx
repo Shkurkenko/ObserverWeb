@@ -6,6 +6,12 @@ import { ScanMetrics } from '../ScanMetrics'
 import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { useEffect } from 'preact/hooks'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
+import { Button } from '../../../Components/Button'
+import { Icon } from '../../../Components/Typography'
+import { Box } from '../../../Components/Layouts/Box'
+import { Divider } from '../../../Components/Typography'
+
+import { cn } from '../../../Utils/Helpers'
 
 export interface IScanDataProps {
   isScanning: boolean
@@ -50,6 +56,8 @@ export const ScanData = ({
   isScanning = false,
   className = '',
 }: IScanDataProps) => {
+  const [isStatsOpen, setStatsOpen] = useState<boolean>(false)
+
   const handleClearData = () => {
     console.log('Handle clear data from ScanData called')
   }
@@ -64,6 +72,10 @@ export const ScanData = ({
 
   const handleStopScan = () => {
     console.log('Handle stop scan from ScanData called')
+  }
+
+  const handleToggleStats = () => {
+    setStatsOpen((prev) => !prev)
   }
 
   // Обновление статистики
@@ -100,7 +112,6 @@ export const ScanData = ({
     }
   }, [currentRows])
 
-  // Метрики для панели статистики
   const metrics = [
     {
       id: 'total',
@@ -140,8 +151,8 @@ export const ScanData = ({
 
   return (
     <Flex className={className}>
-      <Flex inline={false} direction='col' className='flex-1'>
-        <div className='overflow-x-auto flex'>
+      <Flex inline={false} direction='col' gap='none' className='flex-1'>
+        <Box className='overflow-x-auto flex border-b border-outline-variant/30'>
           <NetworkTabsView
             networks={networkTabsData}
             activeIndex={activeIndex}
@@ -152,23 +163,63 @@ export const ScanData = ({
               console.log('Closing tab:', networkId)
             }}
             status={isScanning ? ReoSpace.IScanStatusTypes.Running : ReoSpace.IScanStatusTypes.Idle}
-            className='mb-4 w-full'
+            className='w-full'
           />
-        </div>
+          <Button variant='text' type='button' onClick={handleToggleStats} className='mb-4'>
+            <Icon size='xl'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='#000000'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              >
+                <rect x='3' y='3' width='7' height='9' />
+                <rect x='14' y='3' width='7' height='5' />
+                <rect x='14' y='12' width='7' height='9' />
+                <rect x='3' y='16' width='7' height='5' />
+              </svg>
+            </Icon>
+          </Button>
+        </Box>
+
         {/* Основной контент - таблица */}
-        <div className='flex-1 overflow-auto'>
-          <NetworkTable
-            networkType={networkType}
-            isScanning={isScanning}
-            data={currentData}
-            onClearData={handleClearData}
-            onExportData={handleExportData}
-            onStartScan={handleStartScan}
-            onStopScan={handleStopScan}
-          />
+        <div className='flex items-stretch py-3'>
+          <div
+            className={cn(
+              'transition-all duration-700 ease-in-out',
+              isStatsOpen ? 'w-3/4 pr-4' : 'w-full',
+            )}
+          >
+            <NetworkTable
+              networkType={networkType}
+              isScanning={isScanning}
+              data={currentData}
+              onClearData={handleClearData}
+              onExportData={handleExportData}
+              onStartScan={handleStartScan}
+              onStopScan={handleStopScan}
+              className='min-w-0 h-full'
+            />
+          </div>
+
+          {/* Боковая панель */}
+          <div
+            className={cn(
+              'flex items-stretch transition-all duration-700 ease-in-out overflow-hidden',
+              isStatsOpen ? 'w-1/4 opacity-100' : 'w-0 opacity-0',
+            )}
+          >
+            <Divider color='border-outline-variant/30' vertical={true} className='h-full mr-4' />
+
+            <ScanMetrics metrics={metrics} className='flex-1 h-full' />
+          </div>
         </div>
       </Flex>
-      <ScanMetrics metrics={metrics} className='max-w-[25%]' />
     </Flex>
   )
 }

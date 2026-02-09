@@ -42,20 +42,15 @@ export const Select = ({
 }: ISelectProps) => {
   const selectId = id || `select-${name || Math.random().toString(36).substr(2, 9)}`
 
-  // Формируем aria-label автоматически если не передан
   const computedAriaLabel = ariaLabel || label || placeholder
 
-  // Генерируем уникальный ID для error сообщения
   const errorId = `${selectId}-error`
   const helperId = `${selectId}-helper`
 
   return (
     <div className={cn('form-field', className)}>
       {label && (
-        <Label
-          htmlFor={selectId} // Используем 'for' вместо 'htmlFor' для Preact
-          required={required}
-        >
+        <Label htmlFor={selectId} required={required}>
           {label}
         </Label>
       )}

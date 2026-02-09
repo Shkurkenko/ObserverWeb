@@ -18,9 +18,9 @@ export enum ColumnHeaderSorters {
 }
 
 export const TableHeader = ({ headerColumns }: ITableHeaderProps) => {
-  const { ref, containerHeight } = useContainerSize()
+  const { ref, size } = useContainerSize()
 
-  const isLoading = headerColumns.length === 0 || containerHeight === 0
+  const isLoading = headerColumns.length === 0 || size.height === 0
 
   return (
     <Skeletoned

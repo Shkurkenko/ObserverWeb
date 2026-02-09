@@ -6,10 +6,11 @@ import { cn } from '../../../Utils/Helpers'
 
 interface ITableHeaderRowProps {
   columns: TableSpace.IColumn[]
+  className?: string
 }
 
 export const TableHeaderRow = forwardRef<HTMLDivElement, ITableHeaderRowProps>(
-  ({ columns }, ref) => {
+  ({ columns, className = '' }, ref) => {
     return (
       <Flex
         ref={ref}
@@ -19,6 +20,7 @@ export const TableHeaderRow = forwardRef<HTMLDivElement, ITableHeaderRowProps>(
           `transition-opacity duration-600 ease-out sticky`,
           `top-0 z-10 shadow-lg table-header w-full`,
           `cursor-pointer table-header-row`,
+          className,
         )}
       >
         {columns.map((headerColumnProps: TableSpace.IColumn, index: number) => {

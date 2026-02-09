@@ -25,7 +25,7 @@ export const NetworkTabGroup = ({
   activeIndex = 0,
 }: INetworkTabGroupProps) => {
   return (
-    <div className={cn('flex items-end gap-1 border-b border-outline/50', className)}>
+    <div className={cn('flex items-end gap-1 border-outline/50', className)}>
       {tabs.map((tab, index) => (
         <NetworkTab
           key={tab.id}

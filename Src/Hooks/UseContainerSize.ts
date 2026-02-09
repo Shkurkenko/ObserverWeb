@@ -5,34 +5,26 @@ export function useContainerSize<T extends HTMLElement = HTMLDivElement>() {
   const [size, setSize] = useState<{ width: Number; height: number }>({ width: 0, height: 0 })
 
   useEffect(() => {
-    const element = ref.current
-    if (!element) return
-
-    const updateSize = () => {
-      const rect = element.getBoundingClientRect()
-      const newWidth = Math.floor(rect.width)
-      const newHeight = Math.floor(rect.height)
-
-      setSize((prev) => {
-        if (prev.width === newWidth && prev.height === newHeight) {
-          return prev
-        }
-        return { width: newWidth, height: newHeight }
-      })
+    if (!ref.current) {
+      return
     }
 
-    const raf = requestAnimationFrame(() => {
-      updateSize()
-    })
+    const handleResize = (entries: any) => {
+      if (!entries || entries.length === 0) {
+        return
+      }
 
-    const ro = new ResizeObserver(updateSize)
-    ro.observe(element)
+      const { width, height } = entries[0].contentRect
+      setSize({ width: Math.floor(width), height: Math.floor(height) })
+    }
+
+    const resizeObserver = new ResizeObserver(handleResize)
+    resizeObserver.observe(ref.current)
 
     return () => {
-      cancelAnimationFrame(raf)
-      ro.disconnect()
+      resizeObserver.disconnect()
     }
-  }, [])
+  }, [ref.current])
 
-  return { ref, size, containerWidth: size.width, containerHeight: size.height }
+  return { ref, size }
 }
