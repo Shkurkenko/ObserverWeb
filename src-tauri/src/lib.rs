@@ -6,6 +6,7 @@ fn greet(name: &str) -> String {
 
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_device_info::init())
         .setup(|app| {
             if cfg!(debug_assertions) {
                 app.handle().plugin(
@@ -14,6 +15,7 @@ pub fn run() {
                         .build(),
                 )?;
             }
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![greet])

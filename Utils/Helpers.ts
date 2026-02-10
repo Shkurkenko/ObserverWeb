@@ -1,5 +1,32 @@
 import fs from 'fs'
 import path from 'path'
+import {
+  getDeviceInfo,
+  getBatteryInfo,
+  getNetworkInfo,
+  getStorageInfo,
+  getDisplayInfo,
+} from 'tauri-plugin-device-info-api'
+
+async function loadDeviceInfo() {
+  // Device information
+  const device = await getDeviceInfo()
+  console.log(`Device: ${device.model}`)
+  console.log(`Manufacturer: ${device.manufacturer}`)
+
+  const battery = await getBatteryInfo()
+  console.log(`Battery: ${battery.level}%`)
+  console.log(`Charging: ${battery.isCharging}`)
+
+  const network = await getNetworkInfo()
+  console.log(`IP: ${network.ipAddress}`)
+  console.log(`Type: ${network.networkType}`)
+  console.log(`Mac: ${network.macAddress}`)
+
+  const storage = await getStorageInfo()
+  console.log(`Total: ${storage.totalSpace} bytes`)
+  console.log(`Free: ${storage.freeSpace} bytes`)
+}
 
 /**
  * Форматирует количество секунд в читаемый вид (чч:мм:сс)

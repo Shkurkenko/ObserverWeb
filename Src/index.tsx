@@ -24,10 +24,14 @@ import { ForensicTester } from './Views/Pages/ForensicTester'
 import { TcpScanTester } from './Views/Pages/TcpScanTeseter'
 import { UseInitTheme } from './Hooks/UseInitTheme'
 
+import { invoke } from '@tauri-apps/api/core'
+
 import './style.sass'
 
 export function App() {
   UseInitTheme()
+
+  invoke('greet', { name: 'andrew' }).then((response) => alert(response))
 
   return (
     <ThemeProvider>

@@ -34,6 +34,7 @@
     "react-tiny-virtual-list": "^2.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
+    "tauri-plugin-device-info-api": "^1.0.1",
     "uuid": "^13.0.0",
     "wouter": "^2.12.1",
     "ws": "^8.19.0"
