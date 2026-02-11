@@ -1,3 +1,4 @@
+import { ComponentType } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 import { useFastAlerts } from '../Hooks/UseFastAlerts'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
@@ -5,7 +6,7 @@ import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
 import './style.sass'
 
 interface IFastAlertItemProps {
-  icon: JSX.Element
+  icon: ComponentType
   backgroundColor: string
   color: string
   borderColor: string

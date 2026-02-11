@@ -1,7 +1,9 @@
+import { ComponentType } from 'preact'
+
 interface IAlertGenericProps {
   id: string
   color: string
-  icon: JSX.Element
+  icon: ComponentType
   header: string
   message: string
   dismissAlert: Function | null

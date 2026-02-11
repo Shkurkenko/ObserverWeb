@@ -1,4 +1,4 @@
-import { createContext } from 'preact'
+import { createContext, ComponentType } from 'preact'
 import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { MockGenHelpers } from '../../../Utils/MockGen'
@@ -49,7 +49,7 @@ export interface ITableProviderProps {
 
   data: TableSpace.ITableData<ReoSpace.IReoTable>
 
-  renderEmpty?: () => JSX.Element
+  renderEmpty?: () => ComponentType
 }
 
 export const TableContext = createContext<ITableContext | null>(null)

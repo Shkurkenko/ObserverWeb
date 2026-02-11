@@ -1,4 +1,4 @@
-import { ComponentChildren } from 'preact'
+import { ComponentChildren, ComponentType } from 'preact'
 import { cn } from '../../Utils/Helpers'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | 'text' | 'danger'
@@ -24,7 +24,7 @@ export interface IButtonProps {
 
   type?: 'button' | 'submit' | 'reset'
 
-  iconElement?: JSX.Element
+  iconElement?: ComponentType
 
   onClick?: (event: MouseEvent) => void
 

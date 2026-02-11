@@ -1,6 +1,6 @@
 import { AlertGeneric } from '../AlertGeneric'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
-import { ObserverConfig } from '../../../../Config/ObserverConfig'
+import { AlertsConfig } from '../../../../Config/ObserverConfig'
 import { useAlerts } from '../Hooks/UseAlerts'
 
 import './style.sass'
@@ -25,8 +25,8 @@ const renderNotificationItem = (
       return (
         <AlertGeneric
           id={id}
-          color={ObserverConfig.AlertsConfig.error.color}
-          icon={ObserverConfig.AlertsConfig.error.icon}
+          color={AlertsConfig.error.color}
+          icon={AlertsConfig.error.icon}
           header={header}
           message={message}
           dismissAlert={dismissAlert}
@@ -36,8 +36,8 @@ const renderNotificationItem = (
       return (
         <AlertGeneric
           id={id}
-          color={ObserverConfig.AlertsConfig.success.color}
-          icon={ObserverConfig.AlertsConfig.success.icon}
+          color={AlertsConfig.success.color}
+          icon={AlertsConfig.success.icon}
           header={header}
           message={message}
           dismissAlert={dismissAlert}
@@ -47,8 +47,8 @@ const renderNotificationItem = (
       return (
         <AlertGeneric
           id={id}
-          color={ObserverConfig.AlertsConfig.warning.color}
-          icon={ObserverConfig.AlertsConfig.warning.icon}
+          color={AlertsConfig.warning.color}
+          icon={AlertsConfig.warning.icon}
           header={header}
           message={message}
           dismissAlert={dismissAlert}
@@ -58,8 +58,8 @@ const renderNotificationItem = (
       return (
         <AlertGeneric
           id={id}
-          color={ObserverConfig.AlertsConfig.info.color}
-          icon={ObserverConfig.AlertsConfig.info.icon}
+          color={AlertsConfig.info.color}
+          icon={AlertsConfig.info.icon}
           header={header}
           message={message}
           dismissAlert={dismissAlert}
@@ -69,8 +69,8 @@ const renderNotificationItem = (
       return (
         <AlertGeneric
           id={id}
-          color={ObserverConfig.AlertsConfig.info.color}
-          icon={ObserverConfig.AlertsConfig.info.icon}
+          color={AlertsConfig.info.color}
+          icon={AlertsConfig.info.icon}
           header={header}
           message={message}
           dismissAlert={dismissAlert}

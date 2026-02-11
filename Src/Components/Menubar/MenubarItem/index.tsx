@@ -1,3 +1,4 @@
+import { ComponentType } from 'preact'
 import { IMenubarSetup } from '../../../Shared/Interfaces/Main.interface'
 
 import './style.sass'
@@ -12,8 +13,8 @@ export interface IMenubarItem {
   id: number
   active: boolean
   role: IMenubarSetup
-  icon: JSX.Element
-  content: JSX.Element
+  icon: ComponentType
+  content: ComponentType
 }
 
 export function MenubarItem({ data, itemOnClick, isActive }: IMenubarItemProps) {

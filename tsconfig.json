@@ -1,33 +1,27 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "useDefineForClassFields": true,
     "module": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "moduleResolution": "bundler",
     "noEmit": true,
     "allowJs": true,
     "checkJs": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
 
     /* Preact Config */
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "skipLibCheck": true,
+
     "paths": {
-      "react": ["./node_modules/preact/compat/"],
-      "react-dom": ["./node_modules/preact/compat/"],
-      "react/jsx-dom": ["./node_modules/preact/compat"],
-      "react-dom/*": ["./node_modules/preact/compat/*"]
+      "react": ["./node_modules/preact/compat"],
+      "react-dom": ["./node_modules/preact/compat"],
+      "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"]
     }
   },
-  "include": [
-    "node_modules/vite/client.d.ts",
-    "**/*",
-    "Src",
-    "Src/**/*",
-    "Config",
-    "Config/**/*",
-    "Data",
-    "Data/**/*"
-  ]
+  "include": ["Src", "Config", "Data", "vite.config.ts"]
 }
