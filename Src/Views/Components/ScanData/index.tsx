@@ -1,5 +1,7 @@
 import { useState } from 'preact/hooks'
 import { Flex } from '../../../Components/Layouts/Flex'
+import { Grid } from '../../../Components/Layouts/Grid'
+import { Box } from '../../../Components/Layouts/Box'
 import { NetworkTabsView } from '../NetworkTabs/NetworkTabsView'
 import { NetworkTable } from '../NetworkTable'
 import { ScanMetrics } from '../ScanMetrics'
@@ -8,7 +10,6 @@ import { useEffect } from 'preact/hooks'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { Button } from '../../../Components/Button'
 import { Icon } from '../../../Components/Typography'
-import { Box } from '../../../Components/Layouts/Box'
 import { Divider } from '../../../Components/Typography'
 import { formatDuration } from '../../../../Utils/Helpers'
 
@@ -67,10 +68,8 @@ export const ScanData = ({
     setStatsOpen((prev) => !prev)
   }
 
-  // Обновление статистики
   useEffect(() => {
     if (currentRows.length > 0) {
-      // Подсчет активных сетей (сигнал лучше -95 dBm)
       const activeCount = currentRows.filter((row: TableSpace.IRow) => {
         const signalCell = row.columns.find((col: any) => col.type === 'Signal')
         if (!signalCell) return false
@@ -78,7 +77,6 @@ export const ScanData = ({
         return signalValue && signalValue > -95
       }).length
 
-      // Расчет средней силы сигнала
       const signals = currentRows
         .map((row: TableSpace.IRow) => {
           const signalCell = row.columns.find((col: any) => col.type === 'Signal')
@@ -139,76 +137,108 @@ export const ScanData = ({
   const networkType = networkTabsData[activeIndex].type as ReoSpace.IScanTypes
 
   return (
-    <Flex className={className}>
-      <Flex inline={false} direction='col' gap='none' className='flex-1'>
-        <Box className='overflow-x-auto flex border-b border-outline-variant/30'>
-          <NetworkTabsView
-            networks={networkTabsData}
-            activeIndex={activeIndex}
-            onTabClick={(network) => {
-              setActiveIndex(network.index)
-            }}
-            onTabClose={(networkId) => {
-              console.log('Closing tab:', networkId)
-            }}
-            status={isScanning ? ReoSpace.IScanStatusTypes.Running : ReoSpace.IScanStatusTypes.Idle}
-            className='w-full'
-          />
-          <Button variant='text' type='button' onClick={handleToggleStats} className='mb-4'>
-            <Icon size='xl'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='#000000'
-                stroke-width='2'
-                stroke-linecap='round'
-                stroke-linejoin='round'
-              >
-                <rect x='3' y='3' width='7' height='9' />
-                <rect x='14' y='3' width='7' height='5' />
-                <rect x='14' y='12' width='7' height='9' />
-                <rect x='3' y='16' width='7' height='5' />
-              </svg>
-            </Icon>
-          </Button>
-        </Box>
-
-        {/* Основной контент - таблица */}
-        <div className='flex items-stretch py-3'>
-          <div
-            className={cn(
-              'transition-all duration-700 ease-in-out',
-              isStatsOpen ? 'w-3/4 pr-4' : 'w-full',
-            )}
-          >
-            <NetworkTable
-              networkType={networkType}
-              isScanning={isScanning}
-              data={currentData}
-              onClearData={handleClearData}
-              onExportData={handleExportData}
-              onStartScan={handleStartScan}
-              onStopScan={handleStopScan}
-              className='min-w-0 h-full'
-            />
-          </div>
-
-          {/* Боковая панель */}
-          <div
-            className={cn(
-              'flex items-stretch transition-all duration-700 ease-in-out overflow-hidden',
-              isStatsOpen ? 'w-1/4 opacity-100' : 'w-0 opacity-0',
-            )}
-          >
-            <Divider color='border-outline-variant/30' vertical={true} className='h-full mr-4' />
-
-            <ScanMetrics metrics={metrics} className='flex-1 h-full' />
-          </div>
-        </div>
+    <Flex direction='col' inline={false} className={cn('h-full min-h-0', className)}>
+      {/* Верхняя панель с табами и кнопкой статистики */}
+      <Flex
+        as='header'
+        align='center'
+        justify='between'
+        className='border-b border-outline-variant/30 pr-2 shrink-0'
+      >
+        <NetworkTabsView
+          networks={networkTabsData}
+          activeIndex={activeIndex}
+          onTabClick={(network) => {
+            setActiveIndex(network.index)
+          }}
+          onTabClose={(networkId) => {
+            console.log('Closing tab:', networkId)
+          }}
+          status={isScanning ? ReoSpace.IScanStatusTypes.Running : ReoSpace.IScanStatusTypes.Idle}
+          className='flex-1 min-w-0'
+        />
+        <Button
+          variant='text'
+          type='button'
+          onClick={handleToggleStats}
+          className={cn(
+            'ml-2 transition-colors duration-200 shrink-0',
+            isStatsOpen && 'bg-primary/10 text-primary',
+          )}
+        >
+          <Icon size='xl'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <rect x='3' y='3' width='7' height='9' />
+              <rect x='14' y='3' width='7' height='5' />
+              <rect x='14' y='12' width='7' height='9' />
+              <rect x='3' y='16' width='7' height='5' />
+            </svg>
+          </Icon>
+        </Button>
       </Flex>
+
+      <Box className='flex-1 min-h-0 py-3 overflow-hidden'>
+        <Grid
+          className='h-full min-h-0 transition-[grid-template-columns] duration-500 ease-in-out will-change-[grid-template-columns]'
+          style={{
+            gridTemplateColumns: isStatsOpen ? '3fr 1fr' : '1fr 0fr',
+          }}
+        >
+          {/* Таблица */}
+          <Box className='min-w-0 min-h-0 overflow-hidden'>
+            <Box
+              className={cn(
+                'h-full transition-[padding] duration-500',
+                isStatsOpen ? 'pr-4' : 'pr-0',
+              )}
+            >
+              <NetworkTable
+                networkType={networkType}
+                isScanning={isScanning}
+                data={currentData}
+                onClearData={handleClearData}
+                onExportData={handleExportData}
+                onStartScan={handleStartScan}
+                onStopScan={handleStopScan}
+                className='w-full h-full'
+              />
+            </Box>
+          </Box>
+
+          {/* Статистика */}
+          <Box className='min-w-0 min-h-0 overflow-hidden'>
+            <Box
+              className={cn(
+                'relative h-full transition-opacity duration-500',
+                isStatsOpen ? 'opacity-100' : 'opacity-0',
+              )}
+            >
+              <Divider
+                color='border-outline-variant/30'
+                vertical={true}
+                className='absolute left-0 h-full'
+              />
+              <Box className='h-full pl-6'>
+                <ScanMetrics
+                  scanId={networkTabsData[activeIndex].id}
+                  metrics={metrics}
+                  className='h-full'
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Grid>
+      </Box>
     </Flex>
   )
 }

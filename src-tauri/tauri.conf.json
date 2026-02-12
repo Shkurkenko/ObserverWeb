@@ -15,7 +15,6 @@
         "title": "Наблюдатель",
         "width": 1700,
         "height": 1200,
-        "decorations": false,
         "resizable": true,
         "fullscreen": false
       }

@@ -1,6 +1,7 @@
 import preact, { ComponentChildren } from 'preact'
 import { TableSpace } from './Table.interface'
 import { ReoSpace } from './Reo.interface'
+import { CSSProperties } from 'preact'
 
 export type IReoColumnsModelsConfig = Record<ReoSpace.IScanTypes, TableSpace.IColumn[]>
 
@@ -11,7 +12,7 @@ export interface IIconProps {
 
   color?: string
 
-  style?: preact.JSX.CSSProperties
+  style?: CSSProperties
 
   className?: string
 }
@@ -46,26 +47,37 @@ export interface IView {
   // Дополнительные метаданные (опционально)
   metadata?: {
     createdAt: Date
+
     updatedAt: Date
+
     createdBy?: string
+
     description?: string
+
     tags?: string[]
   }
 
   // Настройки вьюшки (опционально)
   settings?: {
     autoRefresh?: boolean
+
     refreshInterval?: number
+
     showSpectrum?: boolean
   }
 
   // Состояние фильтров (опционально)
   filters?: {
     signalStrength?: { min: number; max: number }
+
     operators?: string[]
+
     frequencyRange?: { min: number; max: number }
+
     activeOnly?: boolean
+
     sortBy?: 'signal' | 'frequency' | 'operator' | 'date'
+
     sortOrder?: 'asc' | 'desc'
   }
 }

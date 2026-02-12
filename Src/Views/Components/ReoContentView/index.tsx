@@ -10,6 +10,7 @@ import { ScanData } from '../ScanData'
 import { Flex } from '../../../Components/Layouts/Flex'
 import { Divider } from '../../../Components/Typography'
 import { Text } from '../../../Components/Typography'
+import { BatteryIndicator } from '../../../Components/BatterIndicator'
 
 export interface IReoContentViewProps {
   headerString: string
@@ -151,12 +152,15 @@ export function ReoContentView({
           ))}
         </FooterItem>
 
-        <FooterItem label='Задача'>{headerString}</FooterItem>
+        {/* <FooterItem label='Задача'>{headerString}</FooterItem> */}
         <FooterItem label='Обновлено'>
           <Text>{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
         </FooterItem>
         <FooterItem label='Версия'>
           <Text className='font-mono'>v2.0.0 beta</Text>
+        </FooterItem>
+        <FooterItem label='Батарея'>
+          <BatteryIndicator level={40} isCharging={false} lowPowerMode={true} size='sm' />
         </FooterItem>
       </Footer>
     </Container>

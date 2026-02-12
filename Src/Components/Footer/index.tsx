@@ -48,7 +48,7 @@ export const FooterItem = ({
   label?: string
   children: ComponentChildren
   className?: string
-  icon?: string
+  icon?: string | Element
 }) => {
   return (
     <Box className={cn(className, 'space-y-1')}>

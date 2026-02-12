@@ -2,22 +2,35 @@ import { ReoSpace } from './Reo.interface'
 export namespace TableSpace {
   export interface IStyleSettings {
     columnWidth?: number
+
     columnMinWidth?: number
+
     columnMaxWidth?: number
+
     columnColors?: string[]
+
     gridColor?: string
+
     enableHorizontalGird?: boolean
+
     enableVerticalGrid?: boolean
+
     columnAlignment?: IColumnAlignment
   }
 
   export interface IConfig {
     enableColumnDisabling?: boolean
+
     enableCleanTable?: boolean
+
     enablePagination?: boolean
+
     enableSorting?: boolean
+
     enableFiltration?: boolean
+
     enableEnumiration?: boolean
+
     tableStyleSettings?: IStyleSettings
   }
 

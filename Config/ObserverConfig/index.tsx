@@ -6,6 +6,7 @@ import { Journal } from '../../Src/Components/Journal'
 import { ReoSpace } from '../../Src/Shared/Interfaces/Reo.interface'
 import { TableSpace } from '../../Src/Shared/Interfaces/Table.interface'
 import { IReoColumnsModelsConfig } from '../../Src/Shared/Interfaces/Main.interface'
+import { getThemeColor } from '../../Utils/Helpers'
 
 export const AlertsConfig = {
   general: {
@@ -154,7 +155,8 @@ export const MenubarConfig: IMenubarModel = {
     },
   ],
 }
-export namespace ObserverConfig {
+
+export namespace ThemeEngine {
   export const Themes = {
     ForensicGreen: {
       light: async () =>
@@ -186,7 +188,9 @@ export namespace ObserverConfig {
 
   export type Theme = keyof typeof Themes
   export type Variant = keyof (typeof Themes)[Theme]
+}
 
+export namespace ObserverConfig {
   export interface IDeviceConfig {
     host: string
     port: number

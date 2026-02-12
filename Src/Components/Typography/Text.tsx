@@ -1,5 +1,6 @@
 import { cn } from '../../Utils/Helpers'
 import { TextVariant, IBaseTypographyProps } from '../../Shared/Interfaces/Typography.interface'
+import { CSSProperties } from 'preact'
 
 export interface ITextProps extends IBaseTypographyProps {
   variant?: TextVariant
@@ -9,6 +10,8 @@ export interface ITextProps extends IBaseTypographyProps {
   underline?: boolean
   truncate?: boolean
   align?: 'left' | 'center' | 'right' | 'justify'
+  className?: string
+  style?: CSSProperties
 }
 
 const variantClasses: Record<TextVariant, string> = {
@@ -31,7 +34,7 @@ const colorClasses: Record<NonNullable<IBaseTypographyProps['color']>, string> =
 export const Text = ({
   variant = 'body1',
   as: Component = 'p',
-  className,
+  className = '',
   children,
   color = 'primary',
   bold = false,
@@ -39,6 +42,7 @@ export const Text = ({
   underline = false,
   truncate = false,
   align = 'left',
+  style = {},
   ...props
 }: ITextProps) => {
   const classes = cn(
@@ -52,7 +56,7 @@ export const Text = ({
   )
 
   return (
-    <Component className={classes} {...props}>
+    <Component className={classes} {...props} style={style}>
       {children}
     </Component>
   )
