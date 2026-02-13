@@ -24,7 +24,7 @@ interface IThemeProvider {
 }
 
 export const ThemeProvider = ({ children, ...props }: IThemeProvider) => {
-  const [theme, setTheme] = useState<Theme>('ForensicGreen')
+  const [theme, setTheme] = useState<Theme>('ForensicBlue')
   const [variant, setVariant] = useState<Variant>('dark')
   const [colors, setColors] = useState({})
 

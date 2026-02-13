@@ -1,16 +1,16 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { ObserverConfig } from '../../Config/ObserverConfig'
+import { ObserverConfig, ThemeEngine } from '../../Config/ObserverConfig'
 
 export type DynamicCallback = (...args: any[]) => void
 
 export async function initializeDefaultTheme() {
-  const defaultTheme: ObserverConfig.Theme = 'ForensicBlue'
-  const defaultVariant: ObserverConfig.Variant = 'dark'
+  const defaultTheme: ThemeEngine.Theme = 'ForensicBlue'
+  const defaultVariant: ThemeEngine.Variant = 'dark'
 
   const loadDefaultTheme = async () => {
     try {
-      const mod = await ObserverConfig.Themes[defaultTheme][defaultVariant]()
+      const mod = await ThemeEngine.Themes[defaultTheme][defaultVariant]()
       const css = (mod as { default: string }).default
 
       const style = document.createElement('style')

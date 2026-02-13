@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import { Card } from '../../../Components/Layouts/Card'
 import { Flex } from '../../../Components/Layouts/Flex'
 import { Box } from '../../../Components/Layouts/Box'
@@ -7,7 +7,6 @@ import { Text } from '../../../Components/Typography'
 import { Stack } from '../../../Components/Layouts/Stack'
 import { PillsTabs } from '../../../Components/Tabs/TabGroup'
 import { cn } from '../../../Utils/Helpers'
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -129,7 +128,9 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
         borderColor: colors.primary,
         backgroundColor: colors.secondaryContainer,
         tension: 0.3,
-        fill: true,
+        fill: '-1',
+        above: colors.primary,
+        below: colors.primary,
         pointRadius: 2,
         pointHoverRadius: 4,
         pointBackgroundColor: colors.primary,
@@ -144,7 +145,9 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
         borderColor: colors.secondary,
         backgroundColor: colors.secondaryContainer,
         tension: 0.3,
-        fill: true,
+        fill: '-1',
+        above: colors.primary,
+        below: colors.primary,
         pointRadius: 2,
         pointHoverRadius: 4,
         pointBackgroundColor: colors.secondary,
@@ -217,7 +220,7 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
         min: -75,
         max: -55,
         grid: {
-          color: colors.outlineVariant + '15',
+          color: colors.outlineVariant,
           lineWidth: 1,
           drawBorder: false,
         },
@@ -226,7 +229,7 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
         },
         ticks: {
           stepSize: 5,
-          color: colors.onSurfaceVariant + 'B3',
+          color: colors.onSurfaceVariant,
           font: {
             size: 11,
             weight: '400',
@@ -245,7 +248,7 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
           display: false,
         },
         ticks: {
-          color: colors.onSurfaceVariant + 'B3',
+          color: colors.onSurfaceVariant,
           font: {
             size: 11,
           },
@@ -325,6 +328,10 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
   const handleTabClick = (tab: any) => {
     setActiveTabId(tab.id)
   }
+
+  useEffect(() => {
+    console.log(colors)
+  }, [])
 
   return (
     <Stack className={cn(className, 'h-full flex flex-col')}>
