@@ -1,4 +1,3 @@
-// Src/Components/Examples/ReviewCard.tsx
 import { Card } from '../Layouts/Card'
 import { Text } from '../Typography/Text'
 import { Caption } from '../Typography/Caption'

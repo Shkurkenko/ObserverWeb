@@ -6,20 +6,14 @@ import { createPreset } from '../../../../Utils/CreatePreset'
 
 export interface ITabGroupProps extends Omit<IFlexProps, 'children' | 'as' | 'role'> {
   tabs: ITab[]
-
   activeTabId?: string | number
-
   onTabClick?: (tab: ITab) => void
-
-  variant?: 'default' | 'underline' | 'pills' | 'outline'
-
-  size?: 'sm' | 'md' | 'lg'
-
-  showCounts?: boolean
-
-  fullWidth?: boolean
-
   orientation?: 'horizontal' | 'vertical'
+  variant?: 'default' | 'underline' | 'pills' | 'outline'
+  size?: 'sm' | 'md' | 'lg'
+  showCounts?: boolean
+  fullWidth?: boolean
+  tabStyles?: string
 }
 
 // Определяем компонент как функцию с generic
@@ -38,7 +32,8 @@ export function TabGroup<T = any>({
   gap,
   wrap,
   inline,
-  className,
+  className = '',
+  tabStyles = '',
   ...flexProps
 }: ITabGroupProps) {
   const flexDirection = orientation === 'vertical' ? 'col' : 'row'
@@ -49,7 +44,7 @@ export function TabGroup<T = any>({
 
   const autoAlign = align || (orientation === 'vertical' ? 'stretch' : 'center')
 
-  const autoGap = gap || (variant === 'pills' ? 'sm' : 'md')
+  const autoGap = gap || (variant === 'pills' ? 'sm' : 'none')
 
   const autoWrap = wrap || (orientation === 'horizontal' ? false : 'nowrap')
 
@@ -94,7 +89,7 @@ export function TabGroup<T = any>({
             size={size}
             fullWidth={shouldStretch}
             showCount={showCounts}
-            className='bg-surface-container'
+            className={tabStyles}
           />
         )
       })}

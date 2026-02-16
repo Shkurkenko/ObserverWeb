@@ -1,5 +1,6 @@
 import { AlertsSpace } from '../../Shared/Interfaces/Alerts.interface'
 import { AlertItem } from './AlertItem'
+import { Box } from '../Layouts/Box'
 
 import './style.sass'
 
@@ -9,7 +10,7 @@ interface IAlertListProps {
 
 export function AlertList({ model }: IAlertListProps) {
   return (
-    <div className='flex alert-list w-full scrollbar-thin'>
+    <Box className='flex alert-list w-full scrollbar-thin'>
       {model.map((alert: AlertsSpace.IAlertType) => (
         <AlertItem
           key={alert.id}
@@ -20,6 +21,6 @@ export function AlertList({ model }: IAlertListProps) {
           handleDismiss={null}
         />
       ))}
-    </div>
+    </Box>
   )
 }

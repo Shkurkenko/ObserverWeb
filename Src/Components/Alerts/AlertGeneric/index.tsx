@@ -1,9 +1,9 @@
-import { ComponentType } from 'preact'
+import { ComponentChildren } from 'preact'
 
 interface IAlertGenericProps {
   id: string
   color: string
-  icon: ComponentType
+  icon: ComponentChildren
   header: string
   message: string
   dismissAlert: Function | null
@@ -23,11 +23,14 @@ export function AlertGeneric({
   }
 
   return (
-    <div className='alert-item' style={{ borderLeft: `0.25rem solid ${color}` }}>
+    <div className='alert-item pr-6' style={{ borderLeft: `0.25rem solid ${color}` }}>
       <div className='notification-icon'>{icon}</div>
       <div className='notification-content'>
         <h4 style={{ color }}>{header}</h4>
-        <p>{message}</p>
+        <p>
+          {message}{' '}
+          sjdklfa;jsadlk;jfklsadjsdjfklsdjfksdfdskjflksdsjdfkjsdklfjsdlkjfklsdjfklsdjfksdjfksdjfksdjfklsdjfk
+        </p>
       </div>
       <div className='close-notification' onClick={handleClose}>
         <svg

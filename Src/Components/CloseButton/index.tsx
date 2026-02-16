@@ -4,7 +4,6 @@ import { Button } from '../Button'
 
 export interface ICloseButtonProps {
   onClose: (event: MouseEvent) => void
-
   className?: string
 }
 

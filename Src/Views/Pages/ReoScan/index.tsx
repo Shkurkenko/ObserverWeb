@@ -35,6 +35,7 @@ export function ReoScan() {
   // Инициализация начальных данных
   useEffect(() => {
     if (scanViews.length === 0 && tasks.length > 0) {
+      console.log('tasks: ', tasks)
       tasks.forEach((task, taskIndex) => {
         const currentHeaderString = `Сканирование ${taskIndex}`
         const viewId = uuidv4()

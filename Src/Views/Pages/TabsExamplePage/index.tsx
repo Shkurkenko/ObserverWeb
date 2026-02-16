@@ -1,5 +1,5 @@
-import TabGroupExamples from '../../../../Examples/Components/Tabs.example'
+// import TabGroupExamples from '../../../../Examples/Components/Tabs.example'
 
-export function TabsExamplePage() {
-  return <TabGroupExamples />
-}
+// export function TabsExamplePage() {
+//   return <TabGroupExamples />
+// }

@@ -162,7 +162,7 @@ export const ScanData = ({
           type='button'
           onClick={handleToggleStats}
           className={cn(
-            'ml-2 transition-colors duration-200 shrink-0',
+            'ml-2 transition-colors duration-200 shrink-0 -mt-5',
             isStatsOpen && 'bg-primary/10 text-primary',
           )}
         >

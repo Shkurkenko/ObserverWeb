@@ -19,8 +19,8 @@ import { SideNavigation } from './Components/Sidebar/SideNavigation'
 import { ReoScan } from './Views/Pages/ReoScan'
 import { ThemeTester } from './Views/Pages/ThemeTester'
 import { TypographyTester } from './Views/Pages/TypographyTester'
-import { TabsExamplePage } from './Views/Pages/TabsExamplePage'
-import { ForensicTester } from './Views/Pages/ForensicTester'
+// import { TabsExamplePage } from './Views/Pages/TabsExamplePage'
+// import { ForensicTester } from './Views/Pages/ForensicTester'
 import { TcpScanTester } from './Views/Pages/TcpScanTeseter'
 import { UseInitTheme } from './Hooks/UseInitTheme'
 
@@ -31,7 +31,7 @@ import './style.sass'
 export function App() {
   UseInitTheme()
 
-  // invoke('greet', { name: 'andrew' }).then((response) => alert(response))
+  invoke('greet', { name: 'andrew' }).then((response) => alert(response))
 
   return (
     <ThemeProvider>
@@ -53,12 +53,12 @@ export function App() {
                       <Route path='/typography-tester'>
                         <TypographyTester />
                       </Route>
-                      <Route path='/tabs-tester'>
+                      {/* <Route path='/tabs-tester'>
                         <TabsExamplePage />
                       </Route>
                       <Route path='/rf-scan-tester'>
                         <ForensicTester />
-                      </Route>
+                      </Route> */}
                       <Route path='/tcp-scan-tester'>
                         <TcpScanTester />
                       </Route>

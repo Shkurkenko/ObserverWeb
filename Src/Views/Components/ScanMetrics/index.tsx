@@ -346,39 +346,37 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
 
       <Box className='flex-1 min-h-0 overflow-y-auto px-1'>
         {activeTabId === 'stats' ? (
-          <Flex direction='col' gap='md' className='py-4'>
-            <div className='grid grid-cols-2 gap-4'>
-              {metrics.map((metric) => (
-                <Card
-                  key={`${scanId}-${metric.id}`}
-                  className='border border-outline-variant/40 bg-surface-container hover:shadow-md transition-all duration-200'
-                >
-                  <Box className='p-5'>
-                    <Flex direction='row' justify='between' align='start' className='w-full'>
-                      <Box className='flex-1 min-w-0 pr-4'>
-                        <Caption className='text-on-surface-variant/80 text-xs uppercase tracking-wider mb-2'>
-                          {metric.title}
-                        </Caption>
-                        <Text className={`text-3xl font-bold ${metric.color} leading-none mb-2`}>
-                          {metric.value}
-                        </Text>
-                        <Caption className='text-on-surface-variant/60 text-sm'>
-                          {metric.description}
-                        </Caption>
-                      </Box>
-                      <Box
-                        className={cn(
-                          'p-3 rounded-xl shrink-0',
-                          metric.color.replace('text', 'bg') + '/10',
-                        )}
-                      >
-                        <span className='text-2xl'>{metric.icon}</span>
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Card>
-              ))}
-            </div>
+          <Flex direction='col' gap='md' className='py-4 w-full pr-4'>
+            {metrics.map((metric) => (
+              <Card
+                key={`${scanId}-${metric.id}`}
+                className='border border-outline-variant/40 bg-surface-container hover:shadow-md transition-all duration-200'
+              >
+                <Box className='p-5'>
+                  <Flex direction='row' justify='between' align='start' className='w-full'>
+                    <Box className='flex-1 min-w-0 pr-4'>
+                      <Caption className='text-on-surface-variant/80 text-xs uppercase tracking-wider mb-2'>
+                        {metric.title}
+                      </Caption>
+                      <Text className={`text-3xl font-bold ${metric.color} leading-none mb-2`}>
+                        {metric.value}
+                      </Text>
+                      <Caption className='text-on-surface-variant/60 text-sm'>
+                        {metric.description}
+                      </Caption>
+                    </Box>
+                    <Box
+                      className={cn(
+                        'p-3 rounded-xl shrink-0',
+                        metric.color.replace('text', 'bg') + '/10',
+                      )}
+                    >
+                      <span className='text-2xl'>{metric.icon}</span>
+                    </Box>
+                  </Flex>
+                </Box>
+              </Card>
+            ))}
           </Flex>
         ) : (
           <Flex direction='col' gap='lg' className='w-full pr-4'>
@@ -387,7 +385,7 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
               className='border border-outline-variant/40 bg-surface-container hover:shadow-md transition-all duration-200 overflow-hidden'
             >
               <Box className='p-5'>
-                <Flex direction='col' gap='md'>
+                <Flex direction='col' gap='md' className='w-full'>
                   <Flex direction='row' justify='between' align='center' className='w-full'>
                     <Flex align='center' gap='sm'>
                       <Box className='bg-primary/10 p-2 rounded-lg'>
@@ -434,8 +432,8 @@ export const ScanMetrics = ({ scanId, metrics, className = '' }: IScanMetricsPro
               className='border border-outline-variant/40 bg-surface-container hover:shadow-md transition-all duration-200 overflow-hidden'
             >
               <Box className='p-5'>
-                <Flex direction='col' gap='md'>
-                  <Flex direction='row' justify='between' align='center' className='w-full'>
+                <Flex direction='col' gap='md' className='w-full'>
+                  <Flex direction='row' justify='between' align='center'>
                     <Flex align='center' gap='sm'>
                       <Box className='bg-secondary/10 p-2 rounded-lg'>
                         <span className='text-xl'>📊</span>

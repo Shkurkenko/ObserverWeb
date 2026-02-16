@@ -65,7 +65,6 @@ const sizeClasses = {
   },
 }
 
-// Используем функцию вместо FunctionalComponent
 export function TabButton({
   tabData,
   isActive,
@@ -94,7 +93,6 @@ export function TabButton({
   const currentSize = sizeClasses[size]
   const iconSizeFinal = iconSize || currentSize.icon
 
-  // Определяем стили и тип кнопки для нашего Button компонента
   let buttonVariant: IButtonProps['variant'] = 'text'
   let additionalClasses = ''
 
@@ -108,7 +106,9 @@ export function TabButton({
   if (variant === 'underline') {
     additionalClasses = cn(
       'rounded-none border-b-4',
-      isActive ? 'border-primary text-primary' : 'border-transparent',
+      isActive
+        ? 'border-primary text-on-surface font-bold'
+        : 'border-transparent text-on-surface/70 font-bold',
     )
   } else if (variant === 'pills' && !isActive) {
     additionalClasses = 'bg-transparent'
@@ -139,8 +139,8 @@ export function TabButton({
       className={cn(
         currentSize.text,
         variant !== 'underline' && currentSize.padding,
+        variantClasses[variant],
         additionalClasses,
-        // Специфичные для табов стили
         variant === 'pills' && !isActive && 'hover:bg-surface-container-high',
         className,
       )}
@@ -156,7 +156,7 @@ export function TabButton({
             currentSize.badge,
             isActive && variant === 'pills'
               ? 'bg-on-primary/20 text-on-primary'
-              : 'bg-surface-container-high text-on-surface-variant',
+              : 'text-on-surface-variant',
           )}
         >
           {badgeContent}
