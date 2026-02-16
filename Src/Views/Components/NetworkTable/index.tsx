@@ -83,7 +83,7 @@ export const NetworkTable = ({
               handleStartScan={handleStartScan}
             />
           ) : (
-            <Flex direction='col' className={cn('w-full h-165')}>
+            <Flex direction='col' className={cn('w-full h-150')}>
               <TextInput
                 type='text'
                 value=''

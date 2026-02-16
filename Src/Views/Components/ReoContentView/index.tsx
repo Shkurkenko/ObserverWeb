@@ -14,17 +14,11 @@ import { BatteryIndicator } from '../../../Components/BatterIndicator'
 
 export interface IReoContentViewProps {
   headerString: string
-
   model: ReoSpace.IReoView
-
   isScanning: boolean
-
   onStartScan: () => void
-
   onStopScan: () => void
-
   onClearData: () => void
-
   onExportData: () => void
 }
 

@@ -31,7 +31,7 @@ import './style.sass'
 export function App() {
   UseInitTheme()
 
-  invoke('greet', { name: 'andrew' }).then((response) => alert(response))
+  // invoke('greet', { name: 'andrew' }).then((response) => alert(response))
 
   return (
     <ThemeProvider>

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'eventemitter3'
-import { IRawScanMessage, IParsedScanMessage } from '.'
+import { IRawScanMessage } from '.'
 import { ScanReoDataParser } from './ReoParser'
 import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
 
