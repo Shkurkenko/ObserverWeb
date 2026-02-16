@@ -1,7 +1,7 @@
 import { useEffect } from 'preact/hooks'
 import { ThemeProvider } from '../Src/Context/ThemeContext'
-import { ObserverConfig } from '../Config/ObserverConfig'
 import { ComponentChildren } from 'preact'
+import { ThemeEngine } from '../Config/ObserverConfig'
 
 export interface IThemeDecoratorProps {
   children: ComponentChildren
@@ -12,7 +12,7 @@ export const ThemeDecorator = ({ children }: IThemeDecoratorProps) => {
   useEffect(() => {
     const loadDefaultTheme = async () => {
       try {
-        const mod = await ObserverConfig.Themes.ForensicGreen.dark()
+        const mod = await ThemeEngine.Themes.ForensicGreen.dark()
         const css = (mod as { default: string }).default
 
         // Проверяем, не загружена ли уже тема

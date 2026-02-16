@@ -1,4 +1,4 @@
-import { ComponentType } from 'preact'
+import { ComponentChildren } from 'preact'
 import { IMenubarSetup } from '../../../Shared/Interfaces/Main.interface'
 
 import './style.sass'
@@ -13,8 +13,8 @@ export interface IMenubarItem {
   id: number
   active: boolean
   role: IMenubarSetup
-  icon: ComponentType
-  content: ComponentType
+  icon: ComponentChildren
+  content: ComponentChildren
 }
 
 export function MenubarItem({ data, itemOnClick, isActive }: IMenubarItemProps) {

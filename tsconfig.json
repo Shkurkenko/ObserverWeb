@@ -23,5 +23,5 @@
       "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"]
     }
   },
-  "include": ["Src", "Config", "Data", "vite.config.ts"]
+  "include": ["Src", "Config/**/*.tsx", "Data", "vite.config.ts"]
 }

@@ -1,8 +1,8 @@
-import { ComponentType, JSX } from 'preact'
+import { ComponentChildren, ComponentType, JSX } from 'preact'
 
 export namespace FastAlertsSpace {
   export interface ItemStyleConfig {
-    icon: ComponentType
+    icon: ComponentChildren
     iconColor: string
     backgroundColor: string
     color: string

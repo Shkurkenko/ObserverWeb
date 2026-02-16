@@ -1,4 +1,6 @@
 /// <reference types="vitest/config" />
+/// <reference types="vite/client" />
+
 import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
 import path from 'node:path'
