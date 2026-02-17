@@ -10,7 +10,7 @@ interface IAlertProps {
   type: AlertsSpace.ILevel
   header: string
   message: string
-  handleDismiss: Function | null
+  handleDismiss: (id: string) => void
 }
 
 const renderNotificationItem = (
@@ -18,7 +18,7 @@ const renderNotificationItem = (
   type: AlertsSpace.ILevel,
   header: string,
   message: string,
-  dismissAlert: Function | null,
+  dismissAlert: (id: string) => void,
 ) => {
   switch (type) {
     case AlertsSpace.ILevel.Error:
@@ -79,7 +79,7 @@ const renderNotificationItem = (
   }
 }
 
-export function AlertItem({ id, type, header, message, handleDismiss = null }: IAlertProps) {
+export function AlertItem({ id, type, header, message, handleDismiss }: IAlertProps) {
   const { dismissAlert } = useAlerts()
 
   return (

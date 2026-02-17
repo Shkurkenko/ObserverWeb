@@ -1,9 +1,12 @@
+import { CSSProperties } from 'preact'
 import { HeadingLevel, IBaseTypographyProps } from '../../Shared/Interfaces/Typography.interface'
 import { cn } from '../../Utils/Helpers'
 
 export interface IHeadingProps extends IBaseTypographyProps {
   level?: HeadingLevel
   as?: `h${HeadingLevel}` | 'div'
+  className?: string
+  style?: CSSProperties
 }
 
 const headingClasses: Record<HeadingLevel, string> = {
@@ -27,14 +30,15 @@ const colorClasses = {
 export const Heading = ({
   level = 1,
   as: Component = `h${level}` as `h${HeadingLevel}`,
-  className,
   children,
   color = 'primary',
+  className = '',
+  style = {},
   ...props
 }: IHeadingProps) => {
   const classes = cn(headingClasses[level], colorClasses[color], 'font-heading', className)
   return (
-    <Component className={classes} {...props}>
+    <Component className={classes} style={style} {...props}>
       {children}
     </Component>
   )

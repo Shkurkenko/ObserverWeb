@@ -9,6 +9,10 @@ import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { EmptyReoView } from '../../Components/EmptyReoView'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
+import { useAlerts } from '../../../Components/Alerts/Hooks/UseAlerts'
+import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
+
+
 
 export function ReoScan() {
   const {
@@ -20,6 +24,7 @@ export function ReoScan() {
     getScanViewById,
   } = useScanView()
   const { tasks } = useTasks()
+  const { addAlert } = useAlerts()
   const [isScanning, setIsScanning] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [sessionData, setSessionData] = useState({

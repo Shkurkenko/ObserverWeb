@@ -1,4 +1,4 @@
-import { ComponentChildren, ComponentType } from 'preact'
+import { ComponentChildren, ComponentType, CSSProperties } from 'preact'
 import { cn } from '../../Utils/Helpers'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | 'text' | 'danger'
@@ -30,9 +30,11 @@ export interface IButtonProps {
 
   onKeyDown?: (event: KeyboardEvent) => void
 
+  'aria-label'?: string
+
   className?: string
 
-  'aria-label'?: string
+  style?: CSSProperties
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -67,8 +69,9 @@ export const Button = ({
   type = 'button',
   onClick,
   onKeyDown,
-  className,
   'aria-label': ariaLabel,
+  className = '',
+  style = {},
   ...props
 }: IButtonProps) => {
   const handleClick = (event: MouseEvent) => {

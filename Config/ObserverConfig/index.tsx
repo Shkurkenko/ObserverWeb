@@ -8,10 +8,13 @@ import { TableSpace } from '../../Src/Shared/Interfaces/Table.interface'
 import { IReoColumnsModelsConfig } from '../../Src/Shared/Interfaces/Main.interface'
 import { BurgerIcon } from '../../Src/Components/Icons/BurgerIcon'
 import { BellIcon } from '../../Src/Components/Icons/BellIcon'
-import { ErrorIcon } from '../../Src/Components/Icons/ErrorIcon'
-import { InfoIcon } from '../../Src/Components/Icons/InfoIcon'
-import { SuccessIcon } from '../../Src/Components/Icons/SuccessIcon'
-import { WarningIcon } from '../../Src/Components/Icons/WarningIcon'
+import { HugeiconsIcon } from '@hugeicons/react'
+import {
+  Alert01Icon,
+  InformationSquareIcon,
+  CheckmarkCircle04Icon,
+  CancelCircleIcon,
+} from '@hugeicons/core-free-icons'
 
 export const AlertsConfig = {
   general: {
@@ -19,19 +22,19 @@ export const AlertsConfig = {
   },
   error: {
     color: '#F44336',
-    icon: <ErrorIcon />,
+    icon: <HugeiconsIcon icon={CancelCircleIcon} size={28} />,
   },
   info: {
     color: '#2a86cf',
-    icon: <InfoIcon />,
+    icon: <HugeiconsIcon icon={InformationSquareIcon} size={28} />,
   },
   success: {
     color: '#4CAF50',
-    icon: <SuccessIcon />,
+    icon: <HugeiconsIcon icon={CheckmarkCircle04Icon} size={28} />,
   },
   warning: {
     color: '#e9c731',
-    icon: <WarningIcon />,
+    icon: <HugeiconsIcon icon={Alert01Icon} size={28} />,
   },
 }
 

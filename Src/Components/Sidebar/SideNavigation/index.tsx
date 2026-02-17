@@ -5,16 +5,120 @@ import { IMenubarItem } from '../../Menubar/MenubarItem'
 import { SlideSidebar } from '..'
 import { useSidebar } from '../Hooks/UseSidebar'
 import { MenubarConfig } from '../../../../Config/ObserverConfig'
+import { Box } from '../../Layouts/Box'
+import { useAlerts } from '../../Alerts/Hooks/UseAlerts'
+import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
+
+export const testJournalAlerts = [
+  {
+    id: '09i98sdfs',
+    header: 'Test Event Error',
+    type: AlertsSpace.ILevel.Error,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: '09i98sdfssdf',
+    header: 'Test Event Warning',
+    type: AlertsSpace.ILevel.Warning,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: 'asdfaa',
+    header: 'Test Event Info',
+    type: AlertsSpace.ILevel.Info,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: '09i98saaadfdfssdssssdsdfss',
+    header: 'Test Event ',
+    type: AlertsSpace.ILevel.Success,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: '09i98sdfssdshdjfkjsdfsssss',
+    header: 'Test Event Info',
+    type: AlertsSpace.ILevel.Info,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+
+  {
+    id: '09i98sdfs2398hnjsjkldf',
+    header: 'Test Event Error',
+    type: AlertsSpace.ILevel.Error,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: '09i98sdfssdf110-0sdf',
+    header: 'Test Event Warning',
+    type: AlertsSpace.ILevel.Warning,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: 'asdfaa-02348===',
+    header: 'Test Event Info',
+    type: AlertsSpace.ILevel.Info,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: '09i98saaadfdfssdssssdsdfss=2345872',
+    header: 'Test Event ',
+    type: AlertsSpace.ILevel.Success,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+  {
+    id: '09i98sdfssdshdjfkjsdfsssssaholikd',
+    header: 'Test Event Info',
+    type: AlertsSpace.ILevel.Info,
+    message:
+      'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
+    show: true,
+    ttl: 3000,
+  },
+]
 
 export function SideNavigation() {
+  const { addAlert } = useAlerts()
   const [menubarModel, setMenubarModel] = useState<IMenubarModel>(MenubarConfig)
   const { show, showSidebar, hideSidebar } = useSidebar()
+
+  useEffect(() => {
+    for (const alert of testJournalAlerts) {
+      addAlert(alert)
+    }
+  }, [])
 
   useEffect(() => {
     if (MenubarConfig.items) {
       setMenubarModel(MenubarConfig)
     } else {
-      console.warn('ObserverConfig.MenubarConfig не найден, используется дефолтная конфигурация')
+      console.warn('MenubarConfig не найден, используется дефолтная конфигурация')
       setMenubarModel(MenubarConfig)
     }
   }, [])
@@ -56,9 +160,9 @@ export function SideNavigation() {
 
   if (!menubarModel?.items || menubarModel.items.length === 0) {
     return (
-      <div className='menubar-container'>
-        <div className='error-message p-4 text-red-500'>Ошибка: нет доступных элементов меню</div>
-      </div>
+      <Box className='menubar-container'>
+        <Box className='error-message p-4 text-red-500'>Ошибка: нет доступных элементов меню</Box>
+      </Box>
     )
   }
 
@@ -66,11 +170,11 @@ export function SideNavigation() {
     menubarModel.items[menubarModel.currentIndex]?.content || <div>Контент не найден</div>
 
   return (
-    <div className='menubar-container'>
+    <Box className='menubar-container'>
       <Menubar model={menubarModel} itemOnClick={menubarHandleClick} />
       <SlideSidebar>
         <CurrentContent />
       </SlideSidebar>
-    </div>
+    </Box>
   )
 }

@@ -10,7 +10,7 @@ interface IAlertListProps {
 
 export function AlertList({ model }: IAlertListProps) {
   return (
-    <Box className='flex alert-list w-full scrollbar-thin'>
+    <Box className='flex alert-list w-full scrollbar-thin overflow-hidden'>
       {model.map((alert: AlertsSpace.IAlertType) => (
         <AlertItem
           key={alert.id}
@@ -18,7 +18,7 @@ export function AlertList({ model }: IAlertListProps) {
           type={alert.type}
           header={alert.header}
           message={alert.message}
-          handleDismiss={null}
+          handleDismiss={() => console.log('dismiss alert')}
         />
       ))}
     </Box>

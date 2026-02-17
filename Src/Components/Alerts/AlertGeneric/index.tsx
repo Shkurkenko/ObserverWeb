@@ -1,4 +1,11 @@
 import { ComponentChildren } from 'preact'
+import { Box } from '../../Layouts/Box'
+import { Flex } from '../../Layouts/Flex'
+import { Heading } from '../../Typography'
+import { Stack } from '../../Layouts/Stack'
+import { Text } from '../../Typography'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { Cancel01Icon } from '@hugeicons/core-free-icons'
 
 interface IAlertGenericProps {
   id: string
@@ -6,7 +13,7 @@ interface IAlertGenericProps {
   icon: ComponentChildren
   header: string
   message: string
-  dismissAlert: Function | null
+  dismissAlert?: (id: string) => void
 }
 
 export function AlertGeneric({
@@ -23,34 +30,31 @@ export function AlertGeneric({
   }
 
   return (
-    <div className='alert-item pr-6' style={{ borderLeft: `0.25rem solid ${color}` }}>
-      <div className='notification-icon'>{icon}</div>
-      <div className='notification-content'>
-        <h4 style={{ color }}>{header}</h4>
-        <p>
-          {message}{' '}
-          sjdklfa;jsadlk;jfklsadjsdjfklsdjfksdfdskjflksdsjdfkjsdklfjsdlkjfklsdjfklsdjfksdjfksdjfksdjfklsdjfk
-        </p>
-      </div>
-      <div className='close-notification' onClick={handleClose}>
-        <svg
-          class='w-5 h-5 text-[#a6adb5]'
-          aria-hidden='true'
-          xmlns='http://www.w3.org/2000/svg'
-          width='24'
-          height='24'
-          fill='none'
-          viewBox='0 0 24 24'
-        >
-          <path
-            stroke='currentColor'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            stroke-width='2'
-            d='M6 18 17.94 6M18 18 6.06 6'
-          />
-        </svg>
-      </div>
-    </div>
+    <Box
+      className='alert-item pr-6 overflow-hidden'
+      style={{ borderLeft: `0.25rem solid ${color}` }}
+    >
+      <Stack className='overflow-hidden'>
+        <Flex className='notification-header'>
+          <Box className='notification-icon self-start' style={{ color }}>
+            {icon}
+          </Box>
+
+          <Heading level={4} style={{ color }}>
+            {header}
+          </Heading>
+        </Flex>
+
+        <Box as='article' className='notification-content text-wrap'>
+          <Text className='ml-5 line-clamp-3'>
+            {message}{' '}
+            sjdklfa;jsadlk;jfklsadjsdjfklsdjfksdfdskjflksdsjdfkjsdklfjsdlkjfklsdjfklsdjfksdjfksdjfksdjfklsdjfk
+          </Text>
+        </Box>
+      </Stack>
+      <Box className='close-notification' onClick={handleClose}>
+        <HugeiconsIcon icon={Cancel01Icon} />
+      </Box>
+    </Box>
   )
 }

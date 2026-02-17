@@ -29,6 +29,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@hugeicons/core-free-icons": "^3.1.1",
+    "@hugeicons/react": "^1.1.5",
     "@tauri-apps/api": "^2.10.0",
     "clsx": "^2.1.1",
     "dequal": "^2.0.3",
