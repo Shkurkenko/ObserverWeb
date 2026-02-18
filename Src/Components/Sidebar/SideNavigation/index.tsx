@@ -6,7 +6,7 @@ import { SlideSidebar } from '..'
 import { useSidebar } from '../Hooks/UseSidebar'
 import { MenubarConfig } from '../../../../Config/ObserverConfig'
 import { Box } from '../../Layouts/Box'
-import { useAlerts } from '../../Alerts/Hooks/UseAlerts'
+import { useAlerts } from '../../Alerts/UseAlerts'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
 
 export const testJournalAlerts = [

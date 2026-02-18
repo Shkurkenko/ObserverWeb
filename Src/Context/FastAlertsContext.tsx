@@ -1,6 +1,5 @@
 import { createContext, ComponentChildren } from 'preact'
 import { useState, useCallback } from 'preact/hooks'
-import { AlertsSpace } from '../Shared/Interfaces/Alerts.interface'
 
 interface IFastAlertsContext {
   fastAlerts: AlertsSpace.IAlertType[]

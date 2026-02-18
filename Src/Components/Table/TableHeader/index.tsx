@@ -12,11 +12,11 @@ interface ITableHeaderProps {
   className?: string
 }
 
-export enum ColumnHeaderSorters {
-  Ascending,
-  Descending,
-  Regular,
-}
+export const ColumnHeaderSorters = {
+  Ascending: 'ascending' as const,
+  Descending: 'descending' as const,
+  Regular: 'regular' as const,
+} as const
 
 export const TableHeader = ({ headerColumns, className = '' }: ITableHeaderProps) => {
   const { ref, size } = useContainerSize()

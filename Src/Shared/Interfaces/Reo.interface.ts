@@ -1,157 +1,153 @@
 import { TableSpace } from './Table.interface'
-import { ITab } from './Main.interface'
-import { IView } from './Main.interface'
+import { Tab } from '../../Components/Tabs/TabGroup'
 
-export namespace ReoSpace {
-  export interface IReoTableMetaInfo {
-    scanType: IScanTypes
+export const ReoScanMode = {
+  Fast: 'Fast',
 
-    scanStatus?: IScanStatusTypes
+  Slow: 'Slow',
+} as const
+export type ReoScanModeType = (typeof ReoScanMode)[keyof typeof ReoScanMode]
 
-    currentScanCycle?: number
-  }
+export const ReoRole = {
+  Enum: 'Enumiration',
 
-  export interface INetworkData {
-    id: string
+  Operator: 'Operator',
 
-    index: number
+  Cid: 'Cid',
 
-    name: string
+  LacTac: 'LacTac',
 
-    type: IScanTypes
+  Mcc: 'Mcc',
 
-    icon: string
+  Mnc: 'Mnc',
 
-    signalCount: number
+  RxLevel: 'RxLevel',
 
-    hasNewData?: boolean
+  Unknown: 'Unknown',
+} as const
+export type ReoRoleType = (typeof ReoRole)[keyof typeof ReoRole]
 
-    lastUpdate?: Date
+export const ReoScanVariant = {
+  Gsm: 'GSM',
 
-    description?: string
-  }
+  Lte: 'LTE',
 
-  export interface IScanTask {
-    id: string
+  Umts: 'UMTS',
 
-    name: string
+  Bluetooth: 'Bluetooth',
 
-    currentScanCycle: number
+  Wifi: 'WiFi',
 
-    types: IScanTypes[]
+  FiveG: '5G',
 
-    status: IScanStatusTypes
+  Unknown: 'Unknown',
+} as const
+export type ReoScanVariantType = (typeof ReoScanVariant)[keyof typeof ReoScanVariant]
 
-    createdAt: string // new Date().toISOString()
+export const ReoScanStatus = {
+  Finished: 'Finished',
 
-    duration: number
-  }
+  Running: 'Running',
 
-  export enum IScanMode {
-    Fast = 'fast',
+  Pending: 'Pending',
 
-    Slow = 'slow', // Eng reo more data
-  }
+  Failed: 'Failed',
 
-  export enum IRoles {
-    Enum = 'enumiration',
+  Idle: 'Idle',
+} as const
+export type ReoScanStatusType = (typeof ReoScanStatus)[keyof typeof ReoScanStatus]
 
-    Operator = 'operator',
+export const ReoSignalLevel = {
+  Excellent: 'Excellent',
 
-    Cid = 'cid',
+  Good: 'Good',
 
-    LacTac = 'lacTac',
+  Fair: 'Fair',
 
-    Mcc = 'mcc',
+  Poor: 'Poor',
 
-    Mnc = 'mnc',
+  No: 'No',
+} as const
+export type ReoSignalLevelType = (typeof ReoSignalLevel)[keyof typeof ReoSignalLevel]
 
-    RxLevel = 'rxLevel',
+export interface ReoTableMetaInfo {
+  scanType: ReoScanVariantType
 
-    Unknown = 'unknown',
-  }
+  scanStatus?: ReoScanStatusType
+}
 
-  export enum IScanTypes {
-    Gsm = 'GSM',
+export interface ReoNetworkData {
+  id: string
 
-    Lte = 'LTE',
+  index: number
 
-    Umts = 'UMTS',
+  name: string
 
-    Bluetooth = 'Bluetooth',
+  type: ReoScanVariantType
 
-    Wifi = 'WiFi',
+  icon: string
 
-    FiveG = '5G',
+  signalCount: number
 
-    Unknown = 'Unknown',
-  }
+  hasNewData?: boolean
 
-  export enum IScanStatusTypes {
-    Finished = 'finished',
+  lastUpdate?: Date
 
-    Running = 'running',
+  description?: string
+}
 
-    Pending = 'pending',
+export interface ScanTask {
+  id: string
 
-    Failed = 'failed',
+  name: string
 
-    Idle = 'idle',
-  }
+  types: ReoScanVariantType[]
 
-  export enum ISignalLevels {
-    Excellent = 'excellent',
+  status: ReoScanStatusType
 
-    Good = 'good',
+  createdAt: string // new Date().toISOString()
 
-    Fair = 'fair',
+  duration: number
+}
 
-    Poor = 'poor',
+export interface ReoSignalRange {
+  beginValue: number
 
-    No = 'no',
-  }
+  endValue: number
+}
 
-  export interface ISignalRange {
-    beginValue: number
+export interface ReoTabData {
+  metaInfo: ReoTableMetaInfo
 
-    endValue: number
-  }
+  rows: TableSpace.IRow[]
 
-  export interface IReoTabData {
-    metaInfo: IReoTableMetaInfo
+  hasNewData: boolean
+}
 
-    rows: TableSpace.IRow[]
+export interface ReoTab extends Tab {
+  data: ReoTabData
+}
 
-    hasNewData: boolean
-  }
+export interface ReoView extends View {
+  taskId: string
 
-  export interface IReoTab extends ITab {
-    data: IReoTabData
-  }
+  headerString: string
 
-  export interface IReoView extends IView {
-    taskId: string
+  isScanning?: boolean
 
-    headerString: string
+  tabsModel: ReoTab[]
 
-    isScanning?: boolean
+  onStartScan?: () => void
 
-    tabsModel: IReoTab[]
+  onStopScan?: () => void
 
-    onStartScan?: () => void
+  onClearData?: () => void
 
-    onStopScan?: () => void
+  onExportData?: () => void
+}
 
-    onClearData?: () => void
+export interface ReoTable {
+  scanType: ReoScanVariantType
 
-    onExportData?: () => void
-  }
-
-  export interface IReoTable {
-    scanType: IScanTypes
-
-    scanStatus: IScanStatusTypes
-
-    currentScanCycle: number
-  }
+  scanStatus: ReoScanStatusType
 }

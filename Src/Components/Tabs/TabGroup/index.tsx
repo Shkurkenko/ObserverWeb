@@ -1,18 +1,45 @@
-import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { TabButton } from '../TabButton'
 import { Flex, IFlexProps } from '../../Layouts/Flex'
-import { cn } from '../../../Utils/Helpers'
+import { ComponentChildren } from 'preact'
 import { createPreset } from '../../../../Utils/CreatePreset'
 
+import { cn } from '../../../Utils/Helpers'
+
+export interface Tab {
+  id: string
+
+  index: number
+
+  label: string
+
+  icon?: ComponentChildren | string
+
+  badge?: string | number
+
+  count?: number
+
+  disabled?: boolean
+
+  loading?: boolean
+}
+
 export interface ITabGroupProps extends Omit<IFlexProps, 'children' | 'as' | 'role'> {
-  tabs: ITab[]
+  tabs: Tab[]
+
   activeTabId?: string | number
-  onTabClick?: (tab: ITab) => void
+
+  onTabClick?: (tab: Tab) => void
+
   orientation?: 'horizontal' | 'vertical'
+
   variant?: 'default' | 'underline' | 'pills' | 'outline'
+
   size?: 'sm' | 'md' | 'lg'
+
   showCounts?: boolean
+
   fullWidth?: boolean
+
   tabStyles?: string
 }
 
@@ -48,12 +75,12 @@ export function TabGroup<T = any>({
 
   const autoWrap = wrap || (orientation === 'horizontal' ? false : 'nowrap')
 
-  const isTabActive = (tab: ITab) => {
+  const isTabActive = (tab: Tab) => {
     if (activeTabId === undefined) return false
     return tab.id === activeTabId
   }
 
-  const handleTabClick = (e: MouseEvent, tab: ITab) => {
+  const handleTabClick = (e: MouseEvent, tab: Tab) => {
     console.log(tab)
     onTabClick?.(tab)
   }

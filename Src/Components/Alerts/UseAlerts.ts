@@ -1,5 +1,5 @@
 import { useContext } from 'preact/hooks'
-import { AlertsContext } from '../../../Context/AlertsContext'
+import { AlertsContext } from './Context/AlertsContext'
 
 export const useAlerts = () => {
   const context = useContext(AlertsContext)

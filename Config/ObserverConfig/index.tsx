@@ -1,56 +1,32 @@
-import { IMenubarSetup } from '../../Src/Shared/Interfaces/Main.interface'
-import { FastAlertsSpace } from '../../Src/Shared/Interfaces/FastAlerts.interface'
 import { IMenubarModel } from '../../Src/Components/Menubar'
 import { TaskSidebar } from '../../Src/Components/TaskSidebar'
 import { Journal } from '../../Src/Components/Journal'
-import { ReoSpace } from '../../Src/Shared/Interfaces/Reo.interface'
 import { TableSpace } from '../../Src/Shared/Interfaces/Table.interface'
-import { IReoColumnsModelsConfig } from '../../Src/Shared/Interfaces/Main.interface'
 import { BurgerIcon } from '../../Src/Components/Icons/BurgerIcon'
 import { BellIcon } from '../../Src/Components/Icons/BellIcon'
-import { HugeiconsIcon } from '@hugeicons/react'
-import {
-  Alert01Icon,
-  InformationSquareIcon,
-  CheckmarkCircle04Icon,
-  CancelCircleIcon,
-} from '@hugeicons/core-free-icons'
+import { ReoScanVariantType } from '../../Src/Shared/Interfaces/Reo.interface'
 
-export const AlertsConfig = {
-  general: {
-    transition: 0.2,
-  },
-  error: {
-    color: '#F44336',
-    icon: <HugeiconsIcon icon={CancelCircleIcon} size={28} />,
-  },
-  info: {
-    color: '#2a86cf',
-    icon: <HugeiconsIcon icon={InformationSquareIcon} size={28} />,
-  },
-  success: {
-    color: '#4CAF50',
-    icon: <HugeiconsIcon icon={CheckmarkCircle04Icon} size={28} />,
-  },
-  warning: {
-    color: '#e9c731',
-    icon: <HugeiconsIcon icon={Alert01Icon} size={28} />,
-  },
-}
+export type ReoColumnsModelsConfigType = Record<ReoScanVariantType, TableSpace.IColumn[]>
+
+export const MenubarSetup = {
+  Notifications: 'Notifications',
+
+  TaskManager: 'TaskManager',
+} as const
 
 export const MenubarConfig: IMenubarModel = {
   currentIndex: 0,
   items: [
     {
       id: 0,
-      role: IMenubarSetup.TaskManager,
+      role: MenubarSetup.TaskManager,
       active: false,
       icon: <BurgerIcon />,
       content: <TaskSidebar />,
     },
     {
       id: 1,
-      role: IMenubarSetup.Notifications,
+      role: MenubarSetup.Notifications,
       active: false,
       icon: <BellIcon />,
       content: <Journal />,

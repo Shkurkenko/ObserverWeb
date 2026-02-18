@@ -2,7 +2,6 @@ import { useState, useMemo } from 'preact/hooks'
 import { Container } from '../../../Components/Layouts/Container'
 import { ScannerControl } from '../ScannerControl'
 import { ScanViewHeader } from '../ScanViewHeader'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { Footer, FooterItem } from '../../../Components/Footer'
 import { v4 as uuidv4 } from 'uuid'
@@ -11,6 +10,48 @@ import { Flex } from '../../../Components/Layouts/Flex'
 import { Divider } from '../../../Components/Typography'
 import { Text } from '../../../Components/Typography'
 import { BatteryIndicator } from '../../../Components/BatterIndicator'
+
+export interface View {
+  viewId: string
+  show: boolean
+
+  // Дополнительные метаданные (опционально)
+  metadata?: {
+    createdAt: Date
+
+    updatedAt: Date
+
+    createdBy?: string
+
+    description?: string
+
+    tags?: string[]
+  }
+
+  // Настройки вьюшки (опционально)
+  settings?: {
+    autoRefresh?: boolean
+
+    refreshInterval?: number
+
+    showSpectrum?: boolean
+  }
+
+  // Состояние фильтров (опционально)
+  filters?: {
+    signalStrength?: { min: number; max: number }
+
+    operators?: string[]
+
+    frequencyRange?: { min: number; max: number }
+
+    activeOnly?: boolean
+
+    sortBy?: 'signal' | 'frequency' | 'operator' | 'date'
+
+    sortOrder?: 'asc' | 'desc'
+  }
+}
 
 export interface IReoContentViewProps {
   headerString: string

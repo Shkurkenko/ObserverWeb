@@ -9,7 +9,7 @@ import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { EmptyReoView } from '../../Components/EmptyReoView'
 import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
-import { useAlerts } from '../../../Components/Alerts/Hooks/UseAlerts'
+import { useAlerts } from '../../../Components/Alerts/UseAlerts'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
 
 
