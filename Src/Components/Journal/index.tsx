@@ -1,4 +1,4 @@
-import { AlertList } from '../Alerts/AlertList'
+import { AlertList } from '../Alerts/Components/AlertRoot'
 import { useAlerts } from '../Alerts/UseAlerts'
 import { Box } from '../Layouts/Box'
 import { Divider, Heading, Icon } from '../Typography'

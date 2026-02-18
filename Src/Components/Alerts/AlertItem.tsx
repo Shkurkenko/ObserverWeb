@@ -1,73 +1,175 @@
-import { StylableProps } from '../Shared/Common.types'
-import { AlertLevel, AlertLevelType } from './Alerts.types'
-import { useAlerts } from './UseAlerts'
-import { Box } from '../Layouts/Box'
-import { Stack } from '../Layouts/Stack'
-import { Flex } from '../Layouts/Flex'
-import { Heading } from '../Typography'
-import { Text } from '../Typography'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { Cancel01Icon } from '@hugeicons/core-free-icons'
-import { getAlertConfig } from './Alerts.helpers'
-
+// AlertItem.tsx
+import { ComponentChildren } from 'preact'
+import { type AlertLevelType, AlertLevel } from './Alerts.types'
+import { type StylableProps } from '../Shared/Common.types'
+import { getAlertConfig } from './Alerts.config'
+import { getAlertIconComponent } from './Alerts.config'
 import { cn } from '../../Utils/Helpers'
+import { AlertRoot } from './Components/AlertRoot'
+import { AlertIcon } from './Components/AlertIcon'
+import { AlertHeader } from './Components/AlertHeader'
+import { AlertMessage } from './Components/AlertMessage'
+import { AlertClose } from './Components/AlertClose'
 
-export interface AlertItemProps extends StylableProps {
-  id: string
-  type?: AlertLevelType
-  header?: string
-  message: string
-  onDismiss?: (id: string) => void
+// ==================== ТИПЫ ====================
+
+/** Функция рендера иконки */
+export type RenderIconFunction = (
+  type: AlertLevelType,
+  config: ReturnType<typeof getAlertConfig>
+) => ComponentChildren
+
+/** Функция рендера заголовка */
+export type RenderHeaderFunction = (header: string, type: AlertLevelType) => ComponentChildren
+
+/** Функция рендера сообщения */
+export type RenderMessageFunction = (message: string, type: AlertLevelType) => ComponentChildren
+
+/** Пропсы для кастомного рендера */
+export interface CustomRenderProps {
+  /** Кастомная иконка */
+  renderIcon?: RenderIconFunction
+  /** Кастомный заголовок */
+  renderHeader?: RenderHeaderFunction
+  /** Кастомное сообщение */
+  renderMessage?: RenderMessageFunction
 }
 
+/** Пропсы для кастомного алерта */
+export interface CustomAlertProps extends StylableProps {
+  /** Тип алерта */
+  type: AlertLevelType
+  /** Заголовок */
+  header: string
+  /** Сообщение */
+  message: string
+  /** Колбек закрытия */
+  onClose?: () => void
+  /** Кастомный рендер */
+  renderers?: CustomRenderProps
+}
+
+/** Пропсы для AlertItem */
+export interface AlertItemProps extends StylableProps {
+  /** ID алерта */
+  id: string
+  /** Тип алерта (по умолчанию Default) */
+  type?: AlertLevelType
+  /** Заголовок */
+  header: string
+  /** Сообщение */
+  message: string
+  /** Колбек закрытия */
+  onDismiss?: (id: string) => void
+  /** Кастомный рендер (опционально) */
+  renderers?: CustomRenderProps
+}
+
+// ==================== КОМПОНЕНТЫ ====================
+
+/**
+ * Кастомный алерт с возможностью переопределения частей
+ */
+const CustomAlert = ({
+  type,
+  header,
+  message,
+  onClose,
+  renderers,
+  className,
+  style,
+  ...props
+}: CustomAlertProps) => {
+  const config = getAlertConfig(type)
+  const defaultIcon = getAlertIconComponent(type)
+
+  return (
+    <AlertRoot
+      style={{ borderLeftColor: config.colors.base, ...style }}
+      className={cn(config.tailwindClasses.container, className)}
+      {...props}
+    >
+      {/* Иконка */}
+      {renderers?.renderIcon ? (
+        renderers.renderIcon(type, config)
+      ) : (
+        <AlertIcon className={config.tailwindClasses.icon}>{defaultIcon}</AlertIcon>
+      )}
+
+      {/* Заголовок */}
+      {renderers?.renderHeader ? (
+        renderers.renderHeader(header, type)
+      ) : (
+        <AlertHeader className={cn(config.tailwindClasses.header, 'font-semibold')}>
+          {header}
+        </AlertHeader>
+      )}
+
+      {/* Сообщение */}
+      {renderers?.renderMessage ? (
+        renderers.renderMessage(message, type)
+      ) : (
+        <AlertMessage className={config.tailwindClasses.message}>{message}</AlertMessage>
+      )}
+
+      {/* Кнопка закрытия */}
+      {onClose && (
+        <AlertClose onClose={onClose} className={config.tailwindClasses.closeHover} />
+      )}
+    </AlertRoot>
+  )
+}
+
+/**
+ * Пресеты алертов для быстрого доступа без проверок
+ */
+const ALERT_PRESETS = {
+  [AlertLevel.Error]: (props: Omit<CustomAlertProps, 'type'>) => (
+    <CustomAlert type={AlertLevel.Error} {...props} />
+  ),
+  [AlertLevel.Success]: (props: Omit<CustomAlertProps, 'type'>) => (
+    <CustomAlert type={AlertLevel.Success} {...props} />
+  ),
+  [AlertLevel.Warning]: (props: Omit<CustomAlertProps, 'type'>) => (
+    <CustomAlert type={AlertLevel.Warning} {...props} />
+  ),
+  [AlertLevel.Info]: (props: Omit<CustomAlertProps, 'type'>) => (
+    <CustomAlert type={AlertLevel.Info} {...props} />
+  ),
+  [AlertLevel.Default]: (props: Omit<CustomAlertProps, 'type'>) => (
+    <CustomAlert type={AlertLevel.Default} {...props} />
+  ),
+} as const
+
+/**
+ * Основной компонент для отображения одного алерта
+ */
 export const AlertItem = ({
   id,
   type = AlertLevel.Default,
   header,
   message,
   onDismiss,
-  className = '',
-  style = {},
+  renderers,
+  ...props
 }: AlertItemProps) => {
-  const { dismissAlert } = useAlerts()
-  const config = getAlertConfig(type)
+  const handleClose = () => onDismiss?.(id)
 
-  const handleClose = (e: Event) => {
-    e.preventDefault()
-    if (onDismiss) {
-      onDismiss(id)
-    } else {
-      dismissAlert(id)
-    }
+  // Если есть кастомный рендер - используем CustomAlert напрямую
+  if (renderers?.renderIcon || renderers?.renderHeader || renderers?.renderMessage) {
+    return (
+      <CustomAlert
+        type={type}
+        header={header}
+        message={message}
+        onClose={handleClose}
+        renderers={renderers}
+        {...props}
+      />
+    )
   }
 
-  return (
-    <Box
-      className={cn(`alert-item pr-6 overflow-hidden`, className)}
-      style={{
-        borderLeft: `0.25rem solid ${config.color}`,
-        ...style,
-      }}
-    >
-      <Stack className='overflow-hidden'>
-        <Flex className='notification-header'>
-          <Box className='notification-icon self-start' style={{ color: config.color }}>
-            {config.icon}
-          </Box>
-
-          <Heading level={4} style={{ color: config.color }}>
-            {header}
-          </Heading>
-        </Flex>
-
-        <Box as='article' className='notification-content text-wrap'>
-          <Text className='ml-5 line-clamp-3'>{message}</Text>
-        </Box>
-      </Stack>
-
-      <Box className='close-notification' onClick={handleClose}>
-        <HugeiconsIcon icon={Cancel01Icon} />
-      </Box>
-    </Box>
-  )
+  // Иначе используем пресет (быстрее, меньше проверок)
+  const Preset = ALERT_PRESETS[type]
+  return <Preset header={header} message={message} onClose={handleClose} {...props} />
 }
