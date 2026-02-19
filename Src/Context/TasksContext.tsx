@@ -1,17 +1,23 @@
 import { createContext, ComponentChildren } from 'preact'
 import { useCallback, useState, useEffect, useMemo } from 'preact/hooks'
-import { ReoSpace } from '../Shared/Interfaces/Reo.interface'
 import { MockGenHelpers } from '../Utils/MockGen'
 import { ScanClient } from '../Services/TcpReoClient/ScanClient'
 import { IParsedScanMessage } from '../Services/TcpReoClient'
 import { serviceConfig } from '../config'
+import {
+  ReoScanStatusType,
+  ReoScanVariantType,
+  ReoScanTask,
+  ReoScanVariant,
+  ReoScanStatus,
+} from '../Shared/Interfaces/Reo.interface'
 
 export interface ITasksContext {
   // Задачи
-  tasks: ReoSpace.IScanTask[]
-  runningTasks: ReoSpace.IScanTask[]
-  availableScanTypes: ReoSpace.IScanTypes[]
-  reservedScanTypes: ReoSpace.IScanTypes[]
+  tasks: ReoScanTask[]
+  runningTasks: ReoScanTask[]
+  availableScanTypes: ReoScanVariantType[]
+  reservedScanTypes: ReoScanVariantType[]
 
   // Данные и статус устройства
   scanData: IParsedScanMessage[]
@@ -23,10 +29,10 @@ export interface ITasksContext {
   isLoading: boolean
 
   // Методы задач
-  setTasks: (tasks: ReoSpace.IScanTask[]) => void
-  addTask: (task: ReoSpace.IScanTask) => boolean
+  setTasks: (tasks: []) => void
+  addTask: (task: ReoScanTask) => boolean
   deleteTask: (id: string) => void
-  setTaskStatus: (id: string, status: ReoSpace.IScanStatusTypes) => void
+  setTaskStatus: (id: string, status: ReoScanStatusType) => void
   startTask: (id: string) => Promise<boolean>
   stopTask: (id: string) => Promise<boolean>
   markAsWait: (id: string) => void
@@ -46,10 +52,10 @@ export const TasksContext = createContext<ITasksContext | null>(null)
 
 export const TasksProvider = ({ children }: { children: ComponentChildren }) => {
   // Состояния задач
-  const [tasks, setTasks] = useState<ReoSpace.IScanTask[]>([])
-  const [runningTasks, setRunningTasks] = useState<ReoSpace.IScanTask[]>([])
-  const [availableScanTypes, setAvailableScanTypes] = useState<ReoSpace.IScanTypes[]>([])
-  const [reservedScanTypes, setReservedScanTypes] = useState<ReoSpace.IScanTypes[]>([])
+  const [tasks, setTasks] = useState<ReoScanTask[]>([])
+  const [runningTasks, setRunningTasks] = useState<ReoScanTask[]>([])
+  const [availableScanTypes, setAvailableScanTypes] = useState<ReoScanVariantType[]>([])
+  const [reservedScanTypes, setReservedScanTypes] = useState<ReoScanVariantType[]>([])
 
   // Состояния устройства и данных
   const [scanData, setScanData] = useState<IParsedScanMessage[]>([])
@@ -64,8 +70,8 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
 
   // Все доступные типы сканирования
   const allScanTypes = useMemo(() => {
-    const values = Object.values(ReoSpace.IScanTypes)
-    return values.filter((value) => typeof value === 'string') as ReoSpace.IScanTypes[]
+    const values = Object.values(ReoScanVariant)
+    return values.filter((value) => typeof value === 'string') as ReoScanVariantType[]
   }, [])
 
   // 1. Инициализация ScanClient
@@ -122,11 +128,11 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
 
   // 2. Обновление состояний задач
   useEffect(() => {
-    const running = tasks.filter((task) => task.status === ReoSpace.IScanStatusTypes.Running)
+    const running = tasks.filter((task) => task.status === ReoScanStatus.Running)
     setRunningTasks(running)
 
     // Собираем занятые типы сканирования
-    const reserved: ReoSpace.IScanTypes[] = []
+    const reserved: ReoScanVariantType[] = []
     running.forEach((task) => {
       task.types?.forEach((type) => {
         if (!reserved.includes(type)) {
@@ -199,14 +205,13 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
   }, [])
 
   const addTask = useCallback(
-    (task: ReoSpace.IScanTask): boolean => {
+    (task: ReoScanTask): boolean => {
       const conflictTypes = task.types?.filter((type) => reservedScanTypes.includes(type)) || []
 
       if (conflictTypes.length > 0) {
         const conflictTasksData = tasks.filter((t) =>
           t.types?.some(
-            (type) =>
-              conflictTypes.includes(type) && t.status === ReoSpace.IScanStatusTypes.Running,
+            (type) => conflictTypes.includes(type) && t.status === ReoScanStatus.Running,
           ),
         )
 
@@ -225,7 +230,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
         {
           ...task,
           id: task.id || `task-${Date.now()}`,
-          status: ReoSpace.IScanStatusTypes.Pending,
+          status: ReoScanStatus.Pending,
           createdAt: task.createdAt || new Date().toISOString(),
         },
       ])
@@ -241,7 +246,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
     setError(null)
   }, [])
 
-  const setTaskStatus = useCallback((id: string, status: ReoSpace.IScanStatusTypes) => {
+  const setTaskStatus = useCallback((id: string, status: ReoScanStatusType) => {
     setTasks((prev) => prev.map((task) => (id === task.id ? { ...task, status } : task)))
   }, [])
 
@@ -254,12 +259,12 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
         return false
       }
 
-      if (taskToStart?.status === ReoSpace.IScanStatusTypes.Running) {
+      if (taskToStart?.status === ReoScanStatus.Running) {
         setError(`Task "${taskToStart.name}" already running`)
         return false
       }
 
-      if (taskToStart.status === ReoSpace.IScanStatusTypes.Finished) {
+      if (taskToStart.status === ReoScanStatus.Finished) {
         setError(`Task "${taskToStart.name}" already finished`)
         return false
       }
@@ -291,7 +296,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
         await scanClient.startScanning(taskTypes)
 
         // Обновляем статус задачи
-        setTaskStatus(id, ReoSpace.IScanStatusTypes.Running)
+        setTaskStatus(id, ReoScanStatus.Running)
         setError(null)
         return true
       } catch (err) {
@@ -311,7 +316,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
         return false
       }
 
-      if (taskToStop.status !== ReoSpace.IScanStatusTypes.Running) {
+      if (taskToStop.status !== ReoScanStatus.Running) {
         setError(`Task "${taskToStop.name}" not running`)
         return false
       }
@@ -328,7 +333,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
           await scanClient.stopScanning(typesToStop)
         }
 
-        setTaskStatus(id, ReoSpace.IScanStatusTypes.Finished)
+        setTaskStatus(id, ReoScanStatus.Finished)
         setError(null)
         return true
       } catch (err) {
@@ -341,7 +346,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
 
   const markAsWait = useCallback(
     (id: string) => {
-      setTaskStatus(id, ReoSpace.IScanStatusTypes.Pending)
+      setTaskStatus(id, ReoScanStatus.Pending)
       setError(null)
     },
     [setTaskStatus],
@@ -349,7 +354,7 @@ export const TasksProvider = ({ children }: { children: ComponentChildren }) => 
 
   const markAsFail = useCallback(
     (id: string) => {
-      setTaskStatus(id, ReoSpace.IScanStatusTypes.Failed)
+      setTaskStatus(id, ReoScanStatus.Failed)
       setError(null)
     },
     [setTaskStatus],

@@ -1,4 +1,4 @@
-import { TableSpace } from './Table.interface'
+import { TableBaseCellData, TableRow } from './Table.interface'
 import { Tab } from '../../Components/Tabs/TabGroup'
 
 export const ReoScanMode = {
@@ -96,7 +96,7 @@ export interface ReoNetworkData {
   description?: string
 }
 
-export interface ScanTask {
+export interface ReoScanTask {
   id: string
 
   name: string
@@ -119,7 +119,7 @@ export interface ReoSignalRange {
 export interface ReoTabData {
   metaInfo: ReoTableMetaInfo
 
-  rows: TableSpace.IRow[]
+  rows: TableRow[]
 
   hasNewData: boolean
 }
@@ -128,6 +128,11 @@ export interface ReoTab extends Tab {
   data: ReoTabData
 }
 
+export interface View {
+  id: string
+
+  show: boolean
+}
 export interface ReoView extends View {
   taskId: string
 
@@ -150,4 +155,21 @@ export interface ReoTable {
   scanType: ReoScanVariantType
 
   scanStatus: ReoScanStatusType
+}
+
+export interface ReoCountryCellData extends TableBaseCellData {
+  name: string
+  countryAbb: string
+  countryCode: number
+}
+
+export interface ReoSignalCellData extends TableBaseCellData {
+  range: ReoSignalRange
+  value: number
+}
+
+export interface ReoOperatorCellData extends TableBaseCellData {
+  name?: string
+  iconPath?: string
+  code: number
 }

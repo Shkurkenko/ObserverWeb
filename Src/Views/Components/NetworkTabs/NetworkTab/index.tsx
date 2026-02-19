@@ -1,7 +1,4 @@
 import { useState } from 'preact/hooks'
-import { ReoSpace } from '../../../../Shared/Interfaces/Reo.interface'
-import { ITab } from '../../../../Shared/Interfaces/Main.interface'
-import { ObserverConfig } from '../../../../../Config/ObserverConfig'
 import { Surface } from '../../../../Components/Layouts/Surface'
 import { Flex } from '../../../../Components/Layouts/Flex'
 import { ShinyLight } from '../../../../Components/ShinyLight'
@@ -9,6 +6,9 @@ import { CloseButton } from '../../../../Components/CloseButton'
 import { Box } from '../../../../Components/Layouts/Box'
 import { Text } from '../../../../Components/Typography'
 import { cn } from '../../../../Utils/Helpers'
+import { ReoScanStatus, ReoScanStatusType } from '../../../../Shared/Interfaces/Reo.interface'
+import { Tab } from '../../../../Components/Tabs/TabGroup'
+import { ScanStatusColors } from '../../ScanLightStatus/ScanLightStatus.config'
 
 export interface NetworkTabData {
   id: string
@@ -19,7 +19,7 @@ export interface NetworkTabData {
 
   networkIcon: string
 
-  status: ReoSpace.IScanStatusTypes
+  status: ReoScanStatusType
 
   signalCount: number
 
@@ -28,14 +28,14 @@ export interface NetworkTabData {
   loading?: boolean
 }
 
-export interface INetworkTabProps extends ITab {
+export interface INetworkTabProps extends Tab {
   index: number
 
   networkType: string
 
   networkIcon: string
 
-  status: ReoSpace.IScanStatusTypes
+  status: ReoScanStatusType
 
   signalCount: number
 
@@ -59,7 +59,7 @@ export function NetworkTab({
   networkIcon,
   onTabClick,
   onTabClose,
-  status = ReoSpace.IScanStatusTypes.Idle,
+  status = ReoScanStatus.Idle,
   signalCount = 0,
   active = false,
   showCloseButton = true,
@@ -70,7 +70,7 @@ export function NetworkTab({
 }: INetworkTabProps) {
   const [isHovered, setIsHovered] = useState<Boolean>(false)
 
-  const statusConfig = ObserverConfig.ScanStatusColors[status]
+  const statusConfig = ScanStatusColors[status]
 
   const handleMouseEnter = () => setIsHovered(true)
   const handleMouseLeave = () => setIsHovered(false)
@@ -146,7 +146,7 @@ export function NetworkTab({
         {!isHovered && (
           <ShinyLight
             size='sm'
-            isShining={status === ReoSpace.IScanStatusTypes.Running}
+            isShining={status === ReoScanStatus.Running}
             color={statusConfig.bg}
             glowColor={statusConfig.glow}
             className='ml-3 shrink-0 mr-3 absolute right-1 top-1/2 -translate-y-1/2'

@@ -1,20 +1,85 @@
-// Src/Components/Examples/ActionCard.tsx
-import { Card } from '../Layouts/Card'
-import { Text } from '../Typography/Text'
-import { Caption } from '../Typography/Caption'
-import { Icon } from '../Typography/Icon'
-import { Button } from '../Button'
+import { Card } from '@Components/Layouts/Card'
+import { Text, Caption } from '@Components/Typography'
+import { Button } from '@Components/Button'
 import { cn } from '../../Utils/Helpers'
 
-interface ActionCardProps {
+export interface ActionCardProps {
+  /** Заголовок карточки */
   title: string
+  /** Описание карточки */
   description: string
+  /** Текст кнопки действия */
   actionLabel?: string
+  /** Обработчик клика по кнопке */
   onAction?: () => void
+  /** Название иконки или SVG элемент */
   icon?: string
+  /** Дополнительные CSS классы */
   className?: string
 }
 
+/**
+ * Карточка с действием - компонент для отображения контента с возможным действием.
+ * Появляющаяся при наведении кнопка и анимированные состояния.
+ *
+ * @component
+ * @example
+ * // Базовая карточка
+ * <ActionCard
+ *   title="Новый проект"
+ *   description="Создайте новый проект для начала работы"
+ * />
+ *
+ * @example
+ * // Карточка с иконкой и действием
+ * <ActionCard
+ *   title="Аналитика"
+ *   description="Просмотрите статистику и отчеты"
+ *   icon="📊"
+ *   actionLabel="Открыть"
+ *   onAction={() => navigate('/analytics')}
+ * />
+ *
+ * @example
+ * // Карточка в списке действий
+ * <div className="space-y-4">
+ *   <ActionCard
+ *     title="Настройки профиля"
+ *     description="Обновите личную информацию"
+ *     icon="⚙️"
+ *     actionLabel="Настроить"
+ *     onAction={handleSettings}
+ *   />
+ *   <ActionCard
+ *     title="Уведомления"
+ *     description="Настройте способ получения уведомлений"
+ *     icon="🔔"
+ *     actionLabel="Изменить"
+ *     onAction={handleNotifications}
+ *   />
+ * </div>
+ *
+ * @example
+ * // Карточка с кастомными стилями
+ * <ActionCard
+ *   title="Важное обновление"
+ *   description="Доступна новая версия системы"
+ *   icon="🚀"
+ *   actionLabel="Обновить"
+ *   onAction={handleUpdate}
+ *   className="max-w-md mx-auto"
+ * />
+ *
+ * @param props - Свойства компонента
+ * @param props.title - Заголовок карточки (обязательно)
+ * @param props.description - Описание карточки (обязательно)
+ * @param props.actionLabel - Текст на кнопке действия (опционально)
+ * @param props.onAction - Функция, вызываемая при клике на кнопку (опционально)
+ * @param props.icon - Иконка для отображения слева от заголовка (опционально)
+ * @param props.className - Дополнительные CSS классы для кастомизации (опционально)
+ *
+ * @returns JSX элемент карточки с действием
+ */
 export const ActionCard = ({
   title,
   description,

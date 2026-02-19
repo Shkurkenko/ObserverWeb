@@ -1,13 +1,13 @@
 import { Icon } from '../../../Components/Typography'
-import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { Button } from '../../../Components/Button'
 import { Heading } from '../../../Components/Typography'
 import { Text } from '../../../Components/Typography'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { ReoScanVariantType } from '../../../Shared/Interfaces/Reo.interface'
+import { NetworkTypeIcons } from '../../../../Config/ObserverConfig'
 
 export interface INetworkTableEmptyProps {
   isScanning: boolean
-  networkType: ReoSpace.IScanTypes
+  networkType: ReoScanVariantType
   handleStartScan: () => void
 }
 
@@ -20,7 +20,7 @@ export const NetworkTableEmpty = ({
     <div className='p-12 text-center'>
       <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-container-high'>
         <Icon size='2xl' className='text-on-surface-variant'>
-          {ObserverConfig.NetworkTypeIcons[networkType]}
+          {NetworkTypeIcons[networkType]}
         </Icon>
       </div>
       <Heading level={4} className='text-on-surface mb-2'>

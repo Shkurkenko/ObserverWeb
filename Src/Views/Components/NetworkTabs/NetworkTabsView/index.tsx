@@ -1,19 +1,23 @@
-import { ReoSpace } from '../../../../Shared/Interfaces/Reo.interface'
 import { NetworkTabGroup } from '../NetworkTabGroup'
 import { useNetworkTabs } from '..'
+import {
+  ReoNetworkData,
+  ReoScanStatus,
+  ReoScanStatusType,
+} from '../../../../Shared/Interfaces/Reo.interface'
 
 export interface NetworkTabsViewProps {
-  networks: ReoSpace.INetworkData[]
+  networks: ReoNetworkData[]
 
   activeIndex?: number
 
-  onTabClick?: (network: ReoSpace.INetworkData) => void
+  onTabClick?: (network: ReoNetworkData) => void
 
   onTabClose?: (networkId: string) => void
 
   className?: string
 
-  status?: ReoSpace.IScanStatusTypes
+  status?: ReoScanStatusType
 }
 
 export function NetworkTabsView({
@@ -21,7 +25,7 @@ export function NetworkTabsView({
   onTabClick,
   onTabClose,
   className,
-  status = ReoSpace.IScanStatusTypes.Idle,
+  status = ReoScanStatus.Idle,
   activeIndex = 0,
 }: NetworkTabsViewProps) {
   const { tabs, handleTabClick } = useNetworkTabs(networks, {

@@ -1,22 +1,20 @@
-// AlertItem.tsx
 import { ComponentChildren } from 'preact'
+import { StylableProps } from '@Components/Shared/Common.types'
 import { type AlertLevelType, AlertLevel } from './Alerts.types'
-import { type StylableProps } from '../Shared/Common.types'
 import { getAlertConfig } from './Alerts.config'
 import { getAlertIconComponent } from './Alerts.config'
-import { cn } from '../../Utils/Helpers'
 import { AlertRoot } from './Components/AlertRoot'
 import { AlertIcon } from './Components/AlertIcon'
 import { AlertHeader } from './Components/AlertHeader'
 import { AlertMessage } from './Components/AlertMessage'
 import { AlertClose } from './Components/AlertClose'
 
-// ==================== ТИПЫ ====================
+import { cn } from '@Utils/Helpers'
 
 /** Функция рендера иконки */
 export type RenderIconFunction = (
   type: AlertLevelType,
-  config: ReturnType<typeof getAlertConfig>
+  config: ReturnType<typeof getAlertConfig>,
 ) => ComponentChildren
 
 /** Функция рендера заголовка */
@@ -65,8 +63,6 @@ export interface AlertItemProps extends StylableProps {
   renderers?: CustomRenderProps
 }
 
-// ==================== КОМПОНЕНТЫ ====================
-
 /**
  * Кастомный алерт с возможностью переопределения частей
  */
@@ -113,9 +109,7 @@ const CustomAlert = ({
       )}
 
       {/* Кнопка закрытия */}
-      {onClose && (
-        <AlertClose onClose={onClose} className={config.tailwindClasses.closeHover} />
-      )}
+      {onClose && <AlertClose onClose={onClose} className={config.tailwindClasses.closeHover} />}
     </AlertRoot>
   )
 }

@@ -1,27 +1,23 @@
-import { useState } from 'preact/hooks'
 import { useMemo } from 'preact/hooks'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { NetworkTabData } from './NetworkTab'
+import { ReoNetworkData, ReoScanStatusType } from '../../../Shared/Interfaces/Reo.interface'
 
 export interface UseNetworkTabsOptions {
-  onTabClick?: (network: ReoSpace.INetworkData) => void
+  onTabClick?: (network: ReoNetworkData) => void
 
   onTabClose?: (networkId: string) => void
 
   showCloseButtons?: boolean
 
-  status?: ReoSpace.IScanStatusTypes
+  status?: ReoScanStatusType
 }
 
-export const useNetworkTabs = (
-  networks: ReoSpace.INetworkData[],
-  options?: UseNetworkTabsOptions,
-) => {
+export const useNetworkTabs = (networks: ReoNetworkData[], options?: UseNetworkTabsOptions) => {
   const {
     onTabClick,
     onTabClose,
     showCloseButtons = true,
-    status = 'idle' as ReoSpace.IScanStatusTypes,
+    status = 'idle' as ReoScanStatusType,
   } = options || {}
 
   const networkTabs = useMemo(

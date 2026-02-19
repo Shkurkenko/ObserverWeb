@@ -1,28 +1,29 @@
 import { isValidElement, cloneElement } from 'preact'
-import { IconSize } from '../../Shared/Interfaces/Typography.interface'
+import { IconSize } from './Typography.types'
 import { cn } from '../../Utils/Helpers'
 
 export interface IIconProps {
+  /** Дополнительные CSS классы */
   className?: string
-
+  /** Размер иконки */
   size?: IconSize
-
+  /** Цвет иконки */
   color?: string
-
+  /** Толщина обводки */
   strokeWidth?: number
-
+  /** SVG иконка */
   children?: preact.ComponentChildren
-
+  /** Обработчик клика */
   onClick?: (event: MouseEvent) => void
-
+  /** Метка для доступности */
   ariaLabel?: string
-
+  /** Состояние загрузки */
   loading?: boolean
-
+  /** Индикатор ошибки */
   error?: boolean
-
+  /** Индикатор новых данных */
   hasNewData?: boolean
-
+  /** Активное состояние */
   active?: boolean
 }
 
@@ -35,6 +36,31 @@ const sizeClasses: Record<IconSize, string> = {
   '2xl': 'w-10 h-10',
 }
 
+/**
+ * Компонент для отображения иконок с поддержкой состояний и индикаторов
+ *
+ * @example
+ * // Базовая иконка
+ * <Icon>
+ *   <svg>...</svg>
+ * </Icon>
+ *
+ * @example
+ * // Иконка с индикатором ошибки
+ * <Icon error>
+ *   <svg>...</svg>
+ * </Icon>
+ *
+ * @example
+ * // Иконка в состоянии загрузки
+ * <Icon loading />
+ *
+ * @example
+ * // Кликабельная иконка
+ * <Icon onClick={handleClick} ariaLabel="Меню">
+ *   <svg>...</svg>
+ * </Icon>
+ */
 export const Icon = ({
   className,
   size = 'md',
@@ -84,7 +110,6 @@ export const Icon = ({
         iconContent
       )}
 
-      {/* Error Indicator */}
       {error && (
         <span
           className='absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full border border-white'
@@ -92,7 +117,6 @@ export const Icon = ({
         />
       )}
 
-      {/* New data indicator */}
       {hasNewData && (
         <span
           className='absolute -top-0.5 -right-0.5 w-2 h-2 bg-blue-500 rounded-full animate-pulse'

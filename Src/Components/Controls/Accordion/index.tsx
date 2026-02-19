@@ -7,7 +7,7 @@ import { CSSProperties } from 'preact'
 import { Button } from '../../Button'
 import { cn } from '../../../Utils/Helpers'
 
-export interface IAccordionItemData {
+export interface AccordionItemData {
   id: string | number
 
   title: string
@@ -24,13 +24,13 @@ export interface IAccordionToggleEvent {
 
   isOpen: boolean
 
-  item: IAccordionItemData
+  item: AccordionItemData
 
   event?: MouseEvent | KeyboardEvent
 }
 
 export interface IAccordionProps {
-  items: IAccordionItemData[]
+  items: AccordionItemData[]
 
   allowMultiple?: boolean
 
@@ -48,7 +48,7 @@ export interface IAccordionProps {
 }
 
 export interface IAccordionItemProps {
-  item: IAccordionItemData
+  item: AccordionItemData
 
   isExpanded: boolean
 
@@ -154,7 +154,7 @@ export const Accordion = ({
   onToggle,
   onOpen,
   onClose,
-}: IAccordionProps) => {
+}: AccordionProps) => {
   const [openItems, setOpenItems] = useState<(string | number)[]>(defaultOpen)
 
   const handleItemToggle = (id: string | number, event?: MouseEvent | KeyboardEvent) => {

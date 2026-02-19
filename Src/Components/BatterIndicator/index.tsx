@@ -5,7 +5,7 @@ import { Text } from '../Typography'
 import { cn } from '../../Utils/Helpers'
 import { useThemeColors } from '../../Hooks/UseThemeColors'
 
-interface IBatteryIndicatorProps {
+export interface BatteryIndicatorProps {
   className?: string
   level?: number | null // от 0 до 100, null - неизвестно
   isCharging?: boolean
@@ -23,7 +23,7 @@ export const BatteryIndicator = ({
   size = 'md',
   animated = true,
   lowPowerMode = false,
-}: IBatteryIndicatorProps) => {
+}: BatteryIndicatorProps) => {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(externalLevel ?? null)
   const [isCharging, setIsCharging] = useState<boolean>(externalCharging ?? false)
   const colors = useThemeColors()

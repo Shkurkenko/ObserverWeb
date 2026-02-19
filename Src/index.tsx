@@ -3,26 +3,18 @@ import 'preact/debug'
 import { Route } from 'wouter'
 import { render } from 'preact'
 import { LocationProvider } from 'preact-iso'
-
-// Context Providers
-import { ThemeProvider } from './Context/ThemeContext'
-import { TasksProvider } from './Context/TasksContext'
-import { SidebarProvider } from './Context/SidebarContext'
-import { FastAlertsProvider } from './Context/FastAlertsContext'
-import { AlertsProvider } from './Context/AlertsContext'
-import { ScanViewProvider } from './Context/ReoScanViewContext'
-
-// Components
-import { SideNavigation } from './Components/Sidebar/SideNavigation'
-
-// Pages
+import { ThemeProvider } from '@Context/ThemeContext'
+import { TasksProvider } from '@Context/TasksContext'
+import { SidebarProvider } from '@Context/SidebarContext'
+import { AlertsProvider } from '@Components/Alerts'
+import { ScanViewProvider } from '@Context/ReoScanViewContext'
+import { ToastChannel } from '@Components/Toasts'
+import { SideNavigation } from '@Components/Sidebar/SideNavigation'
 import { ReoScan } from './Views/Pages/ReoScan'
 import { ThemeTester } from './Views/Pages/ThemeTester'
 import { TypographyTester } from './Views/Pages/TypographyTester'
-// import { TabsExamplePage } from './Views/Pages/TabsExamplePage'
-// import { ForensicTester } from './Views/Pages/ForensicTester'
 import { TcpScanTester } from './Views/Pages/TcpScanTeseter'
-import { UseInitTheme } from './Hooks/UseInitTheme'
+import { UseInitTheme } from '@Hooks/UseInitTheme'
 
 import { invoke } from '@tauri-apps/api/core'
 
@@ -37,7 +29,8 @@ export function App() {
     <ThemeProvider>
       <TasksProvider>
         <SidebarProvider>
-          <FastAlertsProvider>
+          {/* NEW: Toast provider with positioning */}
+          <ToastChannel position='bottom-right' maxToasts={5} portalId='toast-portal'>
             <AlertsProvider>
               <ScanViewProvider>
                 <LocationProvider>
@@ -70,7 +63,7 @@ export function App() {
                 </LocationProvider>
               </ScanViewProvider>
             </AlertsProvider>
-          </FastAlertsProvider>
+          </ToastChannel>
         </SidebarProvider>
       </TasksProvider>
     </ThemeProvider>

@@ -1,16 +1,13 @@
-// AlertList.tsx
 import { ComponentChildren } from 'preact'
+import { StylableProps } from '@Components/Shared/Common.types'
 import { AlertItem } from './AlertItem'
 import { AlertLevel } from './Alerts.types'
 import { Box } from '../Layouts/Box'
 import { Stack } from '../Layouts/Stack'
 import { type Alert } from './Alerts.types'
-import { type StylableProps } from '../Shared/Common.types'
 import { getAlertConfig } from './Alerts.config'
 
-import { cn } from '../../Utils/Helpers'
-
-// ==================== ТИПЫ ====================
+import { cn } from '@Utils/Helpers'
 
 /**
  * Функция для кастомного рендера отдельного алерта в списке
@@ -62,8 +59,6 @@ export interface GroupedAlerts {
   [AlertLevel.Info]: Alert[]
   [AlertLevel.Default]: Alert[]
 }
-
-// ==================== КОМПОНЕНТ ====================
 
 /**
  * Компонент для отображения списка алертов/уведомлений

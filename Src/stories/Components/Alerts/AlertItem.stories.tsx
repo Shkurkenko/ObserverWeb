@@ -209,14 +209,10 @@ export const LongContent: Story = {
   },
 }
 
-// ==================== КАСТОМНЫЙ РЕНДЕР ====================
-
-// ==================== КАСТОМНЫЙ РЕНДЕР ====================
-
 /**
  * Кастомная иконка для алерта
  */
-export const CustomIcon: Story = {
+export const CustomIcon: StoryObj<AlertItemProps> = {
   args: {
     id: 'custom-icon-1',
     type: AlertLevel.Info,
@@ -248,7 +244,7 @@ export const CustomIcon: Story = {
 /**
  * Кастомный заголовок с HTML
  */
-export const CustomHeader: Story = {
+export const CustomHeader: StoryObj<AlertItemProps> = {
   args: {
     id: 'custom-header-1',
     type: AlertLevel.Success,
@@ -278,7 +274,7 @@ export const CustomHeader: Story = {
 /**
  * Кастомное сообщение с форматированием
  */
-export const CustomMessage: Story = {
+export const CustomMessage: StoryObj<AlertItemProps> = {
   args: {
     id: 'custom-message-1',
     type: AlertLevel.Info,
@@ -312,7 +308,7 @@ export const CustomMessage: Story = {
 /**
  * Полностью кастомный алерт
  */
-export const FullyCustom: Story = {
+export const FullyCustom: StoryObj<AlertItemProps> = {
   args: {
     id: 'fully-custom-1',
     type: AlertLevel.Warning,

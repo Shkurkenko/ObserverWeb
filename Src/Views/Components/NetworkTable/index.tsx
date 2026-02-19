@@ -3,18 +3,18 @@ import { Card } from '../../../Components/Layouts/Card'
 import { Heading } from '../../../Components/Typography'
 import { TableHeader } from '../../../Components/Table/TableHeader'
 import { TableBody } from '../../../Components/Table/TableBody'
-import { ObserverConfig } from '../../../../Config/ObserverConfig'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { useEffect } from 'preact/hooks'
 import { NetworkTableEmpty } from './NetworkTableEmpty'
 import { Flex } from '../../../Components/Layouts/Flex'
 import { cn } from '../../../Utils/Helpers'
 import { TextInput } from '../../../Components/Form/TextInput'
+import { ReoScanVariant, ReoScanVariantType } from '../../../Shared/Interfaces/Reo.interface'
+import { NetworkDescrptions, ReoColumnModelsConfig } from '../../../../Config/ObserverConfig'
 
 export interface INetworkTableProps {
   isScanning: boolean
 
-  networkType: ReoSpace.IScanTypes
+  networkType: ReoScanVariantType
 
   data: any
 
@@ -39,8 +39,7 @@ export const NetworkTable = ({
   onStopScan,
   className = '',
 }: INetworkTableProps) => {
-  const columnsConfig = ObserverConfig.ReoColumnModelsConfig[networkType] || []
-  const networkDescriptionConfig = ObserverConfig.NetworkDescrptions[networkType] || 'Сети связи'
+  const columnsConfig = ReoColumnModelsConfig[networkType] || []
 
   useEffect(() => {
     console.log('network type: ', networkType)
@@ -69,7 +68,7 @@ export const NetworkTable = ({
 
   return (
     <>
-      {networkType !== ReoSpace.IScanTypes.Unknown ? (
+      {networkType !== ReoScanVariant.Unknown ? (
         <Card
           className={cn(
             'border border-outline-variant/50 bg-surface-container overflow-hidden',

@@ -1,5 +1,3 @@
-// src/Components/TaskSidebar/index.tsx
-import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
 import { TaskSidebarItem } from './TaskSidebarItem'
 import { AddTask } from './TaskSidebarItemAdd'
 import { useTasks } from './Hooks/UseTasks'
@@ -7,6 +5,7 @@ import { useScanView } from '../../Hooks/UseScanView'
 import { ScanConfigHelpers } from '../../../Utils/ScanConfigHelper'
 import { SearchInput } from '../SearchInput'
 import { useState, useMemo } from 'preact/hooks'
+import { ScanTask } from '../../Shared/Interfaces/Reo.interface'
 import { v4 as uuidv4 } from 'uuid'
 
 import './style.sass'
@@ -29,7 +28,7 @@ export function TaskSidebar() {
     )
   }, [tasks, searchQuery])
 
-  const handleTaskClick = (task: ReoSpace.IScanTask) => {
+  const handleTaskClick = (task: ScanTask) => {
     // При клике на задачу создаем вьюшки для всех типов сетей в задаче
     task.types.forEach((networkType, index) => {
       const viewConfig = ScanConfigHelpers.createScanViewConfig(

@@ -5,22 +5,26 @@ import { Box } from '../../../Components/Layouts/Box'
 import { NetworkTabsView } from '../NetworkTabs/NetworkTabsView'
 import { NetworkTable } from '../NetworkTable'
 import { ScanMetrics } from '../ScanMetrics'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { useEffect } from 'preact/hooks'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { Button } from '../../../Components/Button'
 import { Icon } from '../../../Components/Typography'
 import { Divider } from '../../../Components/Typography'
 import { formatDuration } from '../../../../Utils/Helpers'
 
 import { cn } from '../../../Utils/Helpers'
+import {
+  ReoNetworkData,
+  ReoScanStatus,
+  ReoScanVariantType,
+} from '../../../Shared/Interfaces/Reo.interface'
+import { TableRow } from '../../../Shared/Interfaces/Table.interface'
 
 export interface IScanDataProps {
   isScanning: boolean
 
   currentData: any
 
-  networkTabsData: ReoSpace.INetworkData[]
+  networkTabsData: ReoNetworkData[]
 
   currentRows: any
 
@@ -70,7 +74,7 @@ export const ScanData = ({
 
   useEffect(() => {
     if (currentRows.length > 0) {
-      const activeCount = currentRows.filter((row: TableSpace.IRow) => {
+      const activeCount = currentRows.filter((row: TableRow) => {
         const signalCell = row.columns.find((col: any) => col.type === 'Signal')
         if (!signalCell) return false
         const signalValue = (signalCell.data as any)?.value
@@ -78,7 +82,7 @@ export const ScanData = ({
       }).length
 
       const signals = currentRows
-        .map((row: TableSpace.IRow) => {
+        .map((row: TableRow) => {
           const signalCell = row.columns.find((col: any) => col.type === 'Signal')
           return signalCell ? (signalCell.data as any)?.value : null
         })
@@ -134,7 +138,7 @@ export const ScanData = ({
     },
   ]
 
-  const networkType = networkTabsData[activeIndex].type as ReoSpace.IScanTypes
+  const networkType = networkTabsData[activeIndex].type as ReoScanVariantType
 
   return (
     <Flex direction='col' inline={false} className={cn('h-full min-h-0', className)}>
@@ -154,7 +158,7 @@ export const ScanData = ({
           onTabClose={(networkId) => {
             console.log('Closing tab:', networkId)
           }}
-          status={isScanning ? ReoSpace.IScanStatusTypes.Running : ReoSpace.IScanStatusTypes.Idle}
+          status={isScanning ? ReoScanStatus.Running : ReoScanStatus.Idle}
           className='flex-1 min-w-0'
         />
         <Button

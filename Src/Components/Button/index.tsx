@@ -5,7 +5,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | '
 
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
-export interface IButtonProps {
+export interface ButtonProps {
   children: ComponentChildren
 
   variant?: ButtonVariant
@@ -73,7 +73,7 @@ export const Button = ({
   className = '',
   style = {},
   ...props
-}: IButtonProps) => {
+}: ButtonProps) => {
   const handleClick = (event: MouseEvent) => {
     if (!disabled && !loading && onClick) {
       onClick(event)

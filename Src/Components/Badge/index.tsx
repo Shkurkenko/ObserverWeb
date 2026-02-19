@@ -16,7 +16,7 @@ export type BadgeVariant =
 
 export type BadgeSize = 'xs' | 'sm' | 'md' | 'lg'
 
-export interface IBadgeProps {
+export interface BadgeProps {
   children: ComponentChildren
 
   variant?: BadgeVariant
@@ -81,7 +81,7 @@ const roundedClasses = {
   sm: 'rounded-sm',
 }
 
-export const Badge: FunctionalComponent<IBadgeProps> = ({
+export const Badge: FunctionalComponent<BadgeProps> = ({
   children,
   variant = 'default',
   size = 'md',
@@ -159,14 +159,14 @@ export const Badge: FunctionalComponent<IBadgeProps> = ({
 // Пресеты для удобного использования
 export const BadgePresets = {
   /** Бейдж с иконкой слева */
-  WithIcon: ({ icon, children, ...props }: Omit<IBadgeProps, 'iconPosition'>) => (
+  WithIcon: ({ icon, children, ...props }: Omit<BadgeProps, 'iconPosition'>) => (
     <Badge icon={icon} iconPosition='left' {...props}>
       {children}
     </Badge>
   ),
 
   /** Бейдж с точкой (индикатор) */
-  Dot: ({ children, ...props }: Omit<IBadgeProps, 'dot'>) => (
+  Dot: ({ children, ...props }: Omit<BadgeProps, 'dot'>) => (
     <Badge dot {...props}>
       {children}
     </Badge>
@@ -177,14 +177,14 @@ export const BadgePresets = {
     value,
     max = 99,
     ...props
-  }: Omit<IBadgeProps, 'children'> & { value: number; max?: number }) => (
+  }: Omit<BadgeProps, 'children'> & { value: number; max?: number }) => (
     <Badge {...props} value={value} max={max}>
       {value > max ? `${max}+` : value}
     </Badge>
   ),
 
   /** Уведомление с возможностью закрытия */
-  Notification: ({ children, onDismiss, ...props }: IBadgeProps & { onDismiss: () => void }) => (
+  Notification: ({ children, onDismiss, ...props }: BadgeProps & { onDismiss: () => void }) => (
     <Badge dismissible onDismiss={onDismiss} {...props}>
       {children}
     </Badge>

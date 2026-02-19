@@ -39,5 +39,3 @@ export const SidebarProvider = ({ children }: ISidebarProviderProps) => {
     </SidebarContext.Provider>
   )
 }
-
-export default SidebarProvider

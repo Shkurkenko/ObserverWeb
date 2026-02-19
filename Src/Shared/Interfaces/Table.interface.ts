@@ -1,157 +1,155 @@
-import { ReoSpace } from './Reo.interface'
-export namespace TableSpace {
-  export interface IStyleSettings {
-    columnWidth?: number
+export interface TableStyleSettings {
+  columnWidth?: number
 
-    columnMinWidth?: number
+  columnMinWidth?: number
 
-    columnMaxWidth?: number
+  columnMaxWidth?: number
 
-    columnColors?: string[]
+  columnColors?: string[]
 
-    gridColor?: string
+  gridColor?: string
 
-    enableHorizontalGird?: boolean
+  enableHorizontalGird?: boolean
 
-    enableVerticalGrid?: boolean
+  enableVerticalGrid?: boolean
 
-    columnAlignment?: IColumnAlignment
-  }
+  columnAlignment?: TableColumnAlignmentType
+}
 
-  export interface IConfig {
-    enableColumnDisabling?: boolean
+export interface TableConfig {
+  enableColumnDisabling?: boolean
 
-    enableCleanTable?: boolean
+  enableCleanTable?: boolean
 
-    enablePagination?: boolean
+  enablePagination?: boolean
 
-    enableSorting?: boolean
+  enableSorting?: boolean
 
-    enableFiltration?: boolean
+  enableFiltration?: boolean
 
-    enableEnumiration?: boolean
+  enableEnumiration?: boolean
 
-    tableStyleSettings?: IStyleSettings
-  }
+  tableStyleSettings?: TableStyleSettings
+}
 
-  export enum IColumnAlignment {
-    Left = 'left',
-    Right = 'right',
-    Center = 'center',
-  }
+export const TableColumnAlignment = {
+  Left: 'left',
 
-  export enum IRowStatus {
-    Normal = 'normal',
-    Highlighted = 'highlighted',
-    Disabled = 'disabled',
-  }
+  Right: 'right',
 
-  export enum IRowTypes {
-    Normal,
-    Colored,
-  }
+  Center: 'center',
+} as const
+export type TableColumnAlignmentType =
+  (typeof TableColumnAlignment)[keyof typeof TableColumnAlignment]
 
-  export enum IColumnTypes {
-    Enum,
-    Text,
-    Checkbox,
-    Country,
-    Signal,
-    Operator,
-    Date,
-  }
+export const TableRowStatus = {
+  Normal: 'normal',
 
-  export enum IHeaderTypes {
-    Static,
-    Sortable,
-  }
+  Highlighted: 'highlighted',
 
-  export interface IPoint {
-    rowIndex: number
-    colIndex: number
-  }
+  Disabled: 'disabled',
+} as const
+export type TableRowStatusType = (typeof TableRowStatus)[keyof typeof TableRowStatus]
 
-  export interface IHeader {
-    label: string
-    role: string
-    type: IHeaderTypes
-  }
+export const TableRow = {
+  Normal: 'normal',
 
-  export interface ICell<T> {
-    data: T
-    position: IPoint
-    type: IColumnTypes
-    role: string
-  }
+  Colored: 'colored',
+} as const
+export type TableRowType = (typeof TableRow)[keyof typeof TableRow]
 
-  export enum IRoles {
-    Enum = 'Enum',
-  }
+export const TableColumn = {
+  Enum: 'enum',
 
-  export interface IRow {
-    index: number
-    columns: ICell<unknown>[] // Unknown type to allow different and custom cell types data
-    status: IRowStatus
-    type: IRowTypes
-  }
+  Text: 'text',
 
-  export interface IColumn {
-    role: string
-    type: IColumnTypes
-    width?: number
-    align?: IColumnAlignment
-    minWidth?: number
-    maxWidth?: number
-    label: string
-  }
+  Checkbox: 'checkbox',
 
-  export interface ITableData<T> {
-    hasNewData: boolean
-    metaInfo: T
-    rows: IRow[]
-  }
+  Country: 'country',
 
-  export interface IEnumCellData {
-    rowIndex: number
-  }
+  Signal: 'signal',
 
-  export interface IBaseCellData {
-    position: IPoint
-  }
+  Operator: 'operator',
 
-  export interface ITextCellData extends IBaseCellData {
-    bold?: boolean
-    text: string
-  }
+  Date: 'date',
+} as const
+export type TableColumnType = (typeof TableColumn)[keyof typeof TableColumn]
 
-  export interface ICheckboxCellData extends IBaseCellData {
-    checked: boolean
-    onClick?: (e: Event) => void
-  }
+export const TableHeader = {
+  Static: 'static',
 
-  export interface IOperatorCellData extends IBaseCellData {
-    name?: string
-    iconPath?: string
-    code: number
-  }
+  Sortable: 'sortable',
+} as const
+export type TableHeaderType = (typeof TableHeader)[keyof typeof TableHeader]
 
-  export interface ICountryCellData extends IBaseCellData {
-    name: string
-    countryAbb: string
-    countryCode: number
-  }
+export interface TablePoint {
+  rowIndex: number
+  colIndex: number
+}
 
-  export interface ISignalCellData extends IBaseCellData {
-    range: ReoSpace.ISignalRange
-    value: number
-  }
+export interface IHeader {
+  label: string
+  role: string
+  type: TableHeaderType
+}
 
-  export interface IRowProps extends IBaseCellData {
-    index: number
-    columns: IColumn[]
-  }
+export interface TableCell<T> {
+  data: T
+  position: TablePoint
+  type: TableColumnType
+  role: string
+}
 
-  export interface IBodyProps extends IBaseCellData {
-    rows: IRowProps[]
-  }
+export enum TableRoles {
+  Enum = 'Enum',
+}
+
+export interface TableRow {
+  index: number
+  columns: TableCell<unknown>[] // Unknown type to allow different and custom cell types data
+  status: TableRowStatusType
+  type: TableRowType
+}
+
+export interface TableColumn {
+  role: string
+  type: TableColumnType
+  width?: number
+  align?: TableColumnAlignmentType
+  minWidth?: number
+  maxWidth?: number
+  label: string
+}
+
+export interface TableData<T> {
+  hasNewData: boolean
+  metaInfo: T
+  rows: TableRow[]
+}
+
+export interface TableEnumCellData {
+  rowIndex: number
+}
+
+export interface TableBaseCellData {
+  position: TablePoint
+}
+
+export interface TableTextCellData extends TableBaseCellData {
+  bold?: boolean
+  text: string
+}
+
+export interface TableCheckboxCellData extends TableBaseCellData {
+  checked: boolean
+  onClick?: (e: Event) => void
+}
+
+export interface TableRowProps extends TableBaseCellData {
+  index: number
+  columns: TableColumn[]
+}
+
+export interface TableBodyProps extends TableBaseCellData {
+  rows: TableRowProps[]
 }

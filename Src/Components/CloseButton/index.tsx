@@ -2,12 +2,12 @@ import { Icon } from '../Typography'
 import { cn } from '../../Utils/Helpers'
 import { Button } from '../Button'
 
-export interface ICloseButtonProps {
+export interface CloseButtonProps {
   onClose: (event: MouseEvent) => void
   className?: string
 }
 
-export const CloseButton = ({ onClose, className = '' }: ICloseButtonProps) => {
+export const CloseButton = ({ onClose, className = '' }: CloseButtonProps) => {
   const handleClose = (event: MouseEvent) => {
     onClose(event)
     console.log('close button pushed')

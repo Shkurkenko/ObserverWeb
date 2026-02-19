@@ -1,8 +1,7 @@
-import 
 
 export interface MenubarModel {
   currentIndex: number
-  items: IMenubarItem[]
+  items: MenubarItem[]
 }
 
 export const MenubarConfig: MenubarModel = {

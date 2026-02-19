@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact'
-import { IMenubarSetup } from '../../../Shared/Interfaces/Main.interface'
+import { MenubarSetup } from '../../../../Config/ObserverConfig'
 
 import './style.sass'
 
@@ -9,10 +9,10 @@ export interface IMenubarItemProps {
   isActive: boolean
 }
 
-export interface IMenubarItem {
+export interface MenubarItemConfig {
   id: number
   active: boolean
-  role: IMenubarSetup
+  role: MenubarSetup
   icon: ComponentChildren
   content: ComponentChildren
 }

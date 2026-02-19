@@ -7,8 +7,8 @@ import { Text } from '../../../Components/Typography'
 import { Caption } from '../../../Components/Typography'
 import { Button } from '../../../Components/Button'
 import { formatDuration } from '../../../../Utils/Helpers'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { cn } from '../../../Utils/Helpers'
+import { ReoScanModeType } from '../../../Shared/Interfaces/Reo.interface'
 
 export interface IScanSession {
   id: string
@@ -21,7 +21,7 @@ export interface IScanSession {
 
   isActive: boolean
 
-  scanMode: ReoSpace.IScanMode
+  scanMode: ReoScanModeType
 }
 
 export interface IScannerControlProps {

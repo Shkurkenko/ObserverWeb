@@ -1,20 +1,20 @@
 import { useMemo } from 'preact/hooks'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { ReoScanStatus, ReoScanStatusType } from '../../../Shared/Interfaces/Reo.interface'
 
 import './style.sass'
 
 interface IScanLightStatusProps {
-  statusType: ReoSpace.IScanStatusTypes
+  statusType: ReoScanStatusType
 }
 
 export function ScanLightStatus({ statusType }: IScanLightStatusProps) {
   const color = useMemo(() => {
-    const defaultStatusColors: Record<ReoSpace.IScanStatusTypes, string> = {
-      [ReoSpace.IScanStatusTypes.Running]: '#36b37e', // Some sort of green
-      [ReoSpace.IScanStatusTypes.Pending]: '#FFEE58', // Some sort of yellow
-      [ReoSpace.IScanStatusTypes.Failed]: '#FF5722', // Some sort of red
-      [ReoSpace.IScanStatusTypes.Finished]: 'grey',
-      [ReoSpace.IScanStatusTypes.Idle]: 'grey',
+    const defaultStatusColors: Record<ReoScanStatusType, string> = {
+      [ReoScanStatus.Running]: '#36b37e', // Some sort of green
+      [ReoScanStatus.Pending]: '#FFEE58', // Some sort of yellow
+      [ReoScanStatus.Failed]: '#FF5722', // Some sort of red
+      [ReoScanStatus.Finished]: 'grey',
+      [ReoScanStatus.Idle]: 'grey',
     }
 
     return defaultStatusColors[statusType] || 'pink'

@@ -2,7 +2,7 @@ import { ComponentChild } from 'preact'
 import { ITab } from '../../../Shared/Interfaces/Main.interface'
 import { Icon } from '../../Typography'
 import { Button, IButtonProps } from '../../Button'
-import { IconSize } from '../../../Shared/Interfaces/Typography.interface'
+import { IconSize } from '../../../Shared/Interfaces/Typography.types'
 import { cn } from '../../../Utils/Helpers'
 
 export interface TabButtonProps extends Omit<IButtonProps, 'children' | 'onClick' | 'variant'> {

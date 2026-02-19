@@ -3,18 +3,14 @@ import { IMenubarItem, MenubarItem } from './MenubarItem'
 
 import './style.sass'
 
-interface IMenubarProps {
-  model: IMenubarModel
+interface MenubarProps {
+  model: MenubarModel
   itemOnClick: Function
-}
-export interface IMenubarModel {
-  currentIndex: number
-  items: IMenubarItem[]
 }
 
 import './style.sass'
 
-export function Menubar({ model, itemOnClick }: IMenubarProps) {
+export function Menubar({ model, itemOnClick }: MenubarProps) {
   const { show } = useSidebar()
 
   return (

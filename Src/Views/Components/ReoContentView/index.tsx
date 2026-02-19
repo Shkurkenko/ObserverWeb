@@ -2,7 +2,6 @@ import { useState, useMemo } from 'preact/hooks'
 import { Container } from '../../../Components/Layouts/Container'
 import { ScannerControl } from '../ScannerControl'
 import { ScanViewHeader } from '../ScanViewHeader'
-import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { Footer, FooterItem } from '../../../Components/Footer'
 import { v4 as uuidv4 } from 'uuid'
 import { ScanData } from '../ScanData'
@@ -10,6 +9,15 @@ import { Flex } from '../../../Components/Layouts/Flex'
 import { Divider } from '../../../Components/Typography'
 import { Text } from '../../../Components/Typography'
 import { BatteryIndicator } from '../../../Components/BatterIndicator'
+import { NetworkTypeIcons } from '../../../../Config/ObserverConfig'
+import {
+  ReoNetworkData,
+  ReoScanMode,
+  ReoScanVariant,
+  ReoScanVariantType,
+  ReoTab,
+  ReoView,
+} from '../../../Shared/Interfaces/Reo.interface'
 
 export interface View {
   viewId: string
@@ -55,7 +63,7 @@ export interface View {
 
 export interface IReoContentViewProps {
   headerString: string
-  model: ReoSpace.IReoView
+  model: ReoView
   isScanning: boolean
   onStartScan: () => void
   onStopScan: () => void
@@ -72,8 +80,8 @@ export function ReoContentView({
   onClearData,
   onExportData,
 }: IReoContentViewProps) {
-  const [activeNetworkType, setActiveNetworkType] = useState<ReoSpace.IScanTypes[]>(
-    model.tabsModel.map((tab) => tab.data.metaInfo.scanType),
+  const [activeNetworkType, setActiveNetworkType] = useState<ReoScanVariantType[]>(
+    model.tabsModel.map((tab: ReoTab) => tab.data.metaInfo.scanType),
   )
   const [isLoading, setIsLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number>(0)
@@ -88,18 +96,16 @@ export function ReoContentView({
   })
 
   const networkTabs = useMemo(() => {
-    return model.tabsModel?.map((tab, index) => {
-      const tabData = tab as ReoSpace.IReoTab
+    return model.tabsModel?.map((tab: ReoTab, index: number) => {
+      const tabData = tab as ReoTab
       const data = tabData.data
       const metaInfo = data?.metaInfo
 
       const scanType = metaInfo?.scanType || 'unknown'
 
-      const networkType = Object.values(ReoSpace.IScanTypes).includes(
-        scanType as ReoSpace.IScanTypes,
-      )
-        ? (scanType as ReoSpace.IScanTypes)
-        : ReoSpace.IScanTypes.Gsm
+      const networkType = Object.values(ReoScanVariant).includes(scanType as ReoScanVariantType)
+        ? (scanType as ReoScanVariantType)
+        : ReoScanVariant.Gsm
 
       const rows = data?.rows || []
 
@@ -107,17 +113,17 @@ export function ReoContentView({
         id: uuidv4(),
         index,
         label: tab.label || networkType,
-        icon: ObserverConfig.NetworkTypeIcons[networkType] || '📶',
+        icon: NetworkTypeIcons[networkType] || '📶',
         badge: rows.length,
-        description: ObserverConfig.NetworkTypeIcons[networkType] || 'Сети связи',
+        description: NetworkTypeIcons[networkType] || 'Сети связи',
         data: data,
       }
     })
   }, [model.tabsModel])
 
-  const networkTabsData: ReoSpace.INetworkData[] = useMemo(
+  const networkTabsData: ReoNetworkData[] = useMemo(
     () =>
-      model.tabsModel.map((tab) => {
+      model.tabsModel.map((tab: ReoTab) => {
         const scanType = tab.data.metaInfo.scanType
         const rows = tab.data?.rows || []
 
@@ -125,8 +131,8 @@ export function ReoContentView({
           id: tab.id,
           index: tab.index,
           name: tab.label || scanType,
-          type: scanType as ReoSpace.IScanTypes,
-          icon: ObserverConfig.NetworkTypeIcons[scanType as ReoSpace.IScanTypes] || '📶',
+          type: scanType as ReoScanVariantType,
+          icon: NetworkTypeIcons[scanType as ReoScanVariantType] || '📶',
           signalCount: rows.length,
           hasNewData: tab.data?.hasNewData || false,
         }
@@ -158,7 +164,7 @@ export function ReoContentView({
           duration: stats.scanDuration,
           networksFound: stats.totalNetworks,
           isActive: isScanning,
-          scanMode: 'fast' as ReoSpace.IScanMode,
+          scanMode: ReoScanMode.Fast,
         }}
         onStartScan={onStartScan}
         onStopScan={onStopScan}
@@ -181,7 +187,7 @@ export function ReoContentView({
       />
 
       <Footer className='flex-1'>
-        <FooterItem label='Активный тип' icon={ObserverConfig.NetworkTypeIcons[activeTabScanType]}>
+        <FooterItem label='Активный тип' icon={NetworkTypeIcons[activeTabScanType]}>
           {activeNetworkType.map((scanType) => (
             <Flex>{scanType}</Flex>
           ))}
