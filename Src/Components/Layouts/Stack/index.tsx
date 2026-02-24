@@ -1,5 +1,6 @@
 import { Box, IBoxProps } from '../Box'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export interface IStackProps extends Omit<IBoxProps, 'as'> {
   direction?: 'vertical' | 'horizontal'

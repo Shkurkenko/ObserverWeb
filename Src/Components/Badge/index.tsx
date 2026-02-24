@@ -1,6 +1,7 @@
 // Src/Components/DataDisplay/Badge.tsx
 import { ComponentChildren, FunctionalComponent } from 'preact'
-import { cn } from '../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export type BadgeVariant =
   | 'default'

@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from 'uuid'
-import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
+// import { v4 as uuidv4 } from 'uuid'
+// import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
 
-export namespace ReoSpaceTestData {
+// export namespace ReoSpaceTestData {
   // export const handMadeScanTasks: ReoSpace.IScanTask[] = [
   //   {
   //     id: uuidv4(),
@@ -276,4 +276,4 @@ export namespace ReoSpaceTestData {
   //     status: ReoSpace.IScanStatusTypes.Failed,
   //   },
   // ]
-}
+// }

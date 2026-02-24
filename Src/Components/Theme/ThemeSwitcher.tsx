@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'preact/hooks'
 import { ThemeName } from '../../../Autogen/Themes/ForensicThemes/Theme.registry'
 import { toKebabCase } from '../../../Utils/Helpers'
-import { ThemeEngine } from '../../../Config/ObserverConfig'
+import { Theme, Variant } from '@Config/Themes/Theme.types'
+import { Themes } from '@Config/Themes/Theme.types'
 
 export function ThemeSwitcher() {
-  const [theme, setTheme] = useState<ThemeEngine.Theme>('ForensicGreen')
-  const [variant, setVariant] = useState<ThemeEngine.Variant>('dark')
+  const [theme, setTheme] = useState<Theme>('ForensicGreen')
+  const [variant, setVariant] = useState<Variant>('dark')
 
   const getClassNameFromThemeName = useCallback((themeName: ThemeName | string) => {
     return `theme-${toKebabCase(themeName)}`
@@ -29,7 +30,7 @@ export function ThemeSwitcher() {
       const prev = document.getElementById('dynamic-theme')
       if (prev) prev.remove()
 
-      const mod = await ThemeEngine.Themes[theme][variant]()
+      const mod = await Themes[theme][variant]()
       const css = (mod as { default: string }).default
 
       const style = document.createElement('style')
@@ -47,14 +48,14 @@ export function ThemeSwitcher() {
     apply()
   }, [theme, variant])
 
-  const variants = Object.keys(ThemeEngine.Themes[theme]) as ThemeEngine.Variant[]
+  const variants = Object.keys(Themes[theme]) as Variant[]
 
   return (
     <div class='fixed top-4 right-4 z-50 bg-surface-container-lowest p-6 rounded-3xl shadow-2xl border border-outline-variant/20'>
       <select
         aria-label='Theme selection'
         value={theme}
-        onChange={(e) => setTheme((e.target as HTMLSelectElement).value as ThemeEngine.Theme)}
+        onChange={(e) => setTheme((e.target as HTMLSelectElement).value as Theme)}
         class='w-full bg-surface-container-high text-on-surface px-4 py-3 rounded-xl mb-4'
       >
         <option value='ForensicGreen'>Forensic Green</option>

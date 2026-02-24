@@ -1,5 +1,6 @@
 import { ComponentChildren } from 'preact'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 interface SectionProps {
   title?: string

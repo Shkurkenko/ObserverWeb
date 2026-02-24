@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'preact/hooks'
-import { Flex } from '../Layouts/Flex'
-import { Box } from '../Layouts/Box'
-import { Text } from '../Typography'
-import { cn } from '../../Utils/Helpers'
-import { useThemeColors } from '../../Hooks/UseThemeColors'
+import { Flex } from '@Components/Layouts/Flex'
+import { Box } from '@Components/Layouts/Box'
+import { Text } from '@Components/Typography'
+import { useThemeColors } from '@Hooks/UseThemeColors'
+
+import { cn } from '@Utils/Helpers'
 
 export interface BatteryIndicatorProps {
   className?: string

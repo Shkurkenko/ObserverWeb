@@ -1,38 +1,41 @@
-// SignalStrength.tsx
 import { useMemo } from 'preact/hooks'
-import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
+import {
+  ReoSignalLevel,
+  ReoSignalLevelType,
+  ReoSignalRange,
+} from '@Shared/Interfaces/Reo.interface'
 
 // Карта сигналов
-export const SignalStrengthMap: Record<ReoSpace.ISignalLevels, ReoSpace.ISignalRange> = {
-  [ReoSpace.ISignalLevels.Excellent]: {
+export const SignalStrengthMap: Record<ReoSignalLevelType, ReoSignalRange> = {
+  [ReoSignalLevel.Excellent]: {
     beginValue: -50,
     endValue: -70,
   },
-  [ReoSpace.ISignalLevels.Good]: {
+  [ReoSignalLevel.Good]: {
     beginValue: -70,
     endValue: -85,
   },
-  [ReoSpace.ISignalLevels.Fair]: {
+  [ReoSignalLevel.Fair]: {
     beginValue: -85,
     endValue: -100,
   },
-  [ReoSpace.ISignalLevels.Poor]: {
+  [ReoSignalLevel.Poor]: {
     beginValue: -100,
     endValue: -110,
   },
-  [ReoSpace.ISignalLevels.No]: {
+  [ReoSignalLevel.No]: {
     beginValue: -110,
     endValue: -150,
   },
 }
 
 // Цвета для уровней сигнала
-export const SignalLevelColorMap: Record<ReoSpace.ISignalLevels, string> = {
-  [ReoSpace.ISignalLevels.Excellent]: '#10B981', // emerald-500
-  [ReoSpace.ISignalLevels.Good]: '#22C55E', // green-500
-  [ReoSpace.ISignalLevels.Fair]: '#EAB308', // yellow-500
-  [ReoSpace.ISignalLevels.Poor]: '#F97316', // orange-500
-  [ReoSpace.ISignalLevels.No]: '#EF4444', // red-500
+export const SignalLevelColorMap: Record<ReoSignalLevelType, string> = {
+  [ReoSignalLevel.Excellent]: '#10B981', // emerald-500
+  [ReoSignalLevel.Good]: '#22C55E', // green-500
+  [ReoSignalLevel.Fair]: '#EAB308', // yellow-500
+  [ReoSignalLevel.Poor]: '#F97316', // orange-500
+  [ReoSignalLevel.No]: '#EF4444', // red-500
 }
 
 // Цвета для неактивных палочек
@@ -40,12 +43,12 @@ const INACTIVE_COLOR = '#4B5563' // gray-600
 const INACTIVE_OPACITY = 0.3
 
 // Получаем уровень сигнала по dBm
-export function getSignalStrengthStatus(dbm: number): ReoSpace.ISignalLevels {
-  if (dbm >= -70) return ReoSpace.ISignalLevels.Excellent
-  if (dbm >= -85) return ReoSpace.ISignalLevels.Good
-  if (dbm >= -100) return ReoSpace.ISignalLevels.Fair
-  if (dbm >= -110) return ReoSpace.ISignalLevels.Poor
-  return ReoSpace.ISignalLevels.No
+export function getSignalStrengthStatus(dbm: number): ReoSignalLevelType {
+  if (dbm >= -70) return ReoSignalLevel.Excellent
+  if (dbm >= -85) return ReoSignalLevel.Good
+  if (dbm >= -100) return ReoSignalLevel.Fair
+  if (dbm >= -110) return ReoSignalLevel.Poor
+  return ReoSignalLevel.No
 }
 
 // Получаем количество активных палочек (1-5)
@@ -221,11 +224,11 @@ export function SignalStrengthWithValue({ dbm }: { dbm: number }) {
   const level = getSignalStrengthStatus(dbm)
   const color = SignalLevelColorMap[level]
   const label = {
-    [ReoSpace.ISignalLevels.Excellent]: 'Отлично',
-    [ReoSpace.ISignalLevels.Good]: 'Хорошо',
-    [ReoSpace.ISignalLevels.Fair]: 'Удовл.',
-    [ReoSpace.ISignalLevels.Poor]: 'Слабо',
-    [ReoSpace.ISignalLevels.No]: 'Нет',
+    [ReoSignalLevel.Excellent]: 'Отлично',
+    [ReoSignalLevel.Good]: 'Хорошо',
+    [ReoSignalLevel.Fair]: 'Удовл.',
+    [ReoSignalLevel.Poor]: 'Слабо',
+    [ReoSignalLevel.No]: 'Нет',
   }[level]
 
   return (
@@ -248,11 +251,11 @@ export function useSignalStrength(dbm: number) {
   const color = SignalLevelColorMap[level]
 
   const label = {
-    [ReoSpace.ISignalLevels.Excellent]: 'Отлично',
-    [ReoSpace.ISignalLevels.Good]: 'Хорошо',
-    [ReoSpace.ISignalLevels.Fair]: 'Удовл.',
-    [ReoSpace.ISignalLevels.Poor]: 'Слабо',
-    [ReoSpace.ISignalLevels.No]: 'Нет сигнала',
+    [ReoSignalLevel.Excellent]: 'Отлично',
+    [ReoSignalLevel.Good]: 'Хорошо',
+    [ReoSignalLevel.Fair]: 'Удовл.',
+    [ReoSignalLevel.Poor]: 'Слабо',
+    [ReoSignalLevel.No]: 'Нет сигнала',
   }[level]
 
   return {
@@ -260,8 +263,8 @@ export function useSignalStrength(dbm: number) {
     activeSticks,
     color,
     label,
-    isGood: level === ReoSpace.ISignalLevels.Excellent || level === ReoSpace.ISignalLevels.Good,
-    isFair: level === ReoSpace.ISignalLevels.Fair,
-    isPoor: level === ReoSpace.ISignalLevels.Poor || level === ReoSpace.ISignalLevels.No,
+    isGood: level === ReoSignalLevel.Excellent || level === ReoSignalLevel.Good,
+    isFair: level === ReoSignalLevel.Fair,
+    isPoor: level === ReoSignalLevel.Poor || level === ReoSignalLevel.No,
   }
 }

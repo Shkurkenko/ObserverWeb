@@ -1,6 +1,7 @@
-import { Box } from '../Layouts/Box'
-import { cn } from '../../Utils/Helpers'
 import { CSSProperties } from 'preact'
+import { Box } from '@Components/Layouts/Box'
+
+import { cn } from '@Utils/Helpers'
 
 export type ShinyLightSizeOptions = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 

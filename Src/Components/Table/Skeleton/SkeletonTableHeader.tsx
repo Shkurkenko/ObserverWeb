@@ -1,8 +1,9 @@
-import { Flex } from '../../Layouts/Flex'
-import { Box } from '../../Layouts/Box'
-import { cn } from '../../../Utils/Helpers'
+import { Flex } from '@Components/Layouts/Flex'
+import { Box } from '@Components/Layouts/Box'
 
-interface SkeletonTableHeaderProps {
+import { cn } from '@Utils/Helpers'
+
+export interface SkeletonTableHeaderProps {
   columns?: number
   rowHeight?: number
   className?: string

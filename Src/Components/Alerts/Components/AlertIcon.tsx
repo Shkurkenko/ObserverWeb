@@ -1,7 +1,8 @@
 import { ComponentChildren } from 'preact'
 import { Box } from '@Components/Layouts/Box'
 import { StylableProps } from '@Components/Shared/Common.types'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export interface AlertIconProps extends StylableProps {
   /** Иконка для отображения в алерте */

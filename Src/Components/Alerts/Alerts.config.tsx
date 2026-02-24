@@ -1,4 +1,3 @@
-// Alerts.config.ts
 import { AlertLevel, type AlertLevelType } from './Alerts.types'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
@@ -16,41 +15,61 @@ export const ALERT_COLORS = {
   [AlertLevel.Error]: {
     /** Основной цвет алерта (используется для иконок и акцентов) */
     base: '#F44336',
+
     /** Цвет фона алерта (светлая версия) */
     light: '#FFEBEE',
+
     /** Темная версия цвета (для текста при необходимости) */
     dark: '#D32F2F',
+
     /** Цвет границы алерта */
     border: '#FFCDD2',
+
     /** Цвет при наведении */
     hover: '#EF5350',
   },
   [AlertLevel.Success]: {
     base: '#4CAF50',
+
     light: '#E8F5E9',
+
     dark: '#2E7D32',
+
     border: '#C8E6C9',
+
     hover: '#66BB6A',
   },
   [AlertLevel.Warning]: {
     base: '#e9c731',
+
     light: '#FFF9E7',
+
     dark: '#F57F17',
+
     border: '#FFF3C9',
+
     hover: '#FFD54F',
   },
   [AlertLevel.Info]: {
     base: '#2a86cf',
+
     light: '#E3F2FD',
+
     dark: '#1565C0',
+
     border: '#BBDEFB',
+
     hover: '#42A5F5',
   },
   [AlertLevel.Default]: {
     base: '#9E9E9E',
+
     light: '#F5F5F5',
+
     dark: '#616161',
+
     border: '#E0E0E0',
+
     hover: '#BDBDBD',
   },
 } as const

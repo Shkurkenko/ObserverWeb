@@ -1,8 +1,8 @@
-import { useSidebar } from './Hooks/UseSidebar'
-import { Box } from '../Layouts/Box'
 import { CSSProperties } from 'preact'
+import { useSidebar } from './Hooks/UseSidebar'
+import { Box } from '@Components/Layouts/Box'
 
-import { cn } from '../../Utils/Helpers'
+import { cn } from '@Utils/Helpers'
 
 import './style.sass'
 

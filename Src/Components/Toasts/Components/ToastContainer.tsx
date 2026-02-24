@@ -2,10 +2,9 @@ import { createPortal } from 'preact/compat'
 import { Toast, ToastPosition } from '../Toast.types'
 import { TOAST_CONFIG } from '../Toasts.config'
 import { ToastItem } from '../ToastItem'
-import { Stack } from '../../Layouts/Stack'
+import { Stack } from '@Components/Layouts/Stack'
 
-import { cn } from '../../../Utils/Helpers'
-
+import { cn } from '@Utils/Helpers'
 export interface ToastContainerProps {
   /** Тосты для отображения */
   toasts: Toast[]

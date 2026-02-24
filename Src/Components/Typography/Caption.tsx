@@ -1,8 +1,9 @@
 import { CaptionVariant, BaseTypographyProps } from './Typography.types'
-import { cn } from '../../Utils/Helpers'
-import { StylableProps } from '../Shared/Common.types'
+import { StylableProps } from '@Components/Shared/Common.types'
 
-export interface ICaptionProps extends BaseTypographyProps, StylableProps {
+import { cn } from '@Utils/Helpers'
+
+export interface CaptionProps extends BaseTypographyProps, StylableProps {
   /** Вариант размера подписи */
   variant?: CaptionVariant
   /** HTML-элемент для рендеринга */
@@ -58,7 +59,7 @@ export const Caption = ({
   className = '',
   style = {},
   ...props
-}: ICaptionProps) => {
+}: CaptionProps) => {
   /**
    * CSS классы для разных размеров текста
    */

@@ -1,17 +1,17 @@
-import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
-import { Box } from '../../../Layouts/Box'
-import { Text } from '../../../Typography'
-import { cn } from '../../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { Text } from '@Components/Typography'
+import { ReoCountryCellData } from '@Shared/Interfaces/Reo.interface'
+
+import { cn } from '@Utils/Helpers'
 
 import '/node_modules/flag-icons/css/flag-icons.min.css' // TODO: create patch for this file with only neighbors and needed icons. For now it costs too much space
 import './style.sass'
-
-interface IColumnCountryProps {
-  data: TableSpace.ICountryCellData
+export interface ColumnCountryProps {
+  data: ReoCountryCellData
   className?: string
 }
 
-export const ColumnCountry = ({ data, className = '' }: IColumnCountryProps) => {
+export const ColumnCountry = ({ data, className = '' }: ColumnCountryProps) => {
   return (
     <Box className={cn(className, 'w-full h-full column-country')}>
       <Box className='column-country-name'>

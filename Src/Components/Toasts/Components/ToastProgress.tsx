@@ -1,6 +1,7 @@
-import { Box } from '../../Layouts/Box'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ToastProgressProps {
   /** Время жизни в мс */

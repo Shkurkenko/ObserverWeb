@@ -1,6 +1,7 @@
-import { Box } from '../../Layouts/Box'
 import { ComponentChildren } from 'preact'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ToastRootProps {
   /** Содержимое тоста */

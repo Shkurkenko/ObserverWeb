@@ -8,7 +8,7 @@ import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ScanConfigHelpers } from '../../../../Utils/ScanConfigHelper'
 import { ObserverConfig } from '../../../../Config/ObserverConfig'
 import { EmptyReoView } from '../../Components/EmptyReoView'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
+import { TableSpace } from '../../../Shared/Interfaces/Table.types'
 import { useAlerts } from '../../../Components/Alerts/UseAlerts'
 import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
 

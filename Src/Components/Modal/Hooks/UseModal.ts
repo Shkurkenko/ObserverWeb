@@ -1,13 +1,13 @@
 import { useState, useCallback } from 'preact/hooks'
 
-interface IUseModalReturn {
+interface UseModalReturn {
   isOpen: boolean
   open: () => void
   close: () => void
   toggle: () => void
 }
 
-export function useModal(initialState = false): IUseModalReturn {
+export function useModal(initialState = false): UseModalReturn {
   const [isOpen, setIsOpen] = useState<boolean>(initialState)
 
   const open = useCallback(() => setIsOpen(true), [])

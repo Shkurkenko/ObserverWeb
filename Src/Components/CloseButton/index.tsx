@@ -1,6 +1,7 @@
-import { Icon } from '../Typography'
-import { cn } from '../../Utils/Helpers'
-import { Button } from '../Button'
+import { Icon } from '@Components/Typography'
+import { Button } from '@Components/Button'
+
+import { cn } from '@Utils/Helpers'
 
 export interface CloseButtonProps {
   onClose: (event: MouseEvent) => void

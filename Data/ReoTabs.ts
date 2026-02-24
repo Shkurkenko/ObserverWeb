@@ -1,7 +1,7 @@
-import { ITab } from '../Src/Shared/Interfaces/Main.interface'
-import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
-import { TableSpace } from '../Src/Shared/Interfaces/Table.interface'
-import { MockGenHelpers } from '../Src/Utils/MockGen'
+// import { ITab } from '../Src/Shared/Interfaces/Main.interface'
+// import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
+// import { TableSpace } from '../Src/Shared/Interfaces/Table.types'
+// import { MockGenHelpers } from '../Src/Utils/MockGen'
 
 // import { scanRowsData1 } from './TableData'
 

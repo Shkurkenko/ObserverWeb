@@ -1,8 +1,8 @@
-import { Button } from '../../Button'
-import { cn } from '../../../Utils/Helpers'
-import { Flex } from '../../Layouts/Flex'
+import { Flex } from '@Components/Layouts/Flex'
+import { Button } from '@Components/Button'
 import { ToastAction } from '../Toast.types'
 
+import { cn } from '@Utils/Helpers'
 export interface ToastActionsProps {
   /** Действия */
   actions?: ToastAction[]

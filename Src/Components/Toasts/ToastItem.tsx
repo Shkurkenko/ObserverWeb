@@ -7,7 +7,7 @@ import { ToastClose } from './Components/ToastClose'
 import { ToastProgress } from './Components/ToastProgress'
 import { ToastActions } from './Components/ToastActions'
 import { getToastTypeConfig } from './Toasts.config'
-import { Flex } from '../Layouts/Flex'
+import { Flex } from '@Components/Layouts/Flex'
 
 export interface ToastItemProps {
   /** Тост для отображения */

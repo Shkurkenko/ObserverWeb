@@ -1,7 +1,8 @@
-import { ComponentChildren, FunctionalComponent, createElement, JSX } from 'preact'
 import { forwardRef } from 'preact/compat'
 import { CSSProperties, HTMLAttributes } from 'preact'
-import { cn } from '../../../Utils/Helpers'
+import { ComponentChildren, FunctionalComponent, createElement, JSX } from 'preact'
+
+import { cn } from '@Utils/Helpers'
 
 // Generic интерфейс для Box
 export interface IBoxProps<

@@ -1,15 +1,16 @@
-import TableProvider from '../../../Components/Table/Context/TableContext'
-import { Card } from '../../../Components/Layouts/Card'
-import { Heading } from '../../../Components/Typography'
-import { TableHeader } from '../../../Components/Table/TableHeader'
-import { TableBody } from '../../../Components/Table/TableBody'
 import { useEffect } from 'preact/hooks'
+import TableProvider from '@Components/Table/Context/TableContext'
+import { Card } from '@Components/Layouts/Card'
+import { Heading } from '@Components/Typography'
+import { TableHeader } from '@Components/Table/Table.types'
+import { TableBody } from '@Components/Table/TableBody'
+import { Flex } from '@Components/Layouts/Flex'
+import { TextInput } from '@Components/Form/TextInput'
 import { NetworkTableEmpty } from './NetworkTableEmpty'
-import { Flex } from '../../../Components/Layouts/Flex'
-import { cn } from '../../../Utils/Helpers'
-import { TextInput } from '../../../Components/Form/TextInput'
-import { ReoScanVariant, ReoScanVariantType } from '../../../Shared/Interfaces/Reo.interface'
-import { NetworkDescrptions, ReoColumnModelsConfig } from '../../../../Config/ObserverConfig'
+import { ReoScanVariant, ReoScanVariantType } from '@Shared/Interfaces/Reo.interface'
+import { ReoColumnModelsConfig } from '../../../../Config/ObserverConfig'
+
+import { cn } from '@Utils/Helpers'
 
 export interface INetworkTableProps {
   isScanning: boolean

@@ -1,7 +1,8 @@
 import { BaseTypographyProps } from './Typography.types'
-import { cn } from '../../Utils/Helpers'
 
-interface ILabelProps extends BaseTypographyProps {
+import { cn } from '@Utils/Helpers'
+
+interface LabelProps extends BaseTypographyProps {
   /** ID элемента, к которому привязан label */
   htmlFor?: string
   /** Показывает, что поле обязательно для заполнения */
@@ -58,7 +59,7 @@ export const Label = ({
   required = false,
   size = 'md',
   ...props
-}: ILabelProps) => {
+}: LabelProps) => {
   const classes = cn(
     'font-medium block mb-1',
     sizeClasses[size],

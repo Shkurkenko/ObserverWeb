@@ -1,3 +1,4 @@
+import { StylableProps } from '@Components/Shared/Common.types'
 import { AlertRoot } from '../Components/AlertRoot'
 import { AlertClose } from '../Components/AlertClose'
 import { AlertHeader } from '../Components/AlertHeader'
@@ -5,7 +6,6 @@ import { AlertIcon } from '../Components/AlertIcon'
 import { AlertMessage } from '../Components/AlertMessage'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { CancelCircleIcon } from '@hugeicons/core-free-icons'
-import { type StylableProps } from '../../Shared/Common.types'
 
 interface ErrorAlertProps extends StylableProps {
   /** Заголовок алерта об ошибке */

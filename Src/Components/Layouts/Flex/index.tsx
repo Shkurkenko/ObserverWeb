@@ -1,9 +1,10 @@
 import { forwardRef } from 'preact/compat'
 import { Box, IBoxProps } from '../Box'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 // Generic интерфейс для Flex
-export interface IFlexProps<
+export interface FlexProps<
   T extends keyof preact.JSX.IntrinsicElements | preact.FunctionalComponent<any> = 'div',
 > extends Omit<IBoxProps<T>, 'direction' | 'justify' | 'align' | 'gap' | 'wrap' | 'inline'> {
   direction?: 'row' | 'col' | 'row-reverse' | 'col-reverse'
@@ -59,7 +60,7 @@ const wrapClasses = {
 // Generic компонент Flex
 export const Flex = forwardRef(
   <T extends keyof preact.JSX.IntrinsicElements | preact.FunctionalComponent<any> = 'div'>(
-    props: IFlexProps<T>,
+    props: FlexProps<T>,
     ref: any,
   ) => {
     const {
@@ -100,5 +101,5 @@ export const Flex = forwardRef(
     )
   },
 ) as <T extends keyof preact.JSX.IntrinsicElements | preact.FunctionalComponent<any> = 'div'>(
-  props: IFlexProps<T>,
+  props: FlexProps<T>,
 ) => preact.JSX.Element

@@ -1,7 +1,8 @@
-import { Box } from '../../Layouts/Box'
-import { Text } from '../../Typography/Text'
-import { Caption } from '../../Typography/Caption'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { Text } from '@Components/Typography'
+import { Caption } from '@Components/Typography'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ToastContentProps {
   /** Заголовок */

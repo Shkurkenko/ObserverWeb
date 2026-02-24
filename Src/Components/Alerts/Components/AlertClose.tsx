@@ -3,7 +3,7 @@ import { Cancel01Icon } from '@hugeicons/core-free-icons'
 import { Box } from '@Components/Layouts/Box'
 import { StylableProps } from '@Components/Shared/Common.types'
 
-import { cn } from '../../../Utils/Helpers'
+import { cn } from '@Utils/Helpers'
 
 export interface AlertCloseProps extends StylableProps {
   /** Обработчик закрытия алерта */

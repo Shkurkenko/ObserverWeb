@@ -1,13 +1,14 @@
-import { Flex } from '../../../Layouts/Flex'
-import { cn } from '../../../../Utils/Helpers'
+import { Flex } from '@Components/Layouts/Flex'
+
+import { cn } from '@Utils/Helpers'
 
 import './style.sass'
 
-export interface IColumnCheckBoxProps {
+export interface ColumnCheckBoxProps {
   className?: string
 }
 
-export const ColumnCheckbox = ({ className = '' }: IColumnCheckBoxProps) => {
+export const ColumnCheckbox = ({ className = '' }: ColumnCheckBoxProps) => {
   return (
     <Flex align='center' class={cn(className, 'table-checkbox')}>
       {/* <input

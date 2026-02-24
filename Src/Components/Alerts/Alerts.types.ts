@@ -8,11 +8,14 @@
  * <Alert type={AlertLevel.Error} header="Ошибка" message="..." />
  * ```
  */
+
 export const AlertLevel = {
-  /** Базовый информационный алерт (серый) */
+  /** Просто серый алерт */
+
   Default: 'default',
 
   /** Алерт об ошибке (красный) */
+
   Error: 'error',
 
   /** Алерт об успешном выполнении (зеленый) */
@@ -32,7 +35,9 @@ export const AlertLevel = {
  * @example
  * ```typescript
  * let type: AlertLevelType = AlertLevel.Error // ✅
+ * 
  * let type: AlertLevelType = 'error' // ✅
+ * 
  * let type: AlertLevelType = 'critical' // ❌ ошибка типов
  * ```
  */
@@ -64,7 +69,7 @@ export interface Alert {
   id: string
 
   /** Тип алерта (определяет цвет, иконку и поведение) */
-  type?: AlertLevelType
+  type: AlertLevelType
 
   show?: boolean
 

@@ -1,23 +1,21 @@
-import { useState } from 'preact/hooks'
-import { Flex } from '../../../Components/Layouts/Flex'
-import { Grid } from '../../../Components/Layouts/Grid'
-import { Box } from '../../../Components/Layouts/Box'
+import { useState, useEffect } from 'preact/hooks'
+import { Divider } from '@Components/Typography'
+import { Icon } from '@Components/Typography'
+import { Button } from '@Components/Button'
+import { Flex } from '@Components/Layouts/Flex'
+import { Grid } from '@Components/Layouts/Grid'
+import { Box } from '@Components/Layouts/Box'
 import { NetworkTabsView } from '../NetworkTabs/NetworkTabsView'
 import { NetworkTable } from '../NetworkTable'
 import { ScanMetrics } from '../ScanMetrics'
-import { useEffect } from 'preact/hooks'
-import { Button } from '../../../Components/Button'
-import { Icon } from '../../../Components/Typography'
-import { Divider } from '../../../Components/Typography'
-import { formatDuration } from '../../../../Utils/Helpers'
-
-import { cn } from '../../../Utils/Helpers'
+import { formatDuration } from '@Utils/Helpers'
 import {
   ReoNetworkData,
   ReoScanStatus,
   ReoScanVariantType,
-} from '../../../Shared/Interfaces/Reo.interface'
-import { TableRow } from '../../../Shared/Interfaces/Table.interface'
+} from '@Shared/Interfaces/Reo.interface'
+
+import { cn } from 'Src/Utils/Helpers'
 
 export interface IScanDataProps {
   isScanning: boolean

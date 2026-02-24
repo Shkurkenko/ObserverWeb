@@ -1,9 +1,9 @@
 import { TabButton } from '../TabButton'
-import { Flex, IFlexProps } from '../../Layouts/Flex'
 import { ComponentChildren } from 'preact'
+import { Flex, FlexProps } from '@Components/Layouts/Flex'
 import { createPreset } from '../../../../Utils/CreatePreset'
 
-import { cn } from '../../../Utils/Helpers'
+import { cn } from '@Utils/Helpers'
 
 export interface Tab {
   id: string
@@ -23,7 +23,7 @@ export interface Tab {
   loading?: boolean
 }
 
-export interface ITabGroupProps extends Omit<IFlexProps, 'children' | 'as' | 'role'> {
+export interface TabGroupProps extends Omit<FlexProps, 'children' | 'as' | 'role'> {
   tabs: Tab[]
 
   activeTabId?: string | number
@@ -62,7 +62,7 @@ export function TabGroup<T = any>({
   className = '',
   tabStyles = '',
   ...flexProps
-}: ITabGroupProps) {
+}: TabGroupProps) {
   const flexDirection = orientation === 'vertical' ? 'col' : 'row'
 
   const shouldStretch = fullWidth || orientation === 'vertical'

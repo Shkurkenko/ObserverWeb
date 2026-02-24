@@ -1,6 +1,6 @@
-import { cn } from '../../Utils/Helpers'
+import { cn } from '@Utils/Helpers'
 
-export interface IDividerProps {
+export interface DividerProps {
   /** Дополнительные CSS классы */
   className?: string
   /** Вертикальное или горизонтальное расположение */
@@ -71,7 +71,7 @@ export const Divider = ({
   labelPosition = 'center',
   className,
   ...props
-}: IDividerProps) => {
+}: DividerProps) => {
   /**
    * CSS классы для разной толщины разделителя
    * Для вертикального и горизонтального режимов используются разные стили

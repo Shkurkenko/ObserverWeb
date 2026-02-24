@@ -1,14 +1,14 @@
 import { useState } from 'preact/hooks'
-import { Surface } from '../../../../Components/Layouts/Surface'
-import { Flex } from '../../../../Components/Layouts/Flex'
-import { ShinyLight } from '../../../../Components/ShinyLight'
-import { CloseButton } from '../../../../Components/CloseButton'
-import { Box } from '../../../../Components/Layouts/Box'
-import { Text } from '../../../../Components/Typography'
-import { cn } from '../../../../Utils/Helpers'
-import { ReoScanStatus, ReoScanStatusType } from '../../../../Shared/Interfaces/Reo.interface'
-import { Tab } from '../../../../Components/Tabs/TabGroup'
-import { ScanStatusColors } from '../../ScanLightStatus/ScanLightStatus.config'
+import { Surface } from '@Components/Layouts/Surface'
+import { Flex } from '@Components/Layouts/Flex'
+import { ShinyLight } from '@Components/ShinyLight'
+import { CloseButton } from '@Components/CloseButton'
+import { Box } from '@Components/Layouts/Box'
+import { Text } from '@Components/Typography'
+import { ReoScanStatus, ReoScanStatusType } from '@Shared/Interfaces/Reo.interface'
+import { Tab } from '@Components/Tabs/TabGroup'
+import { ScanStatusColors } from '@Views/Components/ScanLightStatus/ScanLightStatus.config'
+import { cn } from '@Utils/Helpers'
 
 export interface NetworkTabData {
   id: string
@@ -28,7 +28,7 @@ export interface NetworkTabData {
   loading?: boolean
 }
 
-export interface INetworkTabProps extends Tab {
+export interface NetworkTabProps extends Tab {
   index: number
 
   networkType: string
@@ -67,7 +67,7 @@ export function NetworkTab({
   loading = false,
   isUnderlined = false,
   className = '',
-}: INetworkTabProps) {
+}: NetworkTabProps) {
   const [isHovered, setIsHovered] = useState<Boolean>(false)
 
   const statusConfig = ScanStatusColors[status]

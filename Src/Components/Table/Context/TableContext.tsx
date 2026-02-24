@@ -1,15 +1,17 @@
 import { createContext, ComponentType } from 'preact'
-import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
-import { MockGenHelpers } from '../../../Utils/MockGen'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { useCallback, useEffect, useState } from 'preact/hooks'
+import { TableColumn, TableData, TablePoint, TableRowData } from '../Table.types'
 
-export interface ITableContext {
+import { processRowAddition } from '@Utils/MockGen'
+
+import { ReoTable } from '@Shared/Interfaces/Reo.interface'
+
+export interface TableContextProps {
   tableInfo: unknown
 
-  rows: TableSpace.IRow[]
+  rows: TableRowData[]
 
-  columns: TableSpace.IColumn[]
+  columns: TableColumn[]
 
   currentSelectedRow: { rowIndex: number }
 
@@ -17,15 +19,15 @@ export interface ITableContext {
 
   currentSelectedCell: { rowIndex: number; colIndex: number }
 
-  setRows: (rows: TableSpace.IRow[]) => void
+  setRows: (rows: TableRowData[]) => void
 
   setTableInfo: (tableInfo: unknown) => void
 
-  isRowValid: (row: TableSpace.IRow) => boolean
+  isRowValid: (row: TableRowData) => boolean
 
-  setColumns: (columns: TableSpace.IColumn[]) => void
+  setColumns: (columns: TableColumn[]) => void
 
-  addRow: (row: TableSpace.IRow) => void
+  addRow: (row: TableRowData) => void
 
   deleteRow: (index: number) => void
 
@@ -35,32 +37,32 @@ export interface ITableContext {
 
   selectRow: (rowIndex: number) => void
 
-  selectCell: (coords: TableSpace.IPoint) => void
+  selectCell: (coords: TablePoint) => void
 
   mockAddRows: (interval: number, count: number) => void
 
   renderEmpty?: () => JSX.Element
 }
 
-export interface ITableProviderProps {
+export interface TableProviderProps {
   children: JSX.Element | JSX.Element[]
 
-  columnsModel: TableSpace.IColumn[]
+  columnsModel: TableColumn[]
 
-  data: TableSpace.ITableData<ReoSpace.IReoTable>
+  data: TableData<ReoTable>
 
   renderEmpty?: () => ComponentType
 }
 
-export const TableContext = createContext<ITableContext | null>(null)
+export const TableContext = createContext<TableContextProps | null>(null)
 
 export const TableProvider = ({
   children,
   columnsModel,
   data,
   renderEmpty,
-}: ITableProviderProps) => {
-  const [rows, setRows] = useState<TableSpace.IRow[]>([])
+}: TableProviderProps) => {
+  const [rows, setRows] = useState<TableRowData[]>([])
 
   const [tableInfo, setTableInfo] = useState<unknown>()
 
@@ -72,12 +74,12 @@ export const TableProvider = ({
     colIndex: -1,
   })
 
-  const [currentSelectedCell, setCurrentSelectedCell] = useState<TableSpace.IPoint>({
+  const [currentSelectedCell, setCurrentSelectedCell] = useState<TablePoint>({
     rowIndex: -1,
     colIndex: -1,
   })
 
-  const [columns, setColumns] = useState<TableSpace.IColumn[]>([])
+  const [columns, setColumns] = useState<TableColumn[]>([])
 
   const [headerRefs, setHeaderRefs] = useState<any[]>()
 
@@ -90,10 +92,10 @@ export const TableProvider = ({
   }, [data])
 
   const mockAddRows = useCallback((interval: number, count: number) => {
-    MockGenHelpers.processRowAddition(interval, count, addRow)
+    processRowAddition(interval, count, addRow)
   }, [])
 
-  const isRowValid = useCallback((row: TableSpace.IRow): boolean => {
+  const isRowValid = useCallback((row: TableRowData): boolean => {
     const columnsCountEqual = columnsModel.length === row.columns.length
     const columnsTypesEqual = row.columns.every((column, index) => {
       return column.type === columnsModel[index].type
@@ -101,19 +103,19 @@ export const TableProvider = ({
     return columnsCountEqual && columnsTypesEqual
   }, [])
 
-  const addRow = useCallback((row: TableSpace.IRow) => {
-    setRows((prev: TableSpace.IRow[]) => [...prev, row])
+  const addRow = useCallback((row: TableRowData) => {
+    setRows((prev: TableRowData[]) => [...prev, row])
   }, [])
 
   const deleteRow = useCallback((rowIndex: number) => {
-    setRows((prev: TableSpace.IRow[]) => prev.filter((_, index) => index !== rowIndex))
+    setRows((prev: TableRowData[]) => prev.filter((_, index) => index !== rowIndex))
   }, [])
 
   const clearRows = useCallback(() => {
-    setRows((prev: TableSpace.IRow[]) => [])
+    setRows((prev: TableRowData[]) => [])
   }, [])
 
-  const selectCell = useCallback((coords: TableSpace.IPoint) => {
+  const selectCell = useCallback((coords: TablePoint) => {
     setCurrentSelectedCell(coords)
   }, [])
 

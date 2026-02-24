@@ -1,10 +1,9 @@
-// Src/Components/Examples/MetricCard.tsx
-import { Card } from '../Layouts/Card'
-import { Label } from '../Typography/Label'
-import { Text } from '../Typography/Text'
-import { Caption } from '../Typography/Caption'
-import { Icon } from '../Typography/Icon'
-import { cn } from '../../Utils/Helpers'
+import { Card } from '@Components/Layouts/Card'
+import { Text, Caption } from '@Components/Typography'
+import { Icon } from '@Components/Typography'
+import { Label } from '@Components/Typography'
+
+import { cn } from '@Utils/Helpers'
 
 interface MetricCardProps {
   title: string

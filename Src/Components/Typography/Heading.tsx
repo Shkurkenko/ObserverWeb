@@ -1,8 +1,9 @@
 import { CSSProperties } from 'preact'
 import { HeadingLevel, BaseTypographyProps } from './Typography.types'
-import { cn } from '../../Utils/Helpers'
 
-export interface IHeadingProps extends BaseTypographyProps {
+import { cn } from '@Utils/Helpers'
+
+export interface HeadingProps extends BaseTypographyProps {
   /** Уровень заголовка от 1 (самый большой) до 6 (самый маленький) */
   level?: HeadingLevel
   /** HTML-тег для рендеринга (по умолчанию соответствует level) */
@@ -101,7 +102,7 @@ export const Heading = ({
   className = '',
   style = {},
   ...props
-}: IHeadingProps) => {
+}: HeadingProps) => {
   /**
    * Объединение всех классов:
    * - Стили для конкретного уровня заголовка

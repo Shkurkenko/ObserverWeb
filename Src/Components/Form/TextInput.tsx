@@ -1,8 +1,9 @@
 import { FunctionalComponent } from 'preact'
 import { Label } from '../Typography'
-import { cn } from '../../Utils/Helpers'
 
 import './Form.sass'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ITextInputProps {
   id?: string

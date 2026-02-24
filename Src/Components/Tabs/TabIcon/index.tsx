@@ -1,8 +1,10 @@
-import { Icon, IIconProps } from '../../Typography/Icon'
-import { cn } from '../../../Utils/Helpers'
+import { Icon } from '@Components/Typography'
+import { IconProps } from '@Components/Typography/Icon'
 import { FunctionalComponent } from 'preact'
 
-export interface ITabIconProps extends Omit<IIconProps, 'active'> {
+import { cn } from '@Utils/Helpers'
+
+export interface TabIconProps extends Omit<IconProps, 'active'> {
   isActive?: boolean
 
   variant?: 'default' | 'pills' | 'underline' | 'outline'
@@ -10,7 +12,7 @@ export interface ITabIconProps extends Omit<IIconProps, 'active'> {
   tabSize?: 'sm' | 'md' | 'lg'
 }
 
-export const TabIcon: FunctionalComponent<ITabIconProps> = ({
+export const TabIcon: FunctionalComponent<TabIconProps> = ({
   isActive = false,
   variant = 'underline',
   tabSize = 'md',

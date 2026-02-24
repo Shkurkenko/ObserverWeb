@@ -1,5 +1,6 @@
 import { Box, IBoxProps } from '../Box'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export type AdaptiveGridOptions = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'none'
 

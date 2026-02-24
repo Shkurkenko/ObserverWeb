@@ -1,5 +1,4 @@
 import { useState, useCallback, useRef, useEffect } from 'preact/hooks'
-import { cn } from '../../Utils/Helpers'
 
 import './style.sass'
 

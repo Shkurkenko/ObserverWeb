@@ -1,25 +1,20 @@
-import { TableColumn, TableColumnAlignment } from '../../Src/Shared/Interfaces/Table.interface'
-import {
-  ReoRole,
-  ReoScanVariant,
-  ReoScanVariantType,
-} from '../../Src/Shared/Interfaces/Reo.interface'
+import { TableColumn, TableColumnAlignment } from '@Components/Table/Table.types'
+import { ReoRole, ReoScanVariant, ReoScanVariantType } from '@Shared/Interfaces/Reo.interface'
 
 export type ReoColumnsModelsConfigType = Record<ReoScanVariantType, TableColumn[]>
 
 export const MenubarSetup = {
   Notifications: 'Notifications',
-
   TaskManager: 'TaskManager',
 } as const
 
 export interface DeviceConfig {
   host: string
   port: number
-  protocol: 'ws' | 'wss'
   autoReconnect: boolean
   reconnectInterval: number
   maxReconnectAttempts: number
+  protocol: 'ws' | 'wss'
 }
 
 export const SERVICE_CONFIG = {

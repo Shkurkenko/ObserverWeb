@@ -1,15 +1,16 @@
 import { forwardRef } from 'preact/compat'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
 import { ColumnHeader } from '../Columns/ColumnHeader'
-import { Flex } from '../../Layouts/Flex'
-import { cn } from '../../../Utils/Helpers'
+import { Flex } from '@Components/Layouts/Flex'
+import { TableColumn } from '../Table.types'
 
-interface ITableHeaderRowProps {
-  columns: TableSpace.IColumn[]
+import { cn } from '@Utils/Helpers'
+
+export interface TableHeaderRowProps {
+  columns: TableColumn[]
   className?: string
 }
 
-export const TableHeaderRow = forwardRef<HTMLDivElement, ITableHeaderRowProps>(
+export const TableHeaderRow = forwardRef<HTMLDivElement, TableHeaderRowProps>(
   ({ columns, className = '' }, ref) => {
     return (
       <Flex
@@ -23,7 +24,7 @@ export const TableHeaderRow = forwardRef<HTMLDivElement, ITableHeaderRowProps>(
           className,
         )}
       >
-        {columns.map((headerColumnProps: TableSpace.IColumn, index: number) => {
+        {columns.map((headerColumnProps: TableColumn, index: number) => {
           return <ColumnHeader key={index} header={headerColumnProps} />
         })}
       </Flex>

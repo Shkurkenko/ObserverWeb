@@ -1,7 +1,8 @@
 import { INetworkTabProps } from '../NetworkTab'
 import { NetworkTabData } from '../NetworkTab'
 import { NetworkTab } from '../NetworkTab'
-import { cn } from '../../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export interface INetworkTabGroupProps {
   tabs: INetworkTabProps[]

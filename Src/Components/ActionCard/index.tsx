@@ -1,8 +1,9 @@
 import { Card } from '@Components/Layouts/Card'
 import { Text, Caption } from '@Components/Typography'
 import { Button } from '@Components/Button'
-import { cn } from '../../Utils/Helpers'
+import { Icon } from '@Components/Typography'
 
+import { cn } from '@Utils/Helpers'
 export interface ActionCardProps {
   /** Заголовок карточки */
   title: string

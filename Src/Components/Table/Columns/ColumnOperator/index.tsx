@@ -1,13 +1,14 @@
-import { Box } from '../../../Layouts/Box'
-import { Flex } from '../../../Layouts/Flex'
-import { Text } from '../../../Typography'
-import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
-import { cn } from '../../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { Flex } from '@Components/Layouts/Flex'
+import { Text } from '@Components/Typography'
+import { ReoOperatorCellData } from '@Shared/Interfaces/Reo.interface'
+
+import { cn } from '@Utils/Helpers'
 
 import './style.sass'
 
-export interface IColumnOperatorProps {
-  data: TableSpace.IOperatorCellData
+export interface ColumnOperatorProps {
+  data: ReoOperatorCellData
   className?: string
 }
 
@@ -19,7 +20,7 @@ const operatorTestCircles: Record<string, JSX.Element> = {
   default: <Box className={'operator-circle'}></Box>,
 }
 
-export const ColumnOperator = ({ data, className = '' }: IColumnOperatorProps) => {
+export const ColumnOperator = ({ data, className = '' }: ColumnOperatorProps) => {
   return (
     <Flex align='center' className={cn(className, 'operator-column-container')}>
       <Text variant='body1' className='w-full h-full column-operator'>

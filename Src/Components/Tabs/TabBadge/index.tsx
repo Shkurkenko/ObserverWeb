@@ -1,7 +1,8 @@
 import { FunctionalComponent } from 'preact'
-import { cn } from '../../../Utils/Helpers'
 
-export interface ITabBadgeProps {
+import { cn } from '@Utils/Helpers'
+
+export interface TabBadgeProps {
   content: string | number
 
   isActive?: boolean
@@ -13,7 +14,7 @@ export interface ITabBadgeProps {
   className?: string
 }
 
-export const TabBadge: FunctionalComponent<ITabBadgeProps> = ({
+export const TabBadge: FunctionalComponent<TabBadgeProps> = ({
   content,
   isActive,
   variant = 'underline',

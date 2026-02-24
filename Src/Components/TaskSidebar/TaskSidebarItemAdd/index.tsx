@@ -1,52 +1,56 @@
 import { useState } from 'preact/hooks'
-import { useModal } from '../../Modal/hooks/UseModal'
 import { useTasks } from '../Hooks/UseTasks'
-import { Modal } from '../../Modal'
-import { Button } from '../../Button'
-import { Icon, Text } from '../../Typography'
-import { Divider } from '../../Typography'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
+import { useModal } from '@Components/Modal/Hooks/UseModal'
+import { Modal } from '@Components/Modal'
+import { Button } from '@Components/Button'
+import { Icon, Text, Divider } from '../../Typography'
+import {
+  ReoScanStatus,
+  ReoScanTask,
+  ReoScanVariant,
+  ReoScanVariantType,
+} from '@Shared/Interfaces/Reo.interface'
 
 import './style.sass'
 
 const SCAN_TYPES = [
   {
-    type: ReoSpace.IScanTypes.Gsm,
+    type: ReoScanVariant.Gsm,
     name: 'GSM',
     description: 'Сканирование GSM сетей 2G',
     icon: '📶',
     color: '#4CAF50',
   },
   {
-    type: ReoSpace.IScanTypes.Lte,
+    type: ReoScanVariant.Lte,
     name: 'LTE (4G)',
     description: 'Сканирование LTE/4G сетей',
     icon: '🚀',
     color: '#2196F3',
   },
   {
-    type: ReoSpace.IScanTypes.Wifi,
+    type: ReoScanVariant.Wifi,
     name: 'WiFi',
     description: 'Сканирование WiFi сетей',
     icon: '📡',
     color: '#FF9800',
   },
   {
-    type: ReoSpace.IScanTypes.Bluetooth,
+    type: ReoScanVariant.Bluetooth,
     name: 'Bluetooth',
     description: 'Сканирование Bluetooth устройств',
     icon: '🔵',
     color: '#3F51B5',
   },
   {
-    type: ReoSpace.IScanTypes.Umts,
+    type: ReoScanVariant.Umts,
     name: '3G',
     description: 'Сканирование UMTS/3G сетей',
     icon: '📞',
     color: '#9C27B0',
   },
   {
-    type: ReoSpace.IScanTypes.FiveG,
+    type: ReoScanVariant.FiveG,
     name: '5G',
     description: 'Сканирование 5G NR сетей',
     icon: '⚡',
@@ -59,10 +63,10 @@ export function AddTask() {
   const { isOpen, toggle, close } = useModal()
 
   const [scanName, setScanName] = useState('')
-  const [selectedScanTypes, setSelectedScanTypes] = useState<ReoSpace.IScanTypes[]>([])
+  const [selectedScanTypes, setSelectedScanTypes] = useState<ReoScanVariantType[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const toggleScanType = (typeName: ReoSpace.IScanTypes) => {
+  const toggleScanType = (typeName: ReoScanVariantType) => {
     setSelectedScanTypes((prev) => {
       if (prev.includes(typeName)) {
         return prev.filter((type) => type !== typeName)
@@ -98,12 +102,11 @@ export function AddTask() {
         const scanType = SCAN_TYPES.find((st) => st.type === type)
 
         // Создаем задачу сканирования
-        const newTask: ReoSpace.IScanTask = {
+        const newTask: ReoScanTask = {
           id: `scan_${Date.now()}_${type}_${Math.random().toString(36).substr(2, 6)}`,
           name: `${scanName} (${scanType?.name})`,
-          currentScanCycle: 0,
           types: selectedScanTypes,
-          status: ReoSpace.IScanStatusTypes.Pending as const,
+          status: ReoScanStatus.Pending,
           createdAt: new Date().toISOString(),
           duration: 0,
         }
@@ -223,7 +226,7 @@ export function AddTask() {
                   <div
                     key={scanType.name}
                     className={`scan-type-card ${isSelected ? 'selected' : ''} ${'active'}`}
-                    onClick={() => toggleScanType(scanType.name as ReoSpace.IScanTypes)}
+                    onClick={() => toggleScanType(scanType.name as ReoScanVariantType)}
                   >
                     <div className='scan-type-icon' style={{ color: scanType.color }}>
                       <span className='icon-emoji'>{scanType.icon}</span>

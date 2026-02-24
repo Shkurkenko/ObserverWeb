@@ -1,5 +1,6 @@
-import { Label } from '../Typography'
-import { cn } from '../../Utils/Helpers'
+import { Label } from '@Components/Typography'
+
+import { cn } from '@Utils/Helpers'
 
 import './Form.sass'
 

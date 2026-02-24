@@ -1,15 +1,14 @@
-import { Flex } from '../../../Layouts/Flex'
-import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
-import { cn } from '../../../../Utils/Helpers'
+import { Flex } from '@Components/Layouts/Flex'
+import { TableTextCellData } from '@Components/Table/Table.types'
 
-import './style.sass'
+import { cn } from '@Utils/Helpers'
 
-interface ITextColumnProps {
-  data: TableSpace.ITextCellData
+export interface TextColumnProps {
+  data: TableTextCellData
   className?: string
 }
 
-export const ColumnText = ({ data, className = '' }: ITextColumnProps) => {
+export const ColumnText = ({ data, className = '' }: TextColumnProps) => {
   return (
     <Flex justify='center' align='center' className={cn(className, 'w-full h-full column-text')}>
       {data.text}

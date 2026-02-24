@@ -23,7 +23,7 @@ export type {
 } from './Toast.types'
 
 // Конфиг
-export { TOAST_CONFIG, getToastTypeConfig, getToastIcon } from './Toast.config'
+export { TOAST_CONFIG, getToastTypeConfig, getToastIcon } from './Toasts.config'
 
 // Компоненты (на случай кастомной сборки)
 export { ToastItem } from './ToastItem'

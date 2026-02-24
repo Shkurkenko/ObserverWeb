@@ -1,6 +1,6 @@
-import { useMinLoadingDelay } from '../../Hooks/useMinLoadingDelay'
+import { useMinLoadingDelay } from '@Hooks/useMinLoadingDelay'
 
-interface ISkeletonedProps {
+interface SkeletonedProps {
   isLoading: boolean
   skeleton: React.ReactNode
   children: React.ReactNode
@@ -14,7 +14,7 @@ export const Skeletoned = ({
   minDelay = 300,
   children,
   className = '',
-}: ISkeletonedProps) => {
+}: SkeletonedProps) => {
   const isReady = useMinLoadingDelay(isLoading, minDelay)
 
   return (

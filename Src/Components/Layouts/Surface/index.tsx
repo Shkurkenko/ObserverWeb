@@ -1,5 +1,6 @@
 import { Box, IBoxProps } from '../Box'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export type SurfaceVariantOptions =
   | 'surface'

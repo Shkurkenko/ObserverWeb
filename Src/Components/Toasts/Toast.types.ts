@@ -1,4 +1,4 @@
-import { AlertLevelType } from '../Alerts/Alerts.types'
+import { AlertLevelType } from '@Components/Alerts'
 
 /**
  * Позиции тостов на экране

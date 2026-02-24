@@ -1,18 +1,19 @@
-import { useEffect } from 'preact/hooks'
-import { TableRow } from '../TableRow'
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
-import { SkeletonTableBody } from '../Skeleton/SkeletonTableBody'
-import { useContainerSize } from '../../../Hooks/UseContainerSize'
-import { Skeletoned } from '../../Skeletoned'
-import { Box } from '../../Layouts/Box'
 import { CSSProperties } from 'preact'
-import { cn } from '../../../Utils/Helpers'
+import { useEffect } from 'preact/hooks'
+import { SkeletonTableBody } from '../Skeleton/SkeletonTableBody'
+import { useContainerSize } from '@Hooks/UseContainerSize'
+import { Skeletoned } from '@Components/Skeletoned'
+import { Box } from '@Components/Layouts/Box'
+import { TableRowData } from '../Table.types'
+import { TableRow } from '../TableRow'
+
 import VirtualList from 'react-tiny-virtual-list'
 
-import './style.sass'
+import { cn } from '@Utils/Helpers'
 
-interface ITableBodyProps {
-  rows: TableSpace.IRow[]
+import './style.sass'
+export interface ITableBodyProps {
+  rows: TableRowData[]
   itemHeight?: number
   overscanCount?: number
   className?: string

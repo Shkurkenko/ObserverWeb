@@ -1,8 +1,9 @@
 import { isValidElement, cloneElement } from 'preact'
 import { IconSize } from './Typography.types'
-import { cn } from '../../Utils/Helpers'
 
-export interface IIconProps {
+import { cn } from '@Utils/Helpers'
+
+export interface IconProps {
   /** Дополнительные CSS классы */
   className?: string
   /** Размер иконки */
@@ -74,7 +75,7 @@ export const Icon = ({
   hasNewData = false,
   active = false,
   ...props
-}: IIconProps) => {
+}: IconProps) => {
   const classes = cn(
     'inline-flex items-center justify-center',
     'fill-current',

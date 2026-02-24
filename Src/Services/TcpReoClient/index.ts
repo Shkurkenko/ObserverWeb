@@ -1,35 +1,50 @@
-import { ReoSpace } from '../../Shared/Interfaces/Reo.interface'
+import { ReoScanVariant } from '@Shared/Interfaces/Reo.interface'
 
 // GSM данные с парсингом из BCCH-DL-SCH-Message
-export interface IGsmScanData {
-  technology: ReoSpace.IScanTypes.Gsm
+export interface GsmScanData {
+  technology: typeof ReoScanVariant.Gsm
+
   timestamp: number
   // Основные поля
   mcc: number
+
   mnc: number
+
   lac?: number
+
   cellId?: string
+
   // Детали
   cellIdentity?: string // Hex строка "BF AE D6 50"
+
   arfcn?: number // Absolute Radio Frequency Channel Number
+
   bsic?: number // Base Station Identity Code
+
   rxLev?: number // Received Signal Level
+
   // Дополнительные поля
   c1?: number // Path loss criterion
+
   c2?: number // Cell reselection criterion
+
   raColorCode?: number // Random Access Color Code
+
   networkColorCode?: number // Network Color Code
+
   // Координаты если есть
   coordinates?: {
     lat: number
+
     lon: number
+
     accuracy?: number
   }
 }
 
 // UMTS данные
-export interface IUmtsScanData {
-  technology: ReoSpace.IScanTypes.Umts
+export interface UmtsScanData {
+  technology: typeof ReoScanVariant.Umts
   timestamp: number
   // Основные поля
   mcc?: number
@@ -51,8 +66,8 @@ export interface IUmtsScanData {
 }
 
 // LTE данные
-export interface ILteScanData {
-  technology: ReoSpace.IScanTypes.Lte
+export interface LteScanData {
+  technology: typeof ReoScanVariant.Lte
   timestamp: number
   // Основные поля
   mcc: number
@@ -74,8 +89,8 @@ export interface ILteScanData {
 }
 
 // Bluetooth данные
-export interface IBluetoothScanData {
-  technology: ReoSpace.IScanTypes.Bluetooth
+export interface BluetoothScanData {
+  technology: typeof ReoScanVariant.Bluetooth
   timestamp: number
   // Основные поля
   address: string // MAC address (00:11:22:33:44:55)
@@ -96,8 +111,8 @@ export interface IBluetoothScanData {
 }
 
 // WiFi данные
-export interface IWifiScanData {
-  technology: ReoSpace.IScanTypes.Wifi
+export interface WifiScanData {
+  technology: typeof ReoScanVariant.Wifi
   timestamp: number
   // Основные поля
   bssid: string // MAC address (00:11:22:33:44:55)
@@ -119,14 +134,9 @@ export interface IWifiScanData {
   maxRate?: number // Максимальная скорость (Mbps)
 }
 
-export type IScanData =
-  | IGsmScanData
-  | IUmtsScanData
-  | ILteScanData
-  | IWifiScanData
-  | IBluetoothScanData
+export type ScanData = GsmScanData | UmtsScanData | LteScanData | WifiScanData | BluetoothScanData
 
-export interface IRawScanMessage {
+export interface RawScanMessage {
   type: string
   timestamp?: number
   data: Record<string, any>
@@ -135,5 +145,5 @@ export interface IRawScanMessage {
 export interface IParsedScanMessage {
   rawType: string
   timestamp: number
-  data: IScanData
+  data: ScanData
 }

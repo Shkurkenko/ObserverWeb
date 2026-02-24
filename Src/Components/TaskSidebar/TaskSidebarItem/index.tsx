@@ -1,12 +1,10 @@
 import { useCallback } from 'preact/hooks'
 import { useScanView } from '../../../Hooks/UseScanView'
-import { ReoSpace } from '../../../Shared/Interfaces/Reo.interface'
 import { ScanLightStatus } from '../../../Views/Components/ScanLightStatus'
-
-import './style.sass'
+import { ReoScanTask, ReoScanVariantType } from '@Shared/Interfaces/Reo.interface'
 
 interface TaskSidebarItem {
-  task: ReoSpace.IScanTask
+  task: ReoScanTask
   onClick?: () => void
 }
 
@@ -78,7 +76,7 @@ export function TaskSidebarItem({ task }: TaskSidebarItem) {
         </div>
 
         <div className='scan-types'>
-          {task.types.map((type: ReoSpace.IScanTypes, index: number) => (
+          {task.types.map((type: ReoScanVariantType, index: number) => (
             <div key={index} className='scan-type-label'>
               {type}
             </div>

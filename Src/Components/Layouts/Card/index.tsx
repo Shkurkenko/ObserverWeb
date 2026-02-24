@@ -1,6 +1,7 @@
 import { ComponentChildren } from 'preact'
 import { Surface, ISurfaceProps } from '../Surface'
-import { cn } from '../../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ICardProps extends Omit<ISurfaceProps, 'variant' | 'elevation' | 'rounded'> {
   title?: string

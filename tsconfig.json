@@ -3,7 +3,11 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "moduleResolution": "bundler",
     "noEmit": true,
     "allowJs": true,
@@ -12,26 +16,52 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-
-    /* Preact Config */
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-
+    "baseUrl": ".",
     "paths": {
-      "react": ["./node_modules/preact/compat"],
-      "react-dom": ["./node_modules/preact/compat"],
-      "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
-      "@*": ["./Src/*"],
-      "@Components": ["./Src/Components"],
-      "@Context": ["./Src/Context"],
-      "@Hooks": ["./Src/Hooks"],
-      "@Config": ["./Config"],
-      "@Utils": ["./Utils"],
-      "@Examples": ["./Examples"],
-      "@Assets": ["./Src/Assets"],
-      "@Shared": ["./Src/Shared"],
-      "@Views": ["./Src/Views"]
+      "react": [
+        "node_modules/preact/compat"
+      ],
+      "react-dom": [
+        "node_modules/preact/compat"
+      ],
+      "react/jsx-runtime": [
+        "node_modules/preact/jsx-runtime"
+      ],
+      "@Components/*": [
+        "Src/Components/*"
+      ],
+      "@Context/*": [
+        "Src/Context/*"
+      ],
+      "@Hooks/*": [
+        "Src/Hooks/*"
+      ],
+      "@Config/*": [
+        "Config/*"
+      ],
+      "@Utils/*": [
+        "Utils/*"
+      ],
+      "@Examples/*": [
+        "Examples/*"
+      ],
+      "@Assets/*": [
+        "Src/Assets/*"
+      ],
+      "@Shared/*": [
+        "Src/Shared/*"
+      ],
+      "@Views/*": [
+        "Src/Views/*"
+      ]
     }
   },
-  "include": ["Src", "Config/**/*.tsx", "Data", "vite.config.ts"]
+  "include": [
+    "Src",
+    "Config/**/*.tsx",
+    "Data",
+    "vite.config.ts"
+  ]
 }

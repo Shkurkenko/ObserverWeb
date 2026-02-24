@@ -1,4 +1,4 @@
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
+import { CSSProperties } from 'preact'
 import { ColumnBase } from '../Columns/ColumnBase'
 import { ColumnSignal } from '../Columns/ColumnSignal/ColumnSignal'
 import { ColumnOperator } from '../Columns/ColumnOperator'
@@ -6,49 +6,51 @@ import { ColumnEnum } from '../Columns/ColumnEnum'
 import { ColumnText } from '../Columns/ColumnText/ColumnText'
 import { ColumnCountry } from '../Columns/ColumnCountry'
 import { ColumnCheckbox } from '../Columns/ColumnCheckbox'
-import { Box } from '../../Layouts/Box'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { TableCell, TableColumn, TableRowData, TableTextCellData } from '../Table.types'
+import {
+  ReoCountryCellData,
+  ReoOperatorCellData,
+  ReoSignalCellData,
+} from '@Shared/Interfaces/Reo.interface'
+
+import { cn } from '@Utils/Helpers'
 
 import './style.sass'
-import { CSSProperties } from 'preact'
 
-export function ColumnMatcher({
-  columnData,
-}: {
-  columnData: TableSpace.ICell<unknown>
-}): JSX.Element {
+export function ColumnMatcher({ columnData }: { columnData: TableCell<unknown> }): JSX.Element {
   switch (columnData.type) {
-    case TableSpace.IColumnTypes.Enum:
+    case TableColumn.Enum:
       return (
         <ColumnBase position={columnData.position}>
           <ColumnEnum index={columnData.position.rowIndex} />
         </ColumnBase>
       )
-    case TableSpace.IColumnTypes.Text:
+    case TableColumn.Text:
       return (
         <ColumnBase position={columnData.position}>
-          <ColumnText data={columnData.data as TableSpace.ITextCellData} />
+          <ColumnText data={columnData.data as TableTextCellData} />
         </ColumnBase>
       )
-    case TableSpace.IColumnTypes.Operator:
+    case TableColumn.Operator:
       return (
         <ColumnBase position={columnData.position}>
-          <ColumnOperator data={columnData.data as TableSpace.IOperatorCellData} />
+          <ColumnOperator data={columnData.data as ReoOperatorCellData} />
         </ColumnBase>
       )
-    case TableSpace.IColumnTypes.Signal:
+    case TableColumn.Signal:
       return (
         <ColumnBase position={columnData.position}>
-          <ColumnSignal data={columnData.data as TableSpace.ISignalCellData} />
+          <ColumnSignal data={columnData.data as ReoSignalCellData} />
         </ColumnBase>
       )
-    case TableSpace.IColumnTypes.Country:
+    case TableColumn.Country:
       return (
         <ColumnBase position={columnData.position}>
-          <ColumnCountry data={columnData.data as TableSpace.ICountryCellData} />
+          <ColumnCountry data={columnData.data as ReoCountryCellData} />
         </ColumnBase>
       )
-    case TableSpace.IColumnTypes.Checkbox:
+    case TableColumn.Checkbox:
       return (
         <ColumnBase position={columnData.position}>
           <ColumnCheckbox />
@@ -64,13 +66,13 @@ export function ColumnMatcher({
   }
 }
 
-export interface ITableRowProps {
-  rowData: TableSpace.IRow
+export interface TableRowProps {
+  rowData: TableRowData
   style?: CSSProperties
   className?: string
 }
 
-export const TableRow = ({ rowData, style, className = '' }: ITableRowProps) => {
+export const TableRow = ({ rowData, style, className = '' }: TableRowProps) => {
   return (
     <Box
       style={style}
@@ -79,7 +81,7 @@ export const TableRow = ({ rowData, style, className = '' }: ITableRowProps) => 
         'observer-table-body-row w-full flex items-center border-b border-surface-container',
       )}
     >
-      {rowData.columns.map((column: TableSpace.ICell<unknown>, counter: number) => (
+      {rowData.columns.map((column: TableCell<unknown>, counter: number) => (
         <ColumnMatcher columnData={column} key={counter} />
       ))}
     </Box>

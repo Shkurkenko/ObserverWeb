@@ -1,7 +1,7 @@
 import { useContext } from 'preact/hooks'
-import { TableContext, ITableContext } from '../Context/TableContext'
+import { TableContext, TableContextProps } from '../Context/TableContext'
 
-export function useTable(): ITableContext {
+export function useTable(): TableContextProps {
   const context = useContext(TableContext)
 
   if (!context) {

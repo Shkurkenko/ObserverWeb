@@ -1,5 +1,6 @@
-import { Box } from '../../Layouts/Box'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ToastCloseProps {
   /** Обработчик закрытия */

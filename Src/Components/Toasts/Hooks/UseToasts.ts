@@ -1,8 +1,8 @@
 import { useContext } from 'preact/hooks'
 import { ToastContext } from '../Context/ToastsContext'
-import { AlertLevel } from '../../Alerts'
 import { ToastConfig } from '../Toast.types'
 import { getToastTypeConfig } from '../Toasts.config'
+import { AlertLevel } from '@Components/Alerts'
 
 /**
  * Базовый хук для работы с тостами

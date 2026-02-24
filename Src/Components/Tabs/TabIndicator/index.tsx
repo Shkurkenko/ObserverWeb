@@ -1,7 +1,8 @@
 import { FunctionalComponent } from 'preact'
-import { cn } from '../../../Utils/Helpers'
 
-export interface ITabIndicatorProps {
+import { cn } from '@Utils/Helpers'
+
+export interface TabIndicatorProps {
   type: 'new-data' | 'error' | 'success' | 'warning'
 
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
@@ -13,7 +14,7 @@ export interface ITabIndicatorProps {
   className?: string
 }
 
-export const TabIndicator: FunctionalComponent<ITabIndicatorProps> = ({
+export const TabIndicator: FunctionalComponent<TabIndicatorProps> = ({
   type,
   size = 'sm',
   position = 'top-right',

@@ -1,8 +1,9 @@
-import { Box } from '../../Layouts/Box'
-import { Flex } from '../../Layouts/Flex'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { Flex } from '@Components/Layouts/Flex'
 
-interface SkeletonTableBodyProps {
+import { cn } from '@Utils/Helpers'
+
+export interface SkeletonTableBodyProps {
   rows?: number
   columns?: number
   rowHeight?: number

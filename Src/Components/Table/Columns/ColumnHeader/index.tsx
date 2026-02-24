@@ -1,12 +1,13 @@
 import { useCallback, useRef, useState } from 'preact/hooks'
-import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
-import { Flex } from '../../../Layouts/Flex'
-import { cn } from '../../../../Utils/Helpers'
+import { Flex } from '@Components/Layouts/Flex'
+import { TableColumn } from '@Components/Table/Table.types'
+
+import { cn } from '@Utils/Helpers'
 
 import './style.sass'
 
-export interface IColumnHeaderProps {
-  header: TableSpace.IColumn
+export interface ColumnHeaderProps {
+  header: TableColumn
   className?: string
 }
 
@@ -16,7 +17,7 @@ const arrowAngleClassStates = {
   hidden: 'hidden',
 }
 
-export function ColumnHeader({ header, className = '' }: IColumnHeaderProps) {
+export function ColumnHeader({ header, className = '' }: ColumnHeaderProps) {
   const headerRef = useRef<null>(null)
   const [currentState, setCurrentState] = useState(0)
 

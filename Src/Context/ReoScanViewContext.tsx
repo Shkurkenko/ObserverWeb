@@ -1,6 +1,6 @@
 import { createContext, ComponentChildren } from 'preact'
 import { useState, useCallback } from 'preact/hooks'
-import { TableSpace } from '../Shared/Interfaces/Table.interface'
+import { TableRowData } from '@Components/Table/Table.types'
 import { ReoScanStatusType, ReoView } from '../Shared/Interfaces/Reo.interface'
 
 export interface IScanViewContext {
@@ -28,11 +28,11 @@ export interface IScanViewContext {
 
   getScanViewById: (id: string) => ReoView | undefined
 
-  addRowToScanView?: (viewId: string, tabIndex: number, row: TableSpace.IRow) => void
+  addRowToScanView?: (viewId: string, tabIndex: number, row: TableRowData) => void
 
   clearScanViewData?: (viewId: string, tabId?: string) => void
 
-  updateScanViewTabData?: (viewId: string, tabId: string, rows: TableSpace.IRow[]) => void
+  updateScanViewTabData?: (viewId: string, tabId: string, rows: TableRowData[]) => void
 
   updateScanViewData: (id: string, data: Partial<ReoView>) => void
 
@@ -121,13 +121,13 @@ export const ScanViewProvider = ({
     setScanViews((prev) => prev.map((view) => (view.id === id ? { ...view, ...data } : view)))
   }, [])
 
-  const addRowToScanView = useCallback((viewId: string, tabIndex: number, row: TableSpace.IRow) => {
+  const addRowToScanView = useCallback((viewId: string, tabIndex: number, row: TableRowData) => {
     console.log('addRowToScanView called', { viewId, tabIndex, row })
     // Реализация по желанию
   }, [])
 
   const updateScanViewTabData = useCallback(
-    (viewId: string, tabId: string, rows: TableSpace.IRow[]) => {
+    (viewId: string, tabId: string, rows: TableRowData[]) => {
       console.log('updateScanViewTabData called', { viewId, tabId, rows })
       // Реализация по желанию
     },

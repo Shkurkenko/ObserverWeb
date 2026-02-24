@@ -1,8 +1,9 @@
-import { cn } from '../../Utils/Helpers'
-import { TextVariant, BaseTypographyProps } from './Typography.types'
 import { CSSProperties } from 'preact'
+import { TextVariant, BaseTypographyProps } from './Typography.types'
 
-export interface ITextProps extends BaseTypographyProps {
+import { cn } from '@Utils/Helpers'
+
+export interface TextProps extends BaseTypographyProps {
   /** Вариант текста (предопределенные стили) */
   variant?: TextVariant
   /** HTML-тег для рендеринга */
@@ -95,7 +96,7 @@ export const Text = ({
   align = 'left',
   style = {},
   ...props
-}: ITextProps) => {
+}: TextProps) => {
   const classes = cn(
     variantClasses[variant],
     colorClasses[color],

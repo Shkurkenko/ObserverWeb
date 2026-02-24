@@ -1,12 +1,11 @@
-// Src/Components/Examples/ProductCard.tsx
-import { Card } from '../Layouts/Card'
-import { Text } from '../Typography/Text'
-import { Caption } from '../Typography/Caption'
-import { Icon } from '../Typography/Icon'
-import { Badge } from '../Badge'
-import { Button } from '../Button'
+import { Card } from '@Components/Layouts/Card'
+import { Text } from '@Components/Typography'
+import { Caption } from '@Components/Typography'
+import { Icon } from '@Components/Typography'
+import { Badge } from '@Components/Badge'
+import { Button } from '@Components/Button'
 
-interface ProductCardProps {
+export interface ProductCardProps {
   title: string
   description: string
   price: string

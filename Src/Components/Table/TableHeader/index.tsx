@@ -1,14 +1,13 @@
-import { TableSpace } from '../../../Shared/Interfaces/Table.interface'
-import { useContainerSize } from '../../../Hooks/UseContainerSize'
+import { useContainerSize } from '@Hooks/UseContainerSize'
 import { SkeletonTableHeader } from '../Skeleton/SkeletonTableHeader'
-import { Skeletoned } from '../../Skeletoned'
-
+import { Skeletoned } from '@Components/Skeletoned'
 import { TableHeaderRow } from '../TableHeaderRow'
+import { TableColumn } from '@Shared/Interfaces/Table.types'
 
 import './style.sass'
 
-interface ITableHeaderProps {
-  headerColumns: TableSpace.IColumn[]
+export interface TableHeaderProps {
+  headerColumns: TableColumn[]
   className?: string
 }
 
@@ -18,7 +17,7 @@ export const ColumnHeaderSorters = {
   Regular: 'regular' as const,
 } as const
 
-export const TableHeader = ({ headerColumns, className = '' }: ITableHeaderProps) => {
+export const TableHeader = ({ headerColumns, className = '' }: TableHeaderProps) => {
   const { ref, size } = useContainerSize()
 
   const isLoading = headerColumns.length === 0 || size.height === 0

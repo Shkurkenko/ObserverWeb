@@ -51,12 +51,12 @@ export const TableRowStatus = {
 } as const
 export type TableRowStatusType = (typeof TableRowStatus)[keyof typeof TableRowStatus]
 
-export const TableRow = {
+export const TableRowVariant = {
   Normal: 'normal',
 
   Colored: 'colored',
 } as const
-export type TableRowType = (typeof TableRow)[keyof typeof TableRow]
+export type TableRowVariantType = (typeof TableRowVariant)[keyof typeof TableRowVariant]
 
 export const TableColumn = {
   Enum: 'enum',
@@ -104,11 +104,11 @@ export enum TableRoles {
   Enum = 'Enum',
 }
 
-export interface TableRow {
+export interface TableRowData {
   index: number
   columns: TableCell<unknown>[] // Unknown type to allow different and custom cell types data
   status: TableRowStatusType
-  type: TableRowType
+  type: TableRowVariantType
 }
 
 export interface TableColumn {
@@ -124,7 +124,7 @@ export interface TableColumn {
 export interface TableData<T> {
   hasNewData: boolean
   metaInfo: T
-  rows: TableRow[]
+  rows: TableRowData[]
 }
 
 export interface TableEnumCellData {

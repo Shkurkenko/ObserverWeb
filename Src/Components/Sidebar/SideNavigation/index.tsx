@@ -1,19 +1,17 @@
 import { useCallback, useState, useEffect } from 'preact/hooks'
-import { IMenubarModel } from '../../Menubar'
-import { Menubar } from '../../Menubar'
-import { IMenubarItem } from '../../Menubar/MenubarItem'
+import { MenubarModel } from '@Components/Menubar/Menubar.config'
+import { Menubar } from '@Components/Menubar'
 import { SlideSidebar } from '..'
 import { useSidebar } from '../Hooks/UseSidebar'
-import { MenubarConfig } from '../../../../Config/ObserverConfig'
-import { Box } from '../../Layouts/Box'
-import { useAlerts } from '../../Alerts/UseAlerts'
-import { AlertsSpace } from '../../../Shared/Interfaces/Alerts.interface'
+import { MenubarConfig } from '@Components/Menubar/Menubar.config'
+import { Box } from '@Components/Layouts/Box'
+import { AlertLevel, useAlerts } from '@Components/Alerts'
 
 export const testJournalAlerts = [
   {
     id: '09i98sdfs',
     header: 'Test Event Error',
-    type: AlertsSpace.ILevel.Error,
+    type: AlertLevel.Error,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -22,7 +20,7 @@ export const testJournalAlerts = [
   {
     id: '09i98sdfssdf',
     header: 'Test Event Warning',
-    type: AlertsSpace.ILevel.Warning,
+    type: AlertLevel.Warning,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -31,7 +29,7 @@ export const testJournalAlerts = [
   {
     id: 'asdfaa',
     header: 'Test Event Info',
-    type: AlertsSpace.ILevel.Info,
+    type: AlertLevel.Info,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -40,7 +38,7 @@ export const testJournalAlerts = [
   {
     id: '09i98saaadfdfssdssssdsdfss',
     header: 'Test Event ',
-    type: AlertsSpace.ILevel.Success,
+    type: AlertLevel.Success,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -49,7 +47,7 @@ export const testJournalAlerts = [
   {
     id: '09i98sdfssdshdjfkjsdfsssss',
     header: 'Test Event Info',
-    type: AlertsSpace.ILevel.Info,
+    type: AlertLevel.Info,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -59,7 +57,7 @@ export const testJournalAlerts = [
   {
     id: '09i98sdfs2398hnjsjkldf',
     header: 'Test Event Error',
-    type: AlertsSpace.ILevel.Error,
+    type: AlertLevel.Error,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -68,7 +66,7 @@ export const testJournalAlerts = [
   {
     id: '09i98sdfssdf110-0sdf',
     header: 'Test Event Warning',
-    type: AlertsSpace.ILevel.Warning,
+    type: AlertLevel.Warning,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -77,7 +75,7 @@ export const testJournalAlerts = [
   {
     id: 'asdfaa-02348===',
     header: 'Test Event Info',
-    type: AlertsSpace.ILevel.Info,
+    type: AlertLevel.Info,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -86,7 +84,7 @@ export const testJournalAlerts = [
   {
     id: '09i98saaadfdfssdssssdsdfss=2345872',
     header: 'Test Event ',
-    type: AlertsSpace.ILevel.Success,
+    type: AlertLevel.Success,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -95,7 +93,7 @@ export const testJournalAlerts = [
   {
     id: '09i98sdfssdshdjfkjsdfsssssaholikd',
     header: 'Test Event Info',
-    type: AlertsSpace.ILevel.Info,
+    type: AlertLevel.Info,
     message:
       'Test event for viewing alert message and style it more text and more and more and more and more and more!!!',
     show: true,
@@ -105,7 +103,7 @@ export const testJournalAlerts = [
 
 export function SideNavigation() {
   const { addAlert } = useAlerts()
-  const [menubarModel, setMenubarModel] = useState<IMenubarModel>(MenubarConfig)
+  const [menubarModel, setMenubarModel] = useState<MenubarModel>(MenubarConfig)
   const { show, showSidebar, hideSidebar } = useSidebar()
 
   useEffect(() => {
@@ -124,17 +122,17 @@ export function SideNavigation() {
   }, [])
 
   const loadContent = useCallback((index: number) => {
-    setMenubarModel((prev: IMenubarModel) => ({
+    setMenubarModel((prev: MenubarModel) => ({
       ...prev,
       currentIndex: index,
     }))
   }, [])
 
   const setActiveTab = useCallback((index: number) => {
-    setMenubarModel((prev: IMenubarModel) => ({
+    setMenubarModel((prev: MenubarModel) => ({
       ...prev,
-      items: prev.items.map((item: IMenubarItem) =>
-        item.id === index ? { ...item, active: true } : { ...item, active: false },
+      items: prev.items.map((item: MenubarModel) =>
+        item.currentIndex === index ? { ...item, active: true } : { ...item, active: false },
       ),
       currentIndex: index,
     }))

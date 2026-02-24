@@ -1,5 +1,5 @@
-import { TableBaseCellData, TableRow } from './Table.interface'
-import { Tab } from '../../Components/Tabs/TabGroup'
+import { TableBaseCellData, TableRowData } from './Table.types'
+import { Tab } from '@Components/Tabs/TabGroup'
 
 export const ReoScanMode = {
   Fast: 'Fast',
@@ -28,45 +28,45 @@ export const ReoRole = {
 export type ReoRoleType = (typeof ReoRole)[keyof typeof ReoRole]
 
 export const ReoScanVariant = {
-  Gsm: 'GSM',
+  Gsm: 'gsm',
 
-  Lte: 'LTE',
+  Lte: 'lte',
 
-  Umts: 'UMTS',
+  Umts: 'umts',
 
-  Bluetooth: 'Bluetooth',
+  Bluetooth: 'bluetooth',
 
-  Wifi: 'WiFi',
+  Wifi: 'wifi',
 
-  FiveG: '5G',
+  FiveG: '5g',
 
-  Unknown: 'Unknown',
+  Unknown: 'unknown',
 } as const
 export type ReoScanVariantType = (typeof ReoScanVariant)[keyof typeof ReoScanVariant]
 
 export const ReoScanStatus = {
-  Finished: 'Finished',
+  Finished: 'finished',
 
-  Running: 'Running',
+  Running: 'running',
 
-  Pending: 'Pending',
+  Pending: 'pending',
 
-  Failed: 'Failed',
+  Failed: 'failed',
 
-  Idle: 'Idle',
+  Idle: 'idle',
 } as const
 export type ReoScanStatusType = (typeof ReoScanStatus)[keyof typeof ReoScanStatus]
 
 export const ReoSignalLevel = {
-  Excellent: 'Excellent',
+  Excellent: 'excellent',
 
-  Good: 'Good',
+  Good: 'good',
 
-  Fair: 'Fair',
+  Fair: 'fair',
 
-  Poor: 'Poor',
+  Poor: 'poor',
 
-  No: 'No',
+  No: 'no',
 } as const
 export type ReoSignalLevelType = (typeof ReoSignalLevel)[keyof typeof ReoSignalLevel]
 
@@ -119,7 +119,7 @@ export interface ReoSignalRange {
 export interface ReoTabData {
   metaInfo: ReoTableMetaInfo
 
-  rows: TableRow[]
+  rows: TableRowData[]
 
   hasNewData: boolean
 }

@@ -1,7 +1,3 @@
-import { ObserverConfig } from '../Config/ObserverConfig'
-import { ReoSpace } from '../Src/Shared/Interfaces/Reo.interface'
-import { TableSpace } from '../Src/Shared/Interfaces/Table.interface'
-
 export class ScanConfigHelpers {
   // Получить колонки для типа сети
   static getColumnsForNetworkType(networkType: ReoSpace.IScanTypes): TableSpace.IColumn[] {

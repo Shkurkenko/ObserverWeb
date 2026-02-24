@@ -1,6 +1,6 @@
 import { ComponentChildren } from 'preact'
 import { useEffect } from 'preact/hooks'
-import { Portal } from '../Portal'
+import { Portal } from '@Components/Portal'
 
 import './style.sass'
 

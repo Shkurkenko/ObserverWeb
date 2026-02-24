@@ -1,9 +1,9 @@
-import { AdaptiveGridOptions, Grid, GridGapOptions } from '../Layouts/Grid'
-import { Caption } from '../Typography'
-import { Text } from '../Typography'
 import { ComponentChildren } from 'preact'
-import { Box } from '../Layouts/Box'
-import { cn } from '../../Utils/Helpers'
+import { AdaptiveGridOptions, Grid, GridGapOptions } from '@Components/Layouts/Grid'
+import { Box } from '@Components/Layouts/Box'
+import { Caption } from '@Components/Typography'
+
+import { cn } from '@Utils/Helpers'
 
 export interface FooterProps {
   children?: ComponentChildren

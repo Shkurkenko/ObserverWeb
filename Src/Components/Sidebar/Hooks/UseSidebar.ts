@@ -1,5 +1,5 @@
 import { useContext } from 'preact/hooks'
-import { SidebarContext } from '../../../Context/SidebarContext'
+import { SidebarContext } from '@Context/SidebarContext'
 
 export const useSidebar = () => {
   const context = useContext(SidebarContext)

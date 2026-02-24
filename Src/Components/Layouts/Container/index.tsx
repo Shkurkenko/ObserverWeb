@@ -1,5 +1,6 @@
-import { cn } from '../../../Utils/Helpers'
 import { Box, IBoxProps } from '../Box'
+
+import { cn } from '@Utils/Helpers'
 
 export type ContainerPadding =
   | boolean

@@ -1,6 +1,7 @@
-import { Box } from '../../Layouts/Box'
-import { Icon } from '../../Typography/Icon'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { Icon } from '@Components/Typography'
+
+import { cn } from '@Utils/Helpers'
 
 export interface ToastIconProps {
   /** Иконка */

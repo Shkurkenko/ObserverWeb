@@ -3,12 +3,9 @@ import { createContext } from 'preact'
 import { ComponentChildren } from 'preact'
 import { ThemeName } from '../../Autogen/Themes/ForensicThemes/Theme.registry'
 import { toKebabCase } from '../../Utils/Helpers'
-import { ThemeEngine } from '../../Config/ObserverConfig'
+import { Theme, Variant, Themes } from '@Config/Themes/Theme.types'
 
-export type Theme = keyof typeof ThemeEngine.Themes
-export type Variant = keyof (typeof ThemeEngine.Themes)[Theme]
-
-interface IThemeContext {
+interface ThemeContextProps {
   theme: Theme
   variant: Variant
   variants?: Variant[]
@@ -17,7 +14,7 @@ interface IThemeContext {
   setThemeVariant: (theme: Theme, variant: Variant) => void
 }
 
-const ThemeContext = createContext<IThemeContext | null>(null)
+const ThemeContext = createContext<ThemeContextProps | null>(null)
 
 interface IThemeProvider {
   children: ComponentChildren
@@ -73,7 +70,7 @@ export const ThemeProvider = ({ children, ...props }: IThemeProvider) => {
       const prev = document.getElementById('dynamic-theme')
       if (prev) prev.remove()
 
-      const mod = await ThemeEngine.Themes[theme][variant]()
+      const mod = await Themes[theme][variant]()
       const css = (mod as { default: string }).default
 
       const style = document.createElement('style')
@@ -147,7 +144,7 @@ export const ThemeProvider = ({ children, ...props }: IThemeProvider) => {
     apply()
   }, [theme, variant])
 
-  const variants = Object.keys(ThemeEngine.Themes[theme]) as Variant[]
+  const variants = Object.keys(Themes[theme]) as Variant[]
 
   return (
     <ThemeContext.Provider value={{ theme, variant, variants, colors, setThemeVariant }}>

@@ -1,13 +1,14 @@
 import { ComponentChildren } from 'preact'
-import { TableSpace } from '../../../../Shared/Interfaces/Table.interface'
-import { useTable } from '../../Hooks/UseTable'
-import { Box } from '../../../Layouts/Box'
-import { cn } from '../../../../Utils/Helpers'
+import { useTable } from '@Components/Table/Hooks/UseTable'
+import { TablePoint } from '@Components/Table/Table.types'
+import { Box } from '@Components/Layouts/Box'
+
+import { cn } from '@Utils/Helpers'
 
 import './style.sass'
 
-interface IColumnBaseProps {
-  position: TableSpace.IPoint
+export interface ColumnBaseProps {
+  position: TablePoint
 
   children?: ComponentChildren
 
@@ -30,7 +31,7 @@ export function ColumnBase({
   handleHoverEnter,
   handleHoverLeave,
   className = '',
-}: IColumnBaseProps) {
+}: ColumnBaseProps) {
   const { columns } = useTable()
 
   const handleMouseEnter = () => {

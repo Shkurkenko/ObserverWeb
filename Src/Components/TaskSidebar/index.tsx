@@ -1,12 +1,12 @@
+import { useState, useMemo } from 'preact/hooks'
 import { TaskSidebarItem } from './TaskSidebarItem'
 import { AddTask } from './TaskSidebarItemAdd'
 import { useTasks } from './Hooks/UseTasks'
-import { useScanView } from '../../Hooks/UseScanView'
-import { ScanConfigHelpers } from '../../../Utils/ScanConfigHelper'
+import { useScanView } from '@Hooks/UseScanView'
 import { SearchInput } from '../SearchInput'
-import { useState, useMemo } from 'preact/hooks'
-import { ScanTask } from '../../Shared/Interfaces/Reo.interface'
 import { v4 as uuidv4 } from 'uuid'
+import { ReoScanTask } from '@Shared/Interfaces/Reo.interface'
+import { ScanConfigHelpers } from '../../../Utils/ScanConfigHelper'
 
 import './style.sass'
 
@@ -28,7 +28,7 @@ export function TaskSidebar() {
     )
   }, [tasks, searchQuery])
 
-  const handleTaskClick = (task: ScanTask) => {
+  const handleTaskClick = (task: ReoScanTask) => {
     // При клике на задачу создаем вьюшки для всех типов сетей в задаче
     task.types.forEach((networkType, index) => {
       const viewConfig = ScanConfigHelpers.createScanViewConfig(
@@ -39,7 +39,7 @@ export function TaskSidebar() {
 
       // Создаем вьюшку с данными
       addScanView({
-        viewId: viewConfig.viewId,
+        id: viewConfig.viewId,
         taskId: task.id,
         headerString: task.name,
         show: index === 0, // Показываем только первый тип сети
@@ -54,7 +54,6 @@ export function TaskSidebar() {
               metaInfo: {
                 scanType: networkType,
                 scanStatus: task.status,
-                currentScanCycle: task.currentScanCycle,
               },
               rows: [],
               hasNewData: false,
@@ -110,7 +109,7 @@ export function TaskSidebar() {
           </div>
         ) : (
           <ul className='task-list'>
-            {filteredTasks.map((task: ReoSpace.IScanTask) => (
+            {filteredTasks.map((task: ReoScanTask) => (
               <TaskSidebarItem key={task.id} task={task} onClick={() => handleTaskClick(task)} />
             ))}
           </ul>

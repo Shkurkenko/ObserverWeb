@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks'
-import { initializeDefaultTheme } from '../Utils/Helpers'
+import { initializeDefaultTheme } from '@Utils/Helpers'
 
 export function UseInitTheme() {
   useEffect(() => {

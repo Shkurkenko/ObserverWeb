@@ -1,19 +1,28 @@
 import { ComponentChild } from 'preact'
-import { ITab } from '../../../Shared/Interfaces/Main.interface'
-import { Icon } from '../../Typography'
-import { Button, IButtonProps } from '../../Button'
-import { IconSize } from '../../../Shared/Interfaces/Typography.types'
-import { cn } from '../../../Utils/Helpers'
+import { Icon } from '@Components/Typography'
+import { Button, ButtonProps } from '@Components/Button'
+import { IconSize } from '@Components/Typography/Typography.types'
+import { Tab } from '../TabGroup'
 
-export interface TabButtonProps extends Omit<IButtonProps, 'children' | 'onClick' | 'variant'> {
-  tabData: ITab
+import { cn } from '@Utils/Helpers'
+
+export interface TabButtonProps extends Omit<ButtonProps, 'children' | 'onClick' | 'variant'> {
+  tabData: Tab
+
   isActive: boolean
-  onClick?: (e: MouseEvent, tab: ITab) => void
+
+  onClick?: (e: MouseEvent, tab: Tab) => void
+
   variant?: 'default' | 'underline' | 'pills' | 'outline'
+
   fullWidth?: boolean
+
   showCount?: boolean
+
   icon?: ComponentChild
+
   iconSize?: IconSize
+
   badge?: number | string
 }
 
@@ -93,7 +102,7 @@ export function TabButton({
   const currentSize = sizeClasses[size]
   const iconSizeFinal = iconSize || currentSize.icon
 
-  let buttonVariant: IButtonProps['variant'] = 'text'
+  let buttonVariant: ButtonProps['variant'] = 'text'
   let additionalClasses = ''
 
   if (variant === 'pills' && isActive) {

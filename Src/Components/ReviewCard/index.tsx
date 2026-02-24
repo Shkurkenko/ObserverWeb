@@ -1,10 +1,10 @@
-import { Card } from '../Layouts/Card'
-import { Text } from '../Typography/Text'
-import { Caption } from '../Typography/Caption'
-import { Icon } from '../Typography/Icon'
-import { Badge } from '../Badge'
+import { Card } from '@Components/Layouts/Card'
+import { Text } from '@Components/Typography'
+import { Caption } from '@Components/Typography'
+import { Icon } from '@Components/Typography'
+import { Badge } from '@Components/Badge'
 
-interface ReviewCardProps {
+export interface ReviewCardProps {
   rating: number
   title: string
   content: string

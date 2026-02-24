@@ -1,5 +1,6 @@
 import { ComponentChildren, ComponentType, CSSProperties } from 'preact'
-import { cn } from '../../Utils/Helpers'
+
+import { cn } from '@Utils/Helpers'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | 'text' | 'danger'
 

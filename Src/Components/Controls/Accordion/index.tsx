@@ -1,11 +1,12 @@
+import { CSSProperties } from 'preact'
 import { useState } from 'preact/hooks'
 import { ComponentChildren } from 'preact'
-import { Box } from '../../Layouts/Box'
-import { Flex } from '../../Layouts/Flex'
-import { Icon, Text } from '../../Typography'
-import { CSSProperties } from 'preact'
-import { Button } from '../../Button'
-import { cn } from '../../../Utils/Helpers'
+import { Box } from '@Components/Layouts/Box'
+import { Flex } from '@Components/Layouts/Flex'
+import { Icon, Text } from '@Components/Typography'
+import { Button } from '@Components/Button'
+
+import { cn } from '@Utils/Helpers'
 
 export interface AccordionItemData {
   id: string | number
@@ -29,7 +30,7 @@ export interface IAccordionToggleEvent {
   event?: MouseEvent | KeyboardEvent
 }
 
-export interface IAccordionProps {
+export interface AccordionProps {
   items: AccordionItemData[]
 
   allowMultiple?: boolean

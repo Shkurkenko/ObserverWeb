@@ -1,15 +1,13 @@
-import { AlertList } from '../Alerts/Components/AlertRoot'
-import { useAlerts } from '../Alerts/UseAlerts'
-import { Box } from '../Layouts/Box'
-import { Divider, Heading, Icon } from '../Typography'
-import { Flex } from '../Layouts/Flex'
-import { Button } from '../Button'
-import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
-import { AlertsSpace } from '../../Shared/Interfaces/Alerts.interface'
+import { CSSProperties, ComponentChildren } from 'preact'
+import { useCallback, useMemo, useState } from 'preact/hooks'
+import { AlertLevel, AlertLevelType, AlertList } from '@Components/Alerts'
+import { useAlerts } from '@Components/Alerts'
+import { Box } from '@Components/Layouts/Box'
+import { Divider, Heading, Icon } from '@Components/Typography'
+import { Flex } from '@Components/Layouts/Flex'
+import { Button } from '@Components/Button'
+import { TabBadge } from '@Components/Tabs/TabBadge'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { TabBadge } from '../Tabs/TabBadge'
-import { CSSProperties } from 'preact'
-import { ComponentChildren } from 'preact'
 import {
   Notebook02Icon,
   CancelCircleIcon,
@@ -18,9 +16,7 @@ import {
   Alert01Icon,
 } from '@hugeicons/core-free-icons'
 
-import { cn } from '../../Utils/Helpers'
-
-import './style.sass'
+import { cn } from '@Utils/Helpers'
 
 export interface IRoundedCloseButtonProps {
   onClose: (event: MouseEvent) => void
@@ -48,15 +44,12 @@ export const RoundedCloseButton = ({ onClose, className = '' }: IRoundedCloseBut
 
 export const JournalFilters = {
   All: 'All' as const,
-
   Error: 'Error' as const,
-
   Warning: 'Warning' as const,
-
   Info: 'Info' as const,
-
   Success: 'Success' as const,
 } as const
+export type JournalFiltersType = (typeof JournalFilters)[keyof typeof JournalFilters]
 
 export type JournalFilterButtonVariant = 'default' | 'error' | 'success' | 'info' | 'warning'
 
@@ -75,9 +68,9 @@ export interface IJournalFilterProps {
 
   variant?: JournalFilterButtonVariant
 
-  level: AlertsSpace.ILevel
+  level: AlertLevelType
 
-  filter: JournalFilters
+  filter: JournalFiltersType
 
   count: number
 
@@ -128,34 +121,28 @@ export const JournalFilterButton = ({
 
 export const Journal = () => {
   const { alerts } = useAlerts()
-  const [activeFilter, setActiveFilter] = useState<JournalFilters>(JournalFilters.All)
+  const [activeFilter, setActiveFilter] = useState<JournalFiltersType>(JournalFilters.All)
 
   const displayedAlerts = useMemo(() => {
     if (activeFilter === JournalFilters.All) return alerts
-    return alerts.filter((alert) => alert.type === activeFilter)
+    return alerts.filter(
+      (alert) =>
+        (alert.type === AlertLevel.Error && activeFilter === JournalFilters.Error) ||
+        (alert.type === AlertLevel.Info && activeFilter === JournalFilters.Info) ||
+        (alert.type === AlertLevel.Success && activeFilter === JournalFilters.Success) ||
+        (alert.type === AlertLevel.Warning && activeFilter === JournalFilters.Warning),
+    )
   }, [alerts, activeFilter])
 
-  const handleFilterClick = useCallback(
-    (filter: JournalFilters, level?: AlertsSpace.ILevel, e?: MouseEvent) => {
-      if (filter === JournalFilters.All) {
-        setJournalAlerts((prev) => alerts)
-        return
-      }
-      setJournalAlerts((prev) => alerts.filter((alert) => alert.type === level))
-      setActiveFilter((prev) => filter)
-    },
-    [alerts],
-  )
-
-  useEffect(() => {
-    setJournalAlerts(alerts)
-  }, [alerts])
+  const handleFilterClick = useCallback((filter: JournalFiltersType) => {
+    setActiveFilter(filter)
+  }, [])
 
   const allCount = alerts.length
-  const errorsCount = alerts.filter((alert) => alert.type === AlertsSpace.ILevel.Error).length
-  const warningsCount = alerts.filter((alert) => alert.type === AlertsSpace.ILevel.Warning).length
-  const successCount = alerts.filter((alert) => alert.type === AlertsSpace.ILevel.Success).length
-  const infoCount = alerts.filter((alert) => alert.type === AlertsSpace.ILevel.Info).length
+  const errorsCount = alerts.filter((alert) => alert.type === AlertLevel.Error).length
+  const warningsCount = alerts.filter((alert) => alert.type === AlertLevel.Warning).length
+  const successCount = alerts.filter((alert) => alert.type === AlertLevel.Success).length
+  const infoCount = alerts.filter((alert) => alert.type === AlertLevel.Info).length
 
   const alertsEmpty = alerts.length === 0
   const errorsExists = errorsCount !== 0
@@ -186,7 +173,7 @@ export const Journal = () => {
             variant='default'
             count={allCount}
             filter={JournalFilters.All}
-            level={AlertsSpace.ILevel.Default}
+            level={AlertLevel.Default}
             handleClick={() => handleFilterClick(JournalFilters.All)}
           />
 
@@ -197,8 +184,8 @@ export const Journal = () => {
             variant={'error'}
             icon={<HugeiconsIcon icon={CancelCircleIcon} size={25} />}
             filter={JournalFilters.Error}
-            level={AlertsSpace.ILevel.Error}
-            handleClick={() => handleFilterClick(JournalFilters.Error, AlertsSpace.ILevel.Error)}
+            level={AlertLevel.Error}
+            handleClick={() => handleFilterClick(JournalFilters.Error)}
           />
 
           <JournalFilterButton
@@ -208,10 +195,8 @@ export const Journal = () => {
             variant={'warning'}
             icon={<HugeiconsIcon icon={Alert01Icon} size={25} />}
             filter={JournalFilters.Warning}
-            level={AlertsSpace.ILevel.Warning}
-            handleClick={() =>
-              handleFilterClick(JournalFilters.Warning, AlertsSpace.ILevel.Warning)
-            }
+            level={AlertLevel.Warning}
+            handleClick={() => handleFilterClick(JournalFilters.Warning)}
           />
 
           <JournalFilterButton
@@ -221,10 +206,8 @@ export const Journal = () => {
             variant={'success'}
             icon={<HugeiconsIcon icon={CheckmarkCircle04Icon} size={25} />}
             filter={JournalFilters.Success}
-            level={AlertsSpace.ILevel.Success}
-            handleClick={() =>
-              handleFilterClick(JournalFilters.Success, AlertsSpace.ILevel.Success)
-            }
+            level={AlertLevel.Success}
+            handleClick={() => handleFilterClick(JournalFilters.Success)}
           />
 
           <JournalFilterButton
@@ -234,13 +217,13 @@ export const Journal = () => {
             variant={'info'}
             icon={<HugeiconsIcon icon={InformationSquareIcon} size={25} />}
             filter={JournalFilters.Info}
-            level={AlertsSpace.ILevel.Info}
-            handleClick={() => handleFilterClick(JournalFilters.Info, AlertsSpace.ILevel.Info)}
+            level={AlertLevel.Info}
+            handleClick={() => handleFilterClick(JournalFilters.Info)}
           />
         </Flex>
       </Flex>
       <Box className='w-full flex-1'>
-        <AlertList model={journalAlerts} />
+        <AlertList alerts={alerts} />
       </Box>
     </Box>
   )

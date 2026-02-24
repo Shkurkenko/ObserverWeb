@@ -1,7 +1,8 @@
-import { type StylableProps } from '../../Shared/Common.types'
-import { Box } from '../../Layouts/Box'
-import { Text } from '../../Typography'
-import { cn } from '../../../Utils/Helpers'
+import { StylableProps } from '@Components/Shared/Common.types'
+import { Box } from '@Components/Layouts/Box'
+import { Text } from '@Components/Typography'
+
+import { cn } from '@Utils/Helpers'
 
 export interface AlertMessageProps extends StylableProps {
   /** Текст сообщения алерта */
